@@ -7,7 +7,6 @@ public class WalletDTO {
     private String image;
     private int currencyId;
 
-
     public WalletDTO() {
     }
 
@@ -52,7 +51,6 @@ public class WalletDTO {
         this.image = image;
     }
 
-
     public int getCurrencyId() {
         return currencyId;
     }
@@ -60,5 +58,4 @@ public class WalletDTO {
     public void setCurrencyId(int currencyId) {
         this.currencyId = currencyId;
     }
-
 }

@@ -5,31 +5,30 @@ import d2.money.service.dto.CurrencyDTO;
 
 import java.util.List;
 
-public class CurrencyMapper implements EntityMapper<Currency, CurrencyDTO> {
+public class CurrencyMapper implements EntityMapper<CurrencyDTO, Currency> {
 
     @Override
-    public CurrencyDTO toEntity(Currency dto) {
+    public Currency toEntity(CurrencyDTO dto) {
         return null;
     }
 
     @Override
-    public Currency toDto(CurrencyDTO entity) {
+    public CurrencyDTO toDto(Currency entity) {
         return null;
     }
 
     @Override
-    public List<CurrencyDTO> toEntity(List<Currency> dtoList) {
+    public List<Currency> toEntity(List<CurrencyDTO> dtoList) {
         return null;
     }
 
     @Override
-    public List<Currency> toDto(List<CurrencyDTO> entityList) {
+    public List<CurrencyDTO> toDto(List<Currency> entityList) {
         return null;
     }
 
     @Override
-    public void partialUpdate(CurrencyDTO entity, Currency dto) {
+    public void partialUpdate(Currency entity, CurrencyDTO dto) {
 
     }
-
 }

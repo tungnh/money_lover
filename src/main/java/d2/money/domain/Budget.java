@@ -27,5 +27,4 @@ public class Budget {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "budget_category", joinColumns = @JoinColumn(name = "budget_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categoryList = new ArrayList<>();
-
 }

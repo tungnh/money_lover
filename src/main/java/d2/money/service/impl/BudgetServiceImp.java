@@ -1,4 +1,8 @@
 package d2.money.service.impl;
 
-public class BudgetServiceImp {
+import d2.money.service.util.BudgetService;
+import org.springframework.stereotype.Service;
+
+@Service
+public class BudgetServiceImp implements BudgetService {
 }

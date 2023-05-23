@@ -220,6 +220,4 @@ public class User {
     public void setNotificationList(List<Notification> notificationList) {
         this.notificationList = notificationList;
     }
-
-
 }

@@ -5,7 +5,6 @@ import d2.money.service.dto.WalletDTO;
 import java.util.List;
 
 public interface WalletService {
-
     List<WalletDTO> getAllWallet();
 
     WalletDTO save(WalletDTO walletRequest);
@@ -15,5 +14,4 @@ public interface WalletService {
     void delete(int id);
 
     WalletDTO findByWalletId(int id);
-
 }

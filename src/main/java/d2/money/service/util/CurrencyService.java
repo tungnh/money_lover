@@ -15,5 +15,4 @@ public interface CurrencyService {
     void delete(int id);
 
     CurrencyDTO findByCurrencyId(int id);
-
 }

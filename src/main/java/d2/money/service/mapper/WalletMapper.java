@@ -6,10 +6,8 @@ import d2.money.service.dto.WalletDTO;
 import java.util.List;
 
 public class WalletMapper implements EntityMapper<Wallet, WalletDTO> {
-
     @Override
     public WalletDTO toEntity(Wallet dto) {
-
         return null;
     }
 
@@ -30,6 +28,5 @@ public class WalletMapper implements EntityMapper<Wallet, WalletDTO> {
 
     @Override
     public void partialUpdate(WalletDTO entity, Wallet dto) {
-
     }
 }

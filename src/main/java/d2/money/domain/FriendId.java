@@ -8,10 +8,8 @@ import java.io.Serializable;
 public class FriendId implements Serializable {
     @Column(name = "user_id")
     private int userId;
-
     @Column(name = "friend_id")
     private int friendId;
-
     public FriendId() {
     }
 
@@ -19,8 +17,6 @@ public class FriendId implements Serializable {
         this.userId = userId;
         this.friendId = friendId;
     }
-
-    // Getters and setters
 
     public int getUserId() {
         return userId;
@@ -38,19 +34,14 @@ public class FriendId implements Serializable {
         this.friendId = friendId;
     }
 
-    // Implement equals() and hashCode() methods
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         FriendId friendId1 = (FriendId) o;
-
         if (userId != friendId1.userId) return false;
         return friendId == friendId1.friendId;
     }
-
     @Override
     public int hashCode() {
         int result = userId;

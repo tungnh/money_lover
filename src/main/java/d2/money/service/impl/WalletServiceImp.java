@@ -22,7 +22,6 @@ public class WalletServiceImp implements WalletService {
         this.currencyRepository = currencyRepository;
     }
 
-
     @Override
     public List<WalletDTO> getAllWallet() {
         return null;
@@ -40,7 +39,6 @@ public class WalletServiceImp implements WalletService {
 
     @Override
     public void delete(int id) {
-
     }
 
     @Override
