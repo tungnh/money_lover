@@ -1,6 +1,6 @@
 package d2.money.controller;
 
-import d2.money.service.dto.WalletRequest;
+import d2.money.service.dto.WalletDTO;
 import d2.money.service.util.CurrencyService;
 import d2.money.service.util.WalletService;
 import org.springframework.stereotype.Controller;
@@ -22,19 +22,19 @@ public class WalletController {
     @GetMapping("/")
     public String index(Model model) {
 
-        return "admin/index";
+        return "user/index";
     }
 
     @GetMapping("/w")
     public String ww() {
 
-        return "admin/wallet";
+        return "user/wallet";
     }
 
     @GetMapping("/profile")
     public String profile() {
 
-        return "admin/profile";
+        return "user/profile";
     }
 
     @GetMapping("/s")
@@ -45,13 +45,13 @@ public class WalletController {
 
     @GetMapping("/add")
     public String addWallet(Model model) {
-        model.addAttribute("wallet",new WalletRequest());
+        model.addAttribute("wallet",new WalletDTO());
         model.addAttribute("listCurrency",currencyService.getAllCurrency());
         return "user/addWallet";
     }
 
     @PostMapping("/addwallet")
-    public String createWallet(@ModelAttribute WalletRequest wallet,Model model) {
+    public String createWallet(@ModelAttribute WalletDTO wallet, Model model) {
         walletService.save(wallet);
         model.addAttribute("listwallet", walletService.getAllWallet());
         return "user/wallet";

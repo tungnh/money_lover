@@ -1,6 +1,6 @@
 package d2.money.service.dto;
 
-public class WalletRequest {
+public class WalletDTO {
     private int id;
     private String name;
     private double balance;
@@ -8,10 +8,10 @@ public class WalletRequest {
     private int currencyId;
 
 
-    public WalletRequest() {
+    public WalletDTO() {
     }
 
-    public WalletRequest(int id, String name, double balance, String image, int currencyId) {
+    public WalletDTO(int id, String name, double balance, String image, int currencyId) {
         this.id = id;
         this.name = name;
         this.balance = balance;

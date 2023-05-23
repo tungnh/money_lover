@@ -1,20 +1,20 @@
 package d2.money.service.util;
 
 import d2.money.domain.Wallet;
-import d2.money.service.dto.WalletRequest;
+import d2.money.service.dto.WalletDTO;
 
 import java.util.List;
 
 public interface WalletService {
 
-    List<Wallet> getAllWallet();
+    List<WalletDTO> getAllWallet();
 
-    Wallet save(WalletRequest walletRequest);
+    WalletDTO save(WalletDTO walletRequest);
 
-    Wallet update(WalletRequest walletRequest);
+    WalletDTO update(WalletDTO walletRequest);
 
     void delete(int id);
 
-    Wallet findByWalletId(int id);
+    WalletDTO findByWalletId(int id);
 
 }

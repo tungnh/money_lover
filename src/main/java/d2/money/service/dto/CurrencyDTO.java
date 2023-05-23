@@ -2,17 +2,17 @@ package d2.money.service.dto;
 
 
 
-public class CurrencyRequest {
+public class CurrencyDTO {
     private int id;
     private String name;
     private String code;
     private double transfer;
     private String symbol;
 
-    public CurrencyRequest() {
+    public CurrencyDTO() {
     }
 
-    public CurrencyRequest(int id, String name, String code, double transfer, String symbol) {
+    public CurrencyDTO(int id, String name, String code, double transfer, String symbol) {
         this.id = id;
         this.name = name;
         this.code = code;

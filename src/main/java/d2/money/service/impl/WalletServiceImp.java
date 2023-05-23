@@ -6,7 +6,7 @@ import d2.money.domain.Wallet;
 import d2.money.repository.CurrencyRepository;
 import d2.money.repository.UserRepository;
 import d2.money.repository.WalletRepository;
-import d2.money.service.dto.WalletRequest;
+import d2.money.service.dto.WalletDTO;
 import d2.money.service.util.WalletService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,61 +30,29 @@ public class WalletServiceImp implements WalletService {
         this.currencyRepository = currencyRepository;
     }
 
-    @Override
-    public List<Wallet> getAllWallet() {
-        return walletRepository.findAll();
-    }
 
     @Override
-    public Wallet save(WalletRequest walletRequest) {
-        Wallet wallet = new Wallet();
-        Currency currency = currencyRepository.findById(walletRequest.getCurrencyId());
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            User user=userRepository.findByName(userDetails.getUsername());
-            if (user!=null){
-                wallet.setUser(user);
-            }
-        }
-        wallet.setName(walletRequest.getName());
-        wallet.setBalance(walletRequest.getBalance());
-        wallet.setImage(walletRequest.getImage());
-        wallet.setCurrency(currency);
-        wallet.setCreateDate(new Date());
-        return walletRepository.save(wallet);
-    }
-
-
-    @Override
-    public Wallet update(WalletRequest walletRequest) {
-        Wallet oldWallet = walletRepository.findById(walletRequest.getId());
-        Currency currency = currencyRepository.findById(walletRequest.getCurrencyId());
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            User user=userRepository.findByName(userDetails.getUsername());
-            if (user!=null){
-                oldWallet.setUser(user);
-            }
-        }
-        oldWallet.setName(walletRequest.getName());
-        oldWallet.setBalance(walletRequest.getBalance());
-        oldWallet.setImage(walletRequest.getImage());
-        oldWallet.setCurrency(currency);
-        oldWallet.setCreateDate(new Date());
+    public List<WalletDTO> getAllWallet() {
         return null;
     }
 
-
     @Override
-    public void delete(int id) {
-        Wallet wallet = walletRepository.findById(id);
-        walletRepository.delete(wallet);
+    public WalletDTO save(WalletDTO walletRequest) {
+        return null;
     }
 
     @Override
-    public Wallet findByWalletId(int id) {
-        return walletRepository.findById(id);
+    public WalletDTO update(WalletDTO walletRequest) {
+        return null;
+    }
+
+    @Override
+    public void delete(int id) {
+
+    }
+
+    @Override
+    public WalletDTO findByWalletId(int id) {
+        return null;
     }
 }
