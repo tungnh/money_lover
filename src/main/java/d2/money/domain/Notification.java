@@ -11,13 +11,13 @@ public class Notification {
     @Column(name = "id")
     private int id;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id",referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
     @Column(name = "title")
     private String title;
     @Column(name = "type")
     private int type;
-    @Column(name = "message",columnDefinition = "TEXT",nullable = false)
+    @Column(name = "message", columnDefinition = "TEXT", nullable = false)
     private String message;
     @Column(name = "created_by")
     private String createdBy;
@@ -26,9 +26,9 @@ public class Notification {
     @Column(name = "last_modified_by")
     private String lastModifiedBy;
     @Column(name = "last_modified_date")
-    private Date  lastModifiedDate;
+    private Date lastModifiedDate;
     @Column(name = "is_read")
-    private boolean  isRead;
+    private boolean isRead;
     @Column(name = "readed_at")
     private Date readedAt;
 }

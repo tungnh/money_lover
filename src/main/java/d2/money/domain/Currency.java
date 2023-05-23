@@ -30,9 +30,9 @@ public class Currency {
     private String lastModifiedBy;
     @Column(name = "last_modified_date")
     private Date lastModifiedDate;
-    @OneToMany(mappedBy = "currency",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "currency", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Wallet> walletList=new ArrayList<>();
+    private List<Wallet> walletList = new ArrayList<>();
 
     public Currency() {
     }

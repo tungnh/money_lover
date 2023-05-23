@@ -16,7 +16,7 @@ public class Category {
     private int id;
     @Column(name = "name")
     private String name;
-    @Column(name = "image",columnDefinition = "TEXT")
+    @Column(name = "image", columnDefinition = "TEXT")
     private String image;
     @Column(name = "type")
     private String type;
@@ -31,9 +31,9 @@ public class Category {
     @Column(name = "parent_id")
     private int parentId;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id",referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
     @OneToMany(mappedBy = "category")
     @JsonIgnore
-    private List<Transaction> transactionList=new ArrayList<>();
+    private List<Transaction> transactionList = new ArrayList<>();
 }

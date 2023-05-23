@@ -16,17 +16,17 @@ public class Transaction {
     private double amount;
     @Column(name = "day")
     private Date day;
-    @Column(name = "note",columnDefinition = "TEXT")
+    @Column(name = "note", columnDefinition = "TEXT")
     private String note;
-    @Column(name = "image",columnDefinition = "TEXT")
+    @Column(name = "image", columnDefinition = "TEXT")
     private String image;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_id",referencedColumnName = "id")
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "wallet_id",referencedColumnName = "id")
+    @JoinColumn(name = "wallet_id", referencedColumnName = "id")
     private Wallet wallet;
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "transaction_with_user",joinColumns = @JoinColumn(name = "transaction_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> userList=new ArrayList<>();
+    @JoinTable(name = "transaction_with_user", joinColumns = @JoinColumn(name = "transaction_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> userList = new ArrayList<>();
 }

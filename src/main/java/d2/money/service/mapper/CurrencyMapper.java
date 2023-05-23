@@ -7,7 +7,6 @@ import java.util.List;
 
 public class CurrencyMapper implements EntityMapper<Currency, CurrencyDTO> {
 
-
     @Override
     public CurrencyDTO toEntity(Currency dto) {
         return null;
@@ -32,6 +31,5 @@ public class CurrencyMapper implements EntityMapper<Currency, CurrencyDTO> {
     public void partialUpdate(CurrencyDTO entity, Currency dto) {
 
     }
-
 
 }

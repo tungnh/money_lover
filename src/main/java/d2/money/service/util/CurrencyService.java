@@ -1,6 +1,5 @@
 package d2.money.service.util;
 
-import d2.money.domain.Currency;
 import d2.money.service.dto.CurrencyDTO;
 
 import java.util.List;

@@ -17,21 +17,22 @@ public class CurrencyController {
     }
 
     @GetMapping("/currency")
-    public String currency(Model model){
-        model.addAttribute("listcurrency",currencyService.getAllCurrency());
+    public String currency(Model model) {
+        model.addAttribute("listcurrency", currencyService.getAllCurrency());
         return "admin/currency";
     }
 
 
     @GetMapping("/addCurrency")
-    public String addCurrency(@ModelAttribute CurrencyDTO currencyRequest, Model model){
-        model.addAttribute("currency",new CurrencyDTO());
+    public String addCurrency(@ModelAttribute CurrencyDTO currencyRequest, Model model) {
+        model.addAttribute("currency", new CurrencyDTO());
         return "admin/addCurrency";
     }
+
     @PostMapping("/createCurrency")
-    public String createCurrency(@ModelAttribute CurrencyDTO currencyRequest, Model model){
+    public String createCurrency(@ModelAttribute CurrencyDTO currencyRequest, Model model) {
         currencyService.save(currencyRequest);
-        model.addAttribute("listcurrency",currencyService.getAllCurrency());
+        model.addAttribute("listcurrency", currencyService.getAllCurrency());
         return "admin/currency";
     }
 }

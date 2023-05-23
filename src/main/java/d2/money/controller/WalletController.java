@@ -45,8 +45,8 @@ public class WalletController {
 
     @GetMapping("/add")
     public String addWallet(Model model) {
-        model.addAttribute("wallet",new WalletDTO());
-        model.addAttribute("listCurrency",currencyService.getAllCurrency());
+        model.addAttribute("wallet", new WalletDTO());
+        model.addAttribute("listCurrency", currencyService.getAllCurrency());
         return "user/addWallet";
     }
 

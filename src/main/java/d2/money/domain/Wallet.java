@@ -18,21 +18,21 @@ public class Wallet {
     private String name;
     @Column(name = "balance")
     private double balance;
-    @Column(name = "image",columnDefinition = "TEXT")
+    @Column(name = "image", columnDefinition = "TEXT")
     private String image;
     @Column(name = "create_date")
     private Date createDate;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "currency_id",referencedColumnName = "id")
+    @JoinColumn(name = "currency_id", referencedColumnName = "id")
     private Currency currency;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id",referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
     @OneToMany(mappedBy = "wallet")
     @JsonIgnore
-    private List<Transaction> transactionList=new ArrayList<>();
+    private List<Transaction> transactionList = new ArrayList<>();
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "wallet_budget",joinColumns = @JoinColumn(name = "wallet_id"), inverseJoinColumns = @JoinColumn(name = "budget_id"))
+    @JoinTable(name = "wallet_budget", joinColumns = @JoinColumn(name = "wallet_id"), inverseJoinColumns = @JoinColumn(name = "budget_id"))
     private List<Budget> budgetList = new ArrayList<>();
 
     public Wallet() {

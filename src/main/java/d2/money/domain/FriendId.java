@@ -5,7 +5,7 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Embeddable
-public  class FriendId implements Serializable {
+public class FriendId implements Serializable {
     @Column(name = "user_id")
     private int userId;
 

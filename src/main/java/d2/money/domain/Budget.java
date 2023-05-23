@@ -25,7 +25,7 @@ public class Budget {
     @Column(name = "choose_period")
     private String choosePeriod;
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "budget_category",joinColumns = @JoinColumn(name = "budget_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private List<Category> categoryList=new ArrayList<>();
+    @JoinTable(name = "budget_category", joinColumns = @JoinColumn(name = "budget_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private List<Category> categoryList = new ArrayList<>();
 
 }

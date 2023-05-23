@@ -1,3 +1,4 @@
 package d2.money.service.mapper;
 
-public class ConfigMapper {}
+public class ConfigMapper {
+}

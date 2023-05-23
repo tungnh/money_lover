@@ -1,7 +1,5 @@
 package d2.money.service.dto;
 
-
-
 public class CurrencyDTO {
     private int id;
     private String name;
