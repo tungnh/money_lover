@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CurrencyServiceImp implements CurrencyService {
@@ -45,8 +46,9 @@ public class CurrencyServiceImp implements CurrencyService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            User user= userRepository.findUserByName(userDetails.getUsername());
-            if (user!=null){
+            Optional<User> optionalUser= userRepository.findUserByName(userDetails.getUsername());
+            if (optionalUser.isPresent()){
+                User user=optionalUser.get();
                 currencyDto.setCreatedBy(user.getName());
                 currencyDto.setLastModifiedBy(user.getName());
             }
@@ -61,16 +63,20 @@ public class CurrencyServiceImp implements CurrencyService {
     @Override
     public CurrencyDTO update(CurrencyDTO currencyDto) {
         Currency currency=currencyRepository.findById(currencyDto.getId()).get();
+        if (currency!=null){
+            currencyDto.setId(currency.getId());
+        }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            User user= userRepository.findUserByName(userDetails.getUsername());
-            if (user!=null){
+            Optional<User> optionalUser= userRepository.findUserByName(userDetails.getUsername());
+            if (optionalUser.isPresent()){
+                User user=optionalUser.get();
                 currencyDto.setLastModifiedBy(user.getName());
             }
         }
         currencyDto.setLastModifiedDate(new Date());
-        return currencyMapper.toDto(currencyRepository.save(currencyMapper.toEntity(currency,currencyDto)));
+        return currencyMapper.toDto(currencyRepository.save(currencyMapper.toEntity(currencyDto)));
     }
 
     @Override
