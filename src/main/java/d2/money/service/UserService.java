@@ -1,4 +1,4 @@
-package d2.money.service.util;
+package d2.money.service;
 
 public interface UserService {
 }

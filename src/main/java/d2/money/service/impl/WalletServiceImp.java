@@ -4,7 +4,7 @@ import d2.money.repository.CurrencyRepository;
 import d2.money.repository.UserRepository;
 import d2.money.repository.WalletRepository;
 import d2.money.service.dto.WalletDTO;
-import d2.money.service.util.WalletService;
+import d2.money.service.WalletService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

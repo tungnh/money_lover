@@ -1,4 +1,4 @@
-package d2.money.service.util;
+package d2.money.service;
 
 import d2.money.service.dto.CurrencyDTO;
 
@@ -8,9 +8,9 @@ public interface CurrencyService {
     CurrencyDTO findById(int id);
     List<CurrencyDTO> getAllCurrency();
 
-    CurrencyDTO save(CurrencyDTO currency);
+    CurrencyDTO save(CurrencyDTO currencyDto);
 
-    CurrencyDTO update(CurrencyDTO currency);
+    CurrencyDTO update(CurrencyDTO currencyDto);
 
     void delete(int id);
 
