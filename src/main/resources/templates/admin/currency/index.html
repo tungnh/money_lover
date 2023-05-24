@@ -4,10 +4,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title> Currency</title>
     <th:block th:replace="layout/layout.html::css"></th:block>
     <th:block th:replace="layout/header.html::css"></th:block>
@@ -24,25 +22,21 @@
                     <div class="d-flex align-items-center border-bottom pb-3 mb-3">
                         <div class="d-flex align-items-center">
                             <img src="images/flag/united-states.png" class="exchange-image img-fluid" alt="">
-
                             <div>
                                 <p th:text="*{name}"></p>
                                 <h6 th:text="*{code}"></h6>
                             </div>
                         </div>
-
                         <div class="ms-auto me-4">
                             <small>Transfer</small>
                             <h6 th:text="*{transfer}"></h6>
                         </div>
-
                         <div>
                             <small>Symbol</small>
                             <h6 th:text="*{symbol}" style="text-align: center;"></h6>
                         </div>
                     </div>
                 </th:block>
-
             </div>
         </div>
     </div>

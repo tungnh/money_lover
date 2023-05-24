@@ -3,20 +3,16 @@ spring:
     url: jdbc:mysql://localhost:3306/moneylover
     username: root
     password: 123456789
-
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL57Dialect
         format_sql: true
-
-
     hibernate:
       ddl-auto: update
       .naming:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-
         spring:
           jpa:
             properties:

@@ -13,21 +13,9 @@ import java.util.Optional;
 
 @Component
 public class CurrencyMapper implements EntityMapper<CurrencyDTO, Currency> {
-
-    private final CurrencyRepository currencyRepository;
-
-    public CurrencyMapper(CurrencyRepository currencyRepository) {
-        this.currencyRepository = currencyRepository;
-    }
-
-
     @Override
     public Currency toEntity(CurrencyDTO dto) {
         Currency currency = new Currency();
-        Optional<Currency> currencyOptional = currencyRepository.findById(dto.getId());
-        if (currencyOptional.isPresent()) {
-            currency = currencyOptional.get();
-        }
         currency.setName(dto.getName());
         currency.setCode(dto.getCode());
         currency.setTransfer(dto.getTransfer());
@@ -59,7 +47,6 @@ public class CurrencyMapper implements EntityMapper<CurrencyDTO, Currency> {
         for (CurrencyDTO currencyDTO : dtoList) {
             currencyList.add(toEntity(currencyDTO));
         }
-
         return currencyList;
     }
 
@@ -68,12 +55,10 @@ public class CurrencyMapper implements EntityMapper<CurrencyDTO, Currency> {
         if (entityList == null) {
             return null;
         }
-
         List<CurrencyDTO> currencyDTOList = new ArrayList<>(entityList.size());
         for (Currency currency : entityList) {
             currencyDTOList.add(toDto(currency));
         }
-
         return currencyDTOList;
     }
 
