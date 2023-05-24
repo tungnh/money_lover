@@ -7,6 +7,7 @@ import d2.money.repository.UserRepository;
 import d2.money.service.dto.CurrencyDTO;
 import d2.money.service.mapper.CurrencyMapper;
 import d2.money.service.CurrencyService;
+import javassist.NotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,8 +45,7 @@ public class CurrencyServiceImp implements CurrencyService {
 
     @Override
     public List<CurrencyDTO> getAllCurrency() {
-        List<Currency> currencyList = currencyRepository.findAll();
-        return currencyMapper.toDto(currencyList);
+        return currencyMapper.toDto(currencyRepository.findAll());
     }
 
     @Override
@@ -63,28 +63,38 @@ public class CurrencyServiceImp implements CurrencyService {
         currencyDto.setCreatedDate(new Date());
         currencyDto.setLastModifiedDate(new Date());
         Currency currency = currencyMapper.toEntity(currencyDto);
-        currencyRepository.save(currency);
-        return currencyDto;
+        currency = currencyRepository.save(currency);
+        CurrencyDTO savedCurrencyDto = currencyMapper.toDto(currency);
+        return savedCurrencyDto;
     }
 
     @Override
     public CurrencyDTO update(CurrencyDTO currencyDto) {
-        Currency currency = currencyRepository.findById(currencyDto.getId()).get();
-        if (currency != null) {
+        Optional<Currency> currencyOptional = currencyRepository.findById(currencyDto.getId());
+        if (currencyOptional.isPresent()) {
+            Currency currency = currencyOptional.get();
             currencyDto.setId(currency.getId());
-        }
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            Optional<User> optionalUser = userRepository.findUserByName(userDetails.getUsername());
-            if (optionalUser.isPresent()) {
-                User user = optionalUser.get();
-                currencyDto.setLastModifiedBy(user.getName());
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+                Optional<User> optionalUser = userRepository.findUserByName(userDetails.getUsername());
+                if (optionalUser.isPresent()) {
+                    User user = optionalUser.get();
+                    currencyDto.setLastModifiedBy(user.getName());
+                }
+            }
+            currencyDto.setLastModifiedDate(new Date());
+            currency = currencyMapper.toEntity(currencyDto);
+            currency = currencyRepository.save(currency);
+            CurrencyDTO updatedCurrencyDto = currencyMapper.toDto(currency);
+            return updatedCurrencyDto;
+        } else {
+            try {
+                throw new NotFoundException("Currency not found with ID: " + currencyDto.getId());
+            } catch (NotFoundException e) {
+                throw new RuntimeException(e);
             }
         }
-        currencyDto.setLastModifiedDate(new Date());
-        currency = currencyMapper.toEntity(currencyDto);
-        return currencyMapper.toDto(currencyRepository.save(currency));
     }
 
     @Override
