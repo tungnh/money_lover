@@ -2,7 +2,6 @@ package d2.money.config;
 
 import d2.money.domain.User;
 import d2.money.repository.UserRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +19,7 @@ public class CustomUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String name)
             throws UsernameNotFoundException {
-        Optional<User> optionalUser = userRepository.findUserByUsername(name);
+        Optional<User> optionalUser = userRepository.findOneByUsername(name);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             return new CustomUserDetails(user);

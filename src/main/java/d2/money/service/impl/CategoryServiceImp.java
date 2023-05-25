@@ -1,6 +1,6 @@
 package d2.money.service.impl;
 
-import d2.money.service.util.CategoryService;
+import d2.money.service.CategoryService;
 import org.springframework.stereotype.Service;
 
 @Service

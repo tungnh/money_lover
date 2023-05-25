@@ -4,14 +4,14 @@ import d2.money.repository.CurrencyRepository;
 import d2.money.repository.UserRepository;
 import d2.money.repository.WalletRepository;
 import d2.money.service.dto.WalletDTO;
-import d2.money.service.util.WalletService;
+import d2.money.service.WalletService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class WalletServiceImp implements WalletService {
-
     private final WalletRepository walletRepository;
     private final UserRepository userRepository;
     private final CurrencyRepository currencyRepository;
@@ -42,7 +42,7 @@ public class WalletServiceImp implements WalletService {
     }
 
     @Override
-    public WalletDTO findByWalletId(int id) {
+    public Optional<WalletDTO> findByWalletId(int id) {
         return null;
     }
 }

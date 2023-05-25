@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Footer</title>
+    <th:block th:replace="layout/layout.html::css"></th:block>
+    <th:block th:replace="layout/header.html::css"></th:block>
+</head>
+<body>
+<footer class="site-footer" th:fragment="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-12">
+                <p class="copyright-text">Copyright © Mini Finance 2048
+                    - Design: <a rel="sponsored" href="https://www.tooplate.com"
+                                 target="_blank">Tooplate</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+<th:block th:replace="layout/layout.html::script"></th:block>
+</body>
+</html>

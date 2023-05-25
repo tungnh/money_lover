@@ -1,7 +1,7 @@
 package d2.money.controller;
 
 import d2.money.service.dto.CurrencyDTO;
-import d2.money.service.util.CurrencyService;
+import d2.money.service.CurrencyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,22 +18,21 @@ public class CurrencyController {
         this.currencyService = currencyService;
     }
 
-    @GetMapping("/index")
+    @GetMapping("index")
     public String currency(Model model) {
         model.addAttribute("listcurrency", currencyService.getAllCurrency());
-        return "admin/currency";
+        return "admin/currency/index";
     }
-
-    @GetMapping("/add")
-    public String addCurrency(@ModelAttribute CurrencyDTO currencyRequest, Model model) {
+    @GetMapping("add")
+    public String addCurrency(Model model) {
         model.addAttribute("currency", new CurrencyDTO());
-        return "admin/addCurrency";
+        return "admin/currency/add";
     }
 
-    @PostMapping("/add")
-    public String createCurrency(@ModelAttribute CurrencyDTO currencyRequest, Model model) {
-        currencyService.save(currencyRequest);
+    @PostMapping("add")
+    public String createCurrency(@ModelAttribute CurrencyDTO currencyDTO, Model model) {
+        currencyService.save(currencyDTO);
         model.addAttribute("listcurrency", currencyService.getAllCurrency());
-        return "admin/currency";
+        return "admin/currency/index";
     }
 }

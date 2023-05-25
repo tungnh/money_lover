@@ -1,8 +1,9 @@
 package d2.money.controller;
 
+import d2.money.service.UserService;
 import d2.money.service.dto.LoginDTO;
 import d2.money.service.dto.RegisterDTO;
-import d2.money.service.util.UserService;
+import d2.money.service.dto.UserDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,21 +14,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
+
     public final UserService userService;
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
-/*    @GetMapping("/index")
-    public String index() {
-        return "/user/index";
-    }*/
     @GetMapping("/index")
     public String homePage(Model model, Authentication authentication) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         auth.getName();
-
         //lấy đối tượng Authentication thông qua tham số của phương thức home()
         if (authentication != null && authentication.isAuthenticated()) {
             //kiểm tra xem người dùng đã được xác thực hay chưa
@@ -37,7 +34,7 @@ public class UserController {
         }
         return "/user/index";
     }
-    @GetMapping()
+    @GetMapping("/tranghome")
     public String home(){
         return "home";
     }
@@ -49,7 +46,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") RegisterDTO userDto, Model model) {
+    public String registerUser(@ModelAttribute UserDTO userDto, Model model) {
         System.out.println(userDto.getBirthday());
         userService.registerUser(userDto);
         model.addAttribute("registrationSuccess", true);
@@ -60,6 +57,21 @@ public class UserController {
     public String showLoginForm(Model model) {
         model.addAttribute("user", new LoginDTO());
         return "login"; // Trả về tên của tệp HTML đăng nhập
+    }
+    @GetMapping("/")
+    public String index(Model model){
+        model.addAttribute("indexActive","active");
+        return "user/index";
+    }
+    @GetMapping("/profile")
+    public String profile(Model model){
+        model.addAttribute("profileActive","active");
+        return "user/profile";
+    }
+    @GetMapping("/setting")
+    public String setting(Model model){
+        model.addAttribute("settingActive","active");
+        return "user/setting";
     }
 }
 

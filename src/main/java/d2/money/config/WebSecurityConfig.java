@@ -41,15 +41,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/home", "/css/**","/js/**").permitAll()
-                .antMatchers("/register").permitAll()
+                .antMatchers("/user/tranghome", "/css/**", "/js/**").permitAll()
+                .antMatchers("/user/register").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/user/login")
                 .loginProcessingUrl("/loginn")
-                .defaultSuccessUrl("/index",true)
+                .defaultSuccessUrl("/user/index", true)
                 .permitAll()
                 .failureHandler((request, response, exception) -> {
                     // Xử lý thông báo lỗi
@@ -58,11 +58,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     response.sendRedirect("/login");
                 })
                 .and()
+                .rememberMe() // Thêm cấu hình nhớ mật khẩu
+                .tokenValiditySeconds(86400) // Thời gian hiệu lực của token (tính bằng giây)
+                .key("your-unique-key") // Khóa xác thực duy nhất cho token
+                .and()
                 .logout()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login")
+                .logoutSuccessUrl("/user/login")
                 .permitAll();
     }
 }

@@ -32,7 +32,7 @@
                 <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel"
                      aria-labelledby="profile-tab" tabindex="0">
                     <h6 class="mb-4">MoneyLover</h6>
-                    <form style="color: #008FFB" class="custom-form password-form" th:action="@{/register}"
+                    <form style="color: #008FFB" class="custom-form password-form" th:action="@{/user/register}"
                           method="post" th:object="${user}" role="form">
                         <input type="text" id="firstName" name="firstName" th:field="*{firstName}" required
                                class="form-control" placeholder="Họ:">
@@ -42,7 +42,7 @@
                         <input type="hidden" id="valueBirthday" name="birthday" th:value="${user.birthday}">
                         <input type="email" id="email" name="email" th:field="*{email}" required
                                class="form-control" placeholder="Email:">
-                        <input type="text" id="name" name="name" th:field="*{name}" required
+                        <input type="text" id="name" name="name" th:field="*{username}" required
                                class="form-control" placeholder="Tên đăng nhập:">
                         <input type="password" id="password" name="password" required
                                class="form-control" placeholder="Mật khẩu:">
