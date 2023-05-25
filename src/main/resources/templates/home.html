@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Money Lover</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #ffffff;
+            padding: 20px;
+            color: white;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .logo img {
+            height: auto;
+            max-width: 200%;
+            margin-right: 10px;
+        }
+
+        .logo span {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .navigation {
+            background-color: #ffffff;
+            padding: 10px;
+        }
+
+        .navigation ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .navigation li {
+            margin-right: 20px;
+        }
+
+        .navigation li a {
+            color: #020101;
+            text-decoration: none;
+        }
+
+        .navigation li.flag {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+        }
+
+        .navigation li.flag img {
+            height: 20px;
+            width: auto;
+            margin-right: 5px;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .section-text {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .section-text p {
+            margin: 0;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+        }
+
+        .cta-buttons a {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .navigation ul {
+            display: flex;
+            align-items: center;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+    </style>
+</head>
+<body>
+<header class="header">
+    <div class="logo">
+    </div>
+    <div class="navigation">
+        <img src="https://moneylover.me/img/logo.svg" alt="Money Lover Logo">
+        <ul>
+            <li><a href="https://finsify.com/">About us</a></li>
+            <li><a href="https://moneylover.me/career">Career</a></li>
+            <li class="flag"><img src="https://cdn.countryflags.com/thumbs/vietnam/flag-round-250.png" alt="Vietnamese Flag"><a href="#">Vietnamese</a></li>
+        </ul>
+    </div>
+</header>
+<div class="content">
+    <h1 class="section-title">Simple way to manage personal finances</h1>
+    <div class="section-text">
+        <p>Money Lover is a personal finance management application that helps you easily track your income and expenses, set budgets, and achieve your financial goals.</p>
+        <p>With Money Lover, you can:</p>
+        <ul>
+            <li>Track your expenses and income</li>
+            <li>Set and manage budgets</li>
+            <li>View detailed reports and insights</li>
+            <li>Sync data across multiple devices</li>
+            <li>And more...</li>
+        </ul>
+    </div>
+    <div class="cta-buttons">
+        <a th:href="@{/login}">Try on browser</a>
+        <a href="https://moneylover.me/vi/#cta">Download for free</a>
+    </div>
+</div>
+</body>
+</html>

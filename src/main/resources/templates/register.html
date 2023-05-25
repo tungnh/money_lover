@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Mini Finance - Settings</title>
+    <!-- CSS FILES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/apexcharts.css" rel="stylesheet">
+    <link href="/css/tooplate-mini-finance.css" rel="stylesheet">
+</head>
+<body style="background-color: #ececec;">
+<div class="row my-4" style="margin-left: 500px;
+    margin-right: -79px;">
+    <div class="col-lg-7 col-12">
+        <div class="custom-block bg-white">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button style="margin-left: 130px;width: 300px;" class="nav-link active" id="profile-tab"
+                            data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab"
+                            aria-controls="profile-tab-pane" aria-selected="true">Đăng ký
+                    </button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel"
+                     aria-labelledby="profile-tab" tabindex="0">
+                    <h6 class="mb-4">MoneyLover</h6>
+                    <form style="color: #008FFB" class="custom-form password-form" th:action="@{/register}"
+                          method="post" th:object="${user}" role="form">
+                        <input type="text" id="firstName" name="firstName" th:field="*{firstName}" required
+                               class="form-control" placeholder="Họ:">
+                        <input type="text" id="lastName" name="lastName" th:field="*{lastName}" required
+                               placeholder="Tên:" class="form-control">
+                        <input type="date" id="birthday" class="form-control" onchange="formatDateString()">
+                        <input type="hidden" id="valueBirthday" name="birthday" th:value="${user.birthday}">
+                        <input type="email" id="email" name="email" th:field="*{email}" required
+                               class="form-control" placeholder="Email:">
+                        <input type="text" id="name" name="name" th:field="*{name}" required
+                               class="form-control" placeholder="Tên đăng nhập:">
+                        <input type="password" id="password" name="password" required
+                               class="form-control" placeholder="Mật khẩu:">
+                        <div class="d-flex">
+                            <button type="submit" class="form-control ms-2">
+                                Đăng ký
+                            </button>
+                        </div>
+                        <div style="text-align: center" class="login-link">
+                            <p>Đã có tài khoản? <a href="/login">Đăng nhập</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<script>
+    function formatDateString() {
+        var dateInput = document.getElementById("birthday");
+        var dateValue = dateInput.value;
+        var formattedDate = formatDate(dateValue);
+        document.getElementById("valueBirthday").value = formattedDate;
+    }
+
+    function formatDate(dateString) {
+        var date = new Date(dateString);
+        var day = date.getDate();
+        if (day < 10) {
+            day = "0" + day;
+        }
+        var month = date.getMonth() + 1;
+        if (month < 10) {
+            month = "0" + month;
+        }
+        var year = date.getFullYear();
+
+        return day + "/" + month + "/" + year;
+    }
+</script>
+<!-- JAVASCRIPT FILES -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>
