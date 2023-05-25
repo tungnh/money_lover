@@ -13,7 +13,7 @@ public class Currency {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
     @Column(name = "name", unique = true)
     private String name;
     @Column(name = "code")
@@ -36,20 +36,6 @@ public class Currency {
 
     public Currency() {
     }
-
-    public Currency(int id, String name, String code, double transfer, String symbol, String createdBy, Date createdDate, String lastModifiedBy, Date lastModifiedDate, List<Wallet> walletList) {
-        this.id = id;
-        this.name = name;
-        this.code = code;
-        this.transfer = transfer;
-        this.symbol = symbol;
-        this.createdBy = createdBy;
-        this.createdDate = createdDate;
-        this.lastModifiedBy = lastModifiedBy;
-        this.lastModifiedDate = lastModifiedDate;
-        this.walletList = walletList;
-    }
-
     public int getId() {
         return id;
     }

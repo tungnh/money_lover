@@ -1,21 +1,18 @@
 package d2.money.service.mapper;
 
 import d2.money.domain.Currency;
-import d2.money.domain.User;
-import d2.money.repository.CurrencyRepository;
 import d2.money.service.dto.CurrencyDTO;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class CurrencyMapper implements EntityMapper<CurrencyDTO, Currency> {
     @Override
     public Currency toEntity(CurrencyDTO dto) {
         Currency currency = new Currency();
+        currency.setId(dto.getId());
         currency.setName(dto.getName());
         currency.setCode(dto.getCode());
         currency.setTransfer(dto.getTransfer());

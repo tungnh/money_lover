@@ -13,7 +13,9 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
+    @Column(name = "user_id")
+    private Integer userId;
     @Column(name = "name")
     private String name;
     @Column(name = "image", columnDefinition = "TEXT")
@@ -30,8 +32,8 @@ public class Category {
     private Date lastModifiedDate;
     @Column(name = "parent_id")
     private int parentId;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user", referencedColumnName = "id", insertable = false, updatable = false)
     private User user;
     @OneToMany(mappedBy = "category")
     @JsonIgnore
