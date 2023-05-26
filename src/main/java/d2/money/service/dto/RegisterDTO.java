@@ -1,6 +1,6 @@
 package d2.money.service.dto;
-import java.util.Date;
 
+import java.util.Date;
 
 public class RegisterDTO {
     private String username;

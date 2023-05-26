@@ -27,7 +27,6 @@ public class WalletController {
         this.currencyService = currencyService;
     }
 
-
     @GetMapping("index")
     public String wallet(Model model, Authentication authentication) {
         List<WalletDTO> walletDTOList = walletService.getAllWallet();
@@ -93,4 +92,3 @@ public class WalletController {
         return "user/wallet/index";
     }
 }
-

@@ -5,8 +5,6 @@ public class LoginDTO {
     private String password;
     private boolean status;
 
-
-
     public LoginDTO() {
     }
 

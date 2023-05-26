@@ -6,10 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
 
-=======
->>>>>>> 764532906c982b035f812176e0cba543bb1975b2
 @Component
 public class UserMapper implements EntityMapper<UserDTO, User> {
     @Override

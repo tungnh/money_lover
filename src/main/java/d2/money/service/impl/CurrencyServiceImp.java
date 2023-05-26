@@ -53,10 +53,6 @@ public class CurrencyServiceImp implements CurrencyService {
                 currencyDto.setLastModifiedBy(user.getUsername());
                 currency.setCreatedBy(user.getUsername());
                 currency.setLastModifiedBy(user.getUsername());
-<<<<<<< HEAD
-=======
-
->>>>>>> 764532906c982b035f812176e0cba543bb1975b2
             }
         }
         currency.setCreatedDate(new Date());
@@ -68,32 +64,6 @@ public class CurrencyServiceImp implements CurrencyService {
 
     @Override
     public CurrencyDTO update(CurrencyDTO currencyDto) {
-<<<<<<< HEAD
-=======
-        Optional<Currency> currencyOptional = currencyRepository.findById(currencyDto.getId());
-        if (currencyOptional.isPresent()) {
-            Currency currency = currencyOptional.get();
-            currencyDto.setId(currency.getId());
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-                Optional<User> optionalUser = userRepository.findOneByUsername(userDetails.getUsername());
-                if (optionalUser.isPresent()) {
-                    User user = optionalUser.get();
-                    currencyDto.setLastModifiedBy(user.getUsername());
-                }
-            }
-            currencyDto.setLastModifiedDate(new Date());
-            currency = currencyMapper.toEntity(currencyDto);
-            currency = currencyRepository.save(currency);
-            CurrencyDTO updatedCurrencyDto = currencyMapper.toDto(currency);
-            return updatedCurrencyDto;
-        } else {
-            try {
-                throw new NotFoundException("Currency not found with ID: " + currencyDto.getId());
-            } catch (NotFoundException e) {
-                throw new RuntimeException(e);
->>>>>>> 764532906c982b035f812176e0cba543bb1975b2
         Currency currency = currencyMapper.toEntity(currencyDto);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
@@ -112,6 +82,6 @@ public class CurrencyServiceImp implements CurrencyService {
 
     @Override
     public void delete(int id) {
-        currencyRepository.deleteById(id);
+
     }
 }
