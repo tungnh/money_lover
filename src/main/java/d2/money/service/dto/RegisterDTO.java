@@ -2,31 +2,18 @@ package d2.money.service.dto;
 
 import java.util.Date;
 
-public class UserDTO {
-    private int id;
+public class RegisterDTO {
     private String username;
     private String password;
     private String firstName;
     private String lastName;
+    private Date birthday;
     private String email;
     private Date createDate;
-    private Date birthday;
     private boolean status;
-    private String image;
     private String role;
-    private int provinderType;
-    private long provinderId;
-    private String accsessToken;
 
-    public UserDTO() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public RegisterDTO() {
     }
 
     public String getUsername() {
@@ -61,6 +48,14 @@ public class UserDTO {
         this.lastName = lastName;
     }
 
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -77,14 +72,6 @@ public class UserDTO {
         this.createDate = createDate;
     }
 
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
     public boolean isStatus() {
         return status;
     }
@@ -93,43 +80,11 @@ public class UserDTO {
         this.status = status;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public String getRole() {
         return role;
     }
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public int getProvinderType() {
-        return provinderType;
-    }
-
-    public void setProvinderType(int provinderType) {
-        this.provinderType = provinderType;
-    }
-
-    public long getProvinderId() {
-        return provinderId;
-    }
-
-    public void setProvinderId(long provinderId) {
-        this.provinderId = provinderId;
-    }
-
-    public String getAccsessToken() {
-        return accsessToken;
-    }
-
-    public void setAccsessToken(String accsessToken) {
-        this.accsessToken = accsessToken;
     }
 }

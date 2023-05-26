@@ -22,6 +22,7 @@ public class CurrencyController {
         model.addAttribute("listcurrency", currencyService.getAllCurrency());
         return "admin/currency/index";
     }
+
     @GetMapping("add")
     public String addCurrency(Model model) {
         model.addAttribute("currency", new CurrencyDTO());
@@ -34,24 +35,27 @@ public class CurrencyController {
         model.addAttribute("listcurrency", currencyService.getAllCurrency());
         return "admin/currency/index";
     }
+
     @GetMapping("edit/{id}")
-    public String edit(@PathVariable int id,Model model){
-        Optional<CurrencyDTO> optionalCurrencyDTO=currencyService.findById(id);
-        if (optionalCurrencyDTO.isPresent()){
-            CurrencyDTO currencyDTO=optionalCurrencyDTO.get();
-            model.addAttribute("currency",currencyDTO);
+    public String edit(@PathVariable int id, Model model) {
+        Optional<CurrencyDTO> optionalCurrencyDTO = currencyService.findById(id);
+        if (optionalCurrencyDTO.isPresent()) {
+            CurrencyDTO currencyDTO = optionalCurrencyDTO.get();
+            model.addAttribute("currency", currencyDTO);
             return "admin/currency/update";
         }
         return "user/index";
     }
+
     @PostMapping("update")
     public String updateCurrency(@ModelAttribute CurrencyDTO currencyDTO, Model model) {
         currencyService.update(currencyDTO);
         model.addAttribute("listcurrency", currencyService.getAllCurrency());
         return "admin/currency/index";
     }
+
     @GetMapping("delete/{id}")
-    public String deleteCurrency(@PathVariable int id,Model model) {
+    public String deleteCurrency(@PathVariable int id, Model model) {
         currencyService.delete(id);
         model.addAttribute("listcurrency", currencyService.getAllCurrency());
         return "admin/currency/index";

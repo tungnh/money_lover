@@ -7,7 +7,6 @@ import d2.money.repository.UserRepository;
 import d2.money.service.dto.CurrencyDTO;
 import d2.money.service.mapper.CurrencyMapper;
 import d2.money.service.CurrencyService;
-import javassist.NotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -50,6 +49,8 @@ public class CurrencyServiceImp implements CurrencyService {
             Optional<User> optionalUser = userRepository.findOneByUsername(userDetails.getUsername());
             if (optionalUser.isPresent()) {
                 User user = optionalUser.get();
+                currencyDto.setCreatedBy(user.getUsername());
+                currencyDto.setLastModifiedBy(user.getUsername());
                 currency.setCreatedBy(user.getUsername());
                 currency.setLastModifiedBy(user.getUsername());
             }

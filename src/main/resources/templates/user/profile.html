@@ -24,35 +24,29 @@
                     </div>
                     <div class="col-lg-3 col-12 mb-4 mb-lg-0">
                         <div class="custom-block-profile-image-wrap">
-                            <img src="images/medium-shot-happy-man-smiling.jpg"
-                                 class="custom-block-profile-image img-fluid" alt="">
+                            <img th:src="${user.image}" alt="User Image"
+                                 class="custom-block-profile-image img-fluid">
                             <a href="setting.html" class="bi-pencil-square custom-block-edit-icon"></a>
                         </div>
                     </div>
                     <div class="col-lg-9 col-12">
                         <p class="d-flex flex-wrap mb-2">
                             <strong>Name:</strong>
-                            <span>Thomas Edison</span>
+                            <span th:text="${user.firstName}+''+${user.lastName}"></span>
                         </p>
                         <p class="d-flex flex-wrap mb-2">
                             <strong>Email:</strong>
-                            <a href="#">
-                                thomas@site.com
-                            </a>
-                        </p>
-                        <p class="d-flex flex-wrap mb-2">
-                            <strong>Phone:</strong>
-                            <a href="#">
-                                (60) 12 345 6789
+                            <a href="#" th:text="${user.email}">
+
                             </a>
                         </p>
                         <p class="d-flex flex-wrap mb-2">
                             <strong>Birthday:</strong>
-                            <span>March 5, 1992</span>
+                            <span th:text="${user.birthday}"></span>
                         </p>
                         <p class="d-flex flex-wrap">
-                            <strong>Address:</strong>
-                            <span>551 Swanston Street, Melbourne</span>
+                            <strong>Create Date</strong>
+                            <span th:text="${user.createDate}"></span>
                         </p>
                     </div>
                 </div>

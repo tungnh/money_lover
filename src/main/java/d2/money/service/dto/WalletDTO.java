@@ -1,12 +1,5 @@
 package d2.money.service.dto;
 
-import d2.money.domain.Currency;
-import d2.money.domain.User;
-
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.util.Date;
 
 public class WalletDTO {
@@ -17,8 +10,10 @@ public class WalletDTO {
     private int currencyId;
     private Date createDate;
     private int userId;
+
     public WalletDTO() {
     }
+
     public int getId() {
         return id;
     }

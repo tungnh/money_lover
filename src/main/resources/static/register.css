@@ -1,0 +1,79 @@
+body {
+    background-color: #0aa833;
+}
+
+.container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fafafa;
+    border: 1px solid #ccc;
+    border-radius: 20px; /* Điều chỉnh góc bo tròn */
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="email"],
+input[type="password"] {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.social-login {
+    margin-top: 20px;
+}
+
+.social-login p {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.login-link {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.login-link a {
+    color: #337ab7; /* Màu liên kết */
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo img {
+    height: 70px;
+    width: 70px;
+    margin-right: auto;
+}
+
+h2 {
+    text-align: center;
+}
