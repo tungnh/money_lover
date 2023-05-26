@@ -1,6 +1,5 @@
 package d2.money.service.dto;
 
-import javax.persistence.Column;
 import java.util.Date;
 
 public class CurrencyDTO {
@@ -16,6 +15,7 @@ public class CurrencyDTO {
 
     public CurrencyDTO() {
     }
+
     public String getCreatedBy() {
         return createdBy;
     }
