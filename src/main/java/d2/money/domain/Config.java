@@ -8,12 +8,14 @@ public class Config {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
+    @Column(name = "user_id")
+    private Integer userId;
     @Column(name = "`key`")
     private String key;
     @Column(name = "value")
     private String value;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user",insertable = false, updatable = false)
     private User user;
 }

@@ -33,14 +33,7 @@ public class CurrencyServiceImp implements CurrencyService {
 
     @Override
     public Optional<CurrencyDTO> findById(int id) {
-        Optional<Currency> currencyOptional = currencyRepository.findById(id);
-        if (currencyOptional.isPresent()) {
-            Currency currency = currencyOptional.get();
-            CurrencyDTO currencyDTO = currencyMapper.toDto(currency);
-            return Optional.of(currencyDTO);
-        } else {
-            return Optional.empty();
-        }
+        return currencyRepository.findById(id).map(currencyMapper::toDto);
     }
 
     @Override
@@ -50,51 +43,40 @@ public class CurrencyServiceImp implements CurrencyService {
 
     @Override
     public CurrencyDTO save(CurrencyDTO currencyDto) {
+        Currency currency = currencyMapper.toEntity(currencyDto);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            Optional<User> optionalUser = userRepository.findUserByName(userDetails.getUsername());
+            Optional<User> optionalUser = userRepository.findOneByUsername(userDetails.getUsername());
             if (optionalUser.isPresent()) {
                 User user = optionalUser.get();
-                currencyDto.setCreatedBy(user.getName());
-                currencyDto.setLastModifiedBy(user.getName());
+                currency.setCreatedBy(user.getUsername());
+                currency.setLastModifiedBy(user.getUsername());
             }
         }
-        currencyDto.setCreatedDate(new Date());
-        currencyDto.setLastModifiedDate(new Date());
-        Currency currency = currencyMapper.toEntity(currencyDto);
-        currency = currencyRepository.save(currency);
+        currency.setCreatedDate(new Date());
+        currency.setLastModifiedDate(new Date());
+        currencyRepository.save(currency);
         CurrencyDTO savedCurrencyDto = currencyMapper.toDto(currency);
         return savedCurrencyDto;
     }
 
     @Override
     public CurrencyDTO update(CurrencyDTO currencyDto) {
-        Optional<Currency> currencyOptional = currencyRepository.findById(currencyDto.getId());
-        if (currencyOptional.isPresent()) {
-            Currency currency = currencyOptional.get();
-            currencyDto.setId(currency.getId());
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-                UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-                Optional<User> optionalUser = userRepository.findUserByName(userDetails.getUsername());
-                if (optionalUser.isPresent()) {
-                    User user = optionalUser.get();
-                    currencyDto.setLastModifiedBy(user.getName());
-                }
-            }
-            currencyDto.setLastModifiedDate(new Date());
-            currency = currencyMapper.toEntity(currencyDto);
-            currency = currencyRepository.save(currency);
-            CurrencyDTO updatedCurrencyDto = currencyMapper.toDto(currency);
-            return updatedCurrencyDto;
-        } else {
-            try {
-                throw new NotFoundException("Currency not found with ID: " + currencyDto.getId());
-            } catch (NotFoundException e) {
-                throw new RuntimeException(e);
+        Currency currency = currencyMapper.toEntity(currencyDto);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            Optional<User> optionalUser = userRepository.findOneByUsername(userDetails.getUsername());
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                currency.setLastModifiedBy(user.getUsername());
             }
         }
+        currency.setLastModifiedDate(new Date());
+        currencyRepository.save(currency);
+        CurrencyDTO updatedCurrencyDto = currencyMapper.toDto(currency);
+        return updatedCurrencyDto;
     }
 
     @Override

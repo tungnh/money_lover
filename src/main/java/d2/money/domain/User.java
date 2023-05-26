@@ -13,9 +13,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
-    @Column(name = "name", unique = true)
-    private String name;
+    private Integer id;
+    @Column(name = "username", unique = true)
+    private String username;
     @Column(name = "password", columnDefinition = "TEXT")
     private String password;
     @Column(name = "first_name")
@@ -55,28 +55,6 @@ public class User {
 
     public User() {
     }
-
-    public User(int id, String name, String password, String firstName, String lastName, String email, Date createDate, Date birthday, boolean status, String image, String role, int provinderType, long provinderId, String accsessToken, List<Wallet> walletList, List<Category> categoryList, List<Config> configList, List<Notification> notificationList) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.createDate = createDate;
-        this.birthday = birthday;
-        this.status = status;
-        this.image = image;
-        this.role = role;
-        this.provinderType = provinderType;
-        this.provinderId = provinderId;
-        this.accsessToken = accsessToken;
-        this.walletList = walletList;
-        this.categoryList = categoryList;
-        this.configList = configList;
-        this.notificationList = notificationList;
-    }
-
     public int getId() {
         return id;
     }
@@ -85,12 +63,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

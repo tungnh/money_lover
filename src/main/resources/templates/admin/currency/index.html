@@ -15,12 +15,12 @@
     <a class="btn custom-btn" th:href="@{/currency/add}" style="display: table-cell;background-color: #83e457;">Create
         Currency</a>
     <div class="row my-4" style=" margin-left: 112px; margin-right: -321px;">
-        <div class="col-lg-7 col-12">
+        <div class="col-lg-7 col-12" style="width: 829px; margin-left: -61px;text-align: -webkit-match-parent;">
             <div class="custom-block custom-block-exchange">
                 <h5 class="mb-4" style="text-align: center;">Currency</h5>
                 <th:block th:each="cur: ${listcurrency}" th:object="${cur}">
                     <div class="d-flex align-items-center border-bottom pb-3 mb-3">
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center" style="width: 352px;">
                             <img src="images/flag/united-states.png" class="exchange-image img-fluid" alt="">
                             <div>
                                 <p th:text="*{name}"></p>
@@ -34,6 +34,10 @@
                         <div>
                             <small>Symbol</small>
                             <h6 th:text="*{symbol}" style="text-align: center;"></h6>
+                        </div>
+                        <div class="ms-auto">
+                            <a th:href="@{/currency/edit/{id}(id=${cur.id})}" class="btn btn-primary me-2">Edit</a>
+                            <a th:href="@{/currency/delete/{id}(id=${cur.id})}" class="btn btn-danger">Delete</a>
                         </div>
                     </div>
                 </th:block>

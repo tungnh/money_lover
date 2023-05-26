@@ -13,7 +13,11 @@ public class Wallet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
+    @Column(name = "user_id")
+    private Integer userId;
+    @Column(name = "currency_id")
+    private Integer currencyId;
     @Column(name = "name")
     private String name;
     @Column(name = "balance")
@@ -22,11 +26,11 @@ public class Wallet {
     private String image;
     @Column(name = "create_date")
     private Date createDate;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "currency_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "currency_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Currency currency;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user", referencedColumnName = "id", insertable = false, updatable = false)
     private User user;
     @OneToMany(mappedBy = "wallet")
     @JsonIgnore
@@ -38,24 +42,28 @@ public class Wallet {
     public Wallet() {
     }
 
-    public Wallet(int id, String name, double balance, String image, Date createDate, Currency currency, User user, List<Transaction> transactionList, List<Budget> budgetList) {
-        this.id = id;
-        this.name = name;
-        this.balance = balance;
-        this.image = image;
-        this.createDate = createDate;
-        this.currency = currency;
-        this.user = user;
-        this.transactionList = transactionList;
-        this.budgetList = budgetList;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getCurrencyId() {
+        return currencyId;
+    }
+
+    public void setCurrencyId(Integer currencyId) {
+        this.currencyId = currencyId;
     }
 
     public String getName() {
@@ -93,17 +101,8 @@ public class Wallet {
     public Currency getCurrency() {
         return currency;
     }
-
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
-
     public User getUser() {
         return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public List<Transaction> getTransactionList() {

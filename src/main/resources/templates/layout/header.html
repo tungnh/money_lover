@@ -19,6 +19,7 @@
             justify-content: flex-start;
             margin-left: -508px;
         }
+
         .info {
             display: grid;
             margin-left: 14px;
@@ -45,31 +46,27 @@
                                                              name="4" class="wallet-icon wallet-icon-all"
                                                              style="width: 15%;">
         <div class="dropdown px-3" style="margin-left: -20px;">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+            <form class="nav-link dropdown-toggle" th:action="@{/wallet/list}" th:method="get" role="button" data-bs-toggle="dropdown"
                aria-expanded="false">
                 <div data-v-48ecc7dc="" class="info">
-                    <span data-v-48ecc7dc="" class="name">Bbbb</span>
-                    <span data-v-48ecc7dc="" class="amount">+22,222.00 ₫</span>
+                    <th:block th:if="${wallet!=null}">
+                    <span data-v-48ecc7dc="" class="name" ><span th:text="${wallet.name}">No have wallet</span><i class="bi bi-caret-down-fill"></i></span>
+                    <span data-v-48ecc7dc="" class="amount" th:text="${wallet.balance}">+22,222.00 ₫</span>
+                    </th:block>
+                    <th:block th:unless="${wallet !=null}">
+                        <span data-v-48ecc7dc="" class="name" >No have wallet<i class="bi bi-caret-down-fill"></i></span>
+                        <span data-v-48ecc7dc="" class="amount"></span>
+                    </th:block>
                 </div>
-            </a>
+            </form>
             <ul class="dropdown-menu bg-white shadow">
-                <li>
+                <li th:each="wa:${listWallet}" th:object="${wa}">
                     <div class="dropdown-menu-profile-thumb d-flex">
-                        <img src="images/medium-shot-happy-man-smiling.jpg" class="profile-image img-fluid me-3"
-                             alt="">
-
+                        <img th:src="*{image}" class="profile-image img-fluid me-3"
+                             th:alt="*{name}">
                         <div class="d-flex flex-column">
-                            <small>Tên ví</small>
-                            <a href="#">số dư</a><br/>
-                        </div>
-                    </div>
-                    <div class="dropdown-menu-profile-thumb d-flex">
-                        <img src="images/medium-shot-happy-man-smiling.jpg" class="profile-image img-fluid me-3"
-                             alt="">
-
-                        <div class="d-flex flex-column">
-                            <small>Tên ví</small>
-                            <a href="#">số dư</a>
+                            <small><span th:text="*{name}"></span></small>
+                            <a href="#"><span th:text="*{balance}"></span></a><br/>
                         </div>
                     </div>
                 </li>
