@@ -5,8 +5,11 @@ import d2.money.service.dto.LoginDTO;
 import d2.money.service.dto.RegisterDTO;
 import d2.money.service.dto.UserDTO;
 import d2.money.service.impl.UserServiceImp;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
+import d2.money.service.CurrencyService;
+import d2.money.service.WalletService;
+import d2.money.service.dto.CurrencyDTO;
+import d2.money.service.dto.WalletDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
@@ -17,17 +20,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    @Autowired
-    private PersistentTokenBasedRememberMeServices rememberMeServices;
-    public final UserService userService;
 
-    public UserController(UserService userService) {
+    public final PersistentTokenBasedRememberMeServices rememberMeServices;
+    public final UserService userService;
+    private final WalletService walletService;
+    private final CurrencyService currencyService;
+
+    public UserController(PersistentTokenBasedRememberMeServices rememberMeServices, UserService userService, WalletService walletService, CurrencyService currencyService) {
+        this.rememberMeServices = rememberMeServices;
         this.userService = userService;
+        this.walletService = walletService;
+        this.currencyService = currencyService;
     }
 
     @GetMapping("/index")
@@ -74,6 +83,7 @@ public class UserController {
         return "login";
     }
 
+
     @PostMapping("/loginn")
     public String login(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         request.getSession().setAttribute("user", authentication.getPrincipal());
@@ -82,6 +92,21 @@ public class UserController {
             rememberMeServices.loginSuccess(request, response, authentication);
         }
         return "user/index";
+    }
+
+    @GetMapping("/")
+    public String index(Model model) {
+        List<WalletDTO> walletDTOList = walletService.getAllWallet();
+        if (walletDTOList != null) {
+            WalletDTO walletDTO = walletDTOList.get(0);
+            Optional<CurrencyDTO> currencyDTO = currencyService.findById(walletDTO.getCurrencyId());
+            model.addAttribute("wallet", walletDTO);
+            model.addAttribute("currency", currencyDTO);
+            model.addAttribute("listWallet", walletService.getAllWallet());
+            return "user/index";
+        }
+        model.addAttribute("listCurrency", currencyService.getAllCurrency());
+        return "user/wallet/add";
     }
 
     @GetMapping("/profile")

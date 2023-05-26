@@ -11,7 +11,11 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
+    @Column(name = "category_id")
+    private Integer categoryId;
+    @Column(name = "wallet_id")
+    private Integer walletId;
     @Column(name = "amount")
     private double amount;
     @Column(name = "day")
@@ -20,11 +24,11 @@ public class Transaction {
     private String note;
     @Column(name = "image", columnDefinition = "TEXT")
     private String image;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Category category;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "wallet_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "wallet_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Wallet wallet;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "transaction_with_user", joinColumns = @JoinColumn(name = "transaction_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))

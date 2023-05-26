@@ -8,30 +8,11 @@ import java.io.Serializable;
 public class FriendId implements Serializable {
     @Column(name = "user_id")
     private int userId;
-    @Column(name = "friend_id")
+
+    @Column(name = "friend_id", insertable = false, updatable = false)
     private int friendId;
+
     public FriendId() {
-    }
-
-    public FriendId(int userId, int friendId) {
-        this.userId = userId;
-        this.friendId = friendId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getFriendId() {
-        return friendId;
-    }
-
-    public void setFriendId(int friendId) {
-        this.friendId = friendId;
     }
 
     @Override

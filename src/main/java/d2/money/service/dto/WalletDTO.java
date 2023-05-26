@@ -19,17 +19,6 @@ public class WalletDTO {
     private int userId;
     public WalletDTO() {
     }
-
-    public WalletDTO(int id, String name, double balance, String image, int currencyId, Date createDate, int userId) {
-        this.id = id;
-        this.name = name;
-        this.balance = balance;
-        this.image = image;
-        this.currencyId = currencyId;
-        this.createDate = createDate;
-        this.userId = userId;
-    }
-
     public int getId() {
         return id;
     }
