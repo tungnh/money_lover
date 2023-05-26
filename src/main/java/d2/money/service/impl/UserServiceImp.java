@@ -8,9 +8,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import d2.money.service.UserService;
+import d2.money.service.dto.UserDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -74,6 +76,30 @@ public class UserServiceImp implements UserService {
         public UsernameExistsException(String message) {
             super(message);
         }
+
+    @Override
+    public List<UserDTO> getAllUserDTO() {
+        return null;
+    }
+
+    @Override
+    public UserDTO save(UserDTO userDTO) {
+        return null;
+    }
+
+    @Override
+    public UserDTO update(UserDTO userDTO) {
+        return null;
+    }
+
+    @Override
+    public void delete(int id) {
+
+    }
+
+    @Override
+    public Optional<UserDTO> findByUserDTOId(int id) {
+        return Optional.empty();
     }
 }
 

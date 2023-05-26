@@ -7,6 +7,10 @@ import d2.money.service.dto.UserDTO;
 import d2.money.service.impl.UserServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
+import d2.money.service.CurrencyService;
+import d2.money.service.WalletService;
+import d2.money.service.dto.CurrencyDTO;
+import d2.money.service.dto.WalletDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -82,6 +87,27 @@ public class UserController {
             rememberMeServices.loginSuccess(request, response, authentication);
         }
         return "user/index";
+    private final WalletService walletService;
+    private final CurrencyService currencyService;
+
+    public UserController(WalletService walletService, CurrencyService currencyService) {
+        this.walletService = walletService;
+        this.currencyService = currencyService;
+    }
+
+    @GetMapping("/")
+    public String index(Model model){
+        List<WalletDTO> walletDTOList=walletService.getAllWallet();
+        if (walletDTOList!=null) {
+            WalletDTO walletDTO=walletDTOList.get(0);
+            Optional<CurrencyDTO> currencyDTO = currencyService.findById(walletDTO.getCurrencyId());
+            model.addAttribute("wallet", walletDTO);
+            model.addAttribute("currency", currencyDTO);
+            model.addAttribute("listWallet",walletService.getAllWallet());
+            return "user/index";
+        }
+        model.addAttribute("listCurrency",currencyService.getAllCurrency());
+        return "user/wallet/add";
     }
 
     @GetMapping("/profile")
@@ -93,6 +119,9 @@ public class UserController {
             return "user/profile";
         }
         return "redirect:/user/login";
+
+    public String profile(Model model){
+        return "user/profile";
     }
 
     @GetMapping("/setting")
@@ -103,6 +132,8 @@ public class UserController {
             model.addAttribute("user", user);
             return "user/setting";
         }
+
+    public String setting(Model model){
         return "user/setting";
     }
 }

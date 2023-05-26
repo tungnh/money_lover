@@ -16,19 +16,6 @@ public class CurrencyDTO {
 
     public CurrencyDTO() {
     }
-
-    public CurrencyDTO(int id, String name, String code, double transfer, String symbol, String createdBy, Date createdDate, String lastModifiedBy, Date lastModifiedDate) {
-        this.id = id;
-        this.name = name;
-        this.code = code;
-        this.transfer = transfer;
-        this.symbol = symbol;
-        this.createdBy = createdBy;
-        this.createdDate = createdDate;
-        this.lastModifiedBy = lastModifiedBy;
-        this.lastModifiedDate = lastModifiedDate;
-    }
-
     public String getCreatedBy() {
         return createdBy;
     }
