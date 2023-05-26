@@ -13,6 +13,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+<<<<<<< HEAD
+=======
+    private int id;
+>>>>>>> 764532906c982b035f812176e0cba543bb1975b2
     private Integer id;
     @Column(name = "username", unique = true)
     private String username;

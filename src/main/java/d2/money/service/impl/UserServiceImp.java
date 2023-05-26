@@ -76,7 +76,6 @@ public class UserServiceImp implements UserService {
         public UsernameExistsException(String message) {
             super(message);
         }
-    }
 
     @Override
     public List<UserDTO> getAllUserDTO() {
@@ -102,5 +101,33 @@ public class UserServiceImp implements UserService {
     public Optional<UserDTO> findByUserDTOId(int id) {
         return Optional.empty();
     }
+<<<<<<< HEAD
+
+    @Override
+    public List<UserDTO> getAllUserDTO() {
+        return null;
+    }
+
+    @Override
+    public UserDTO save(UserDTO userDTO) {
+        return null;
+    }
+
+    @Override
+    public UserDTO update(UserDTO userDTO) {
+        return null;
+    }
+
+    @Override
+    public void delete(int id) {
+
+    }
+
+    @Override
+    public Optional<UserDTO> findByUserDTOId(int id) {
+        return Optional.empty();
+    }
+=======
+>>>>>>> 764532906c982b035f812176e0cba543bb1975b2
 }
 

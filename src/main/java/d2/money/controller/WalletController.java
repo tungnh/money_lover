@@ -3,6 +3,10 @@ package d2.money.controller;
 import d2.money.service.UserService;
 import d2.money.service.dto.UserDTO;
 import org.springframework.security.core.Authentication;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 764532906c982b035f812176e0cba543bb1975b2
 import d2.money.service.CurrencyService;
 import d2.money.service.WalletService;
 import d2.money.service.dto.CurrencyDTO;
@@ -17,6 +21,24 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/wallet/")
 public class WalletController {
+<<<<<<< HEAD
+=======
+    public final UserService userService;
+
+    public WalletController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping("/index")
+    public String wallet(Model model, Authentication authentication) {
+        Optional<UserDTO> userDTO = userService.getUserProfile(authentication);
+        if (userDTO.isPresent()) {
+            UserDTO user = userDTO.get();
+            model.addAttribute("user", user);
+            return "user/wallet/index";
+        }
+
+>>>>>>> 764532906c982b035f812176e0cba543bb1975b2
     private final WalletService walletService;
     private final CurrencyService currencyService;
     public final UserService userService;
