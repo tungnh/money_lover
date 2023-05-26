@@ -1,5 +1,6 @@
 package d2.money.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -9,11 +10,35 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private DataSource dataSource;
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Bean
+    public PersistentTokenBasedRememberMeServices rememberMeServices() {
+        PersistentTokenBasedRememberMeServices rememberMeServices =
+                new PersistentTokenBasedRememberMeServices("your-unique-key", userDetailsService, persistentTokenRepository());
+        rememberMeServices.setTokenValiditySeconds(86400);
+        return rememberMeServices;
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+        return tokenRepository;
+    }
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -58,15 +83,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     response.sendRedirect("/login");
                 })
                 .and()
-                .rememberMe() // Thêm cấu hình nhớ mật khẩu
-                .tokenValiditySeconds(86400) // Thời gian hiệu lực của token (tính bằng giây)
+                .rememberMe()
+                .rememberMeServices(rememberMeServices())
                 .key("your-unique-key") // Khóa xác thực duy nhất cho token
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/user/login")
+                .logoutSuccessUrl("/user/login?/user/logout")
                 .permitAll();
     }
 }

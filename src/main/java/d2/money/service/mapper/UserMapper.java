@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Component
 public class UserMapper implements EntityMapper<UserDTO, User> {
     @Override
@@ -46,16 +47,15 @@ public class UserMapper implements EntityMapper<UserDTO, User> {
         user.setProvinderId(entity.getProvinderId());
         user.setAccsessToken(entity.getAccsessToken());
         return user;
-
     }
 
     @Override
     public List<User> toEntity(List<UserDTO> dtoList) {
-        if (dtoList.isEmpty()){
+        if (dtoList.isEmpty()) {
             return null;
         }
         List<User> listUser = new ArrayList<>(dtoList.size());
-        for (UserDTO userDTO : dtoList){
+        for (UserDTO userDTO : dtoList) {
             listUser.add(toEntity(userDTO));
         }
         return listUser;
@@ -63,11 +63,11 @@ public class UserMapper implements EntityMapper<UserDTO, User> {
 
     @Override
     public List<UserDTO> toDto(List<User> entityList) {
-        if (entityList == null){
+        if (entityList == null) {
             return null;
         }
         List<UserDTO> listuser = new ArrayList<>(entityList.size());
-        for (User user : entityList){
+        for (User user : entityList) {
             listuser.add(toDto(user));
         }
         return listuser;

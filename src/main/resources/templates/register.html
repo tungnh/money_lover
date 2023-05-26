@@ -42,8 +42,14 @@
                         <input type="hidden" id="valueBirthday" name="birthday" th:value="${user.birthday}">
                         <input type="email" id="email" name="email" th:field="*{email}" required
                                class="form-control" placeholder="Email:">
+                        <div th:if="${error}">
+                            <p th:text="${error}" style="color: red"></p>
+                        </div>
                         <input type="text" id="name" name="name" th:field="*{username}" required
                                class="form-control" placeholder="Tên đăng nhập:">
+                        <div th:if="${error}">
+                            <p th:text="${error}" style="color: red"></p>
+                        </div>
                         <input type="password" id="password" name="password" required
                                class="form-control" placeholder="Mật khẩu:">
                         <div class="d-flex">
@@ -90,5 +96,7 @@
 <script src="/js/jquery.min.js"></script>
 <script src="/js/bootstrap.bundle.min.js"></script>
 <script src="/js/custom.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
+
 </body>
 </html>
