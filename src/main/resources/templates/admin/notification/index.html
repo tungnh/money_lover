@@ -1,0 +1,59 @@
+<!doctype html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Notification</title>
+    <th:block th:replace="layout/layout.html::css"></th:block>
+    <th:block th:replace="layout/navbar.html::css"></th:block>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div class="title-group mb-3">
+        <h1 class="h2 mb-0">Notifications</h1>
+    </div>
+    <div class="row my-4">
+        <div class="col-lg-12 col-12">
+            <div class="custom-block custom-block-transation-detail bg-white" th:each="no:${listNotification}"
+                 th:object="${no}">
+                <div class="d-flex flex-wrap align-items-center border-bottom pb-3 mb-3">
+                    <div class="d-flex flex-wrap align-items-center">
+                        <div class="custom-block-transation-detail-item mt-4" style="width: 231px;">
+                            <h6>Title</h6>
+                            <p><span th:text="*{title}"></span></p>
+                        </div>
+                        <div class="custom-block-transation-detail-item mt-4 mx-auto px-4" style="width: 243px;">
+                            <h6>Message</h6>
+                            <p><span th:text="*{message}"></span></p>
+                        </div>
+                        <div class="custom-block-transation-detail-item mt-4 ms-lg-auto px-lg-3 px-md-3"
+                             style="width: 176px;">
+                            <h6>Type</h6>
+                            <p th:if="${no.type == 1}">Thông Báo</p>
+                            <p th:if="${no.type == 2}">Cảnh Báo</p>
+                            <p th:if="${no.type == 3}">Gợi Ý</p>
+                        </div>
+                        <div class="custom-block-transation-detail-item mt-4 ms-auto me-auto" style="width: 125px;">
+                            <h6>Create Date</h6>
+                            <p><span th:text="*{#dates.format(createdDate, 'dd/MM/yyyy')}"></span></p>
+                        </div>
+                        <div class="custom-block-transation-detail-item mt-4 ms-lg-auto px-lg-3 px-md-3">
+                            <h6 style="margin-left: 22px;">Action</h6>
+                            <div style="display: flex;">
+                                <a th:href="@{/notification/delete/{id}(id=${no.id})}" class="btn btn-danger"
+                                   onclick="return confirm('Bạn có muốn xóa thông báo không?')"
+                                   style="margin-left: 30px;"><i class="bi bi-trash3"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+<th:block th:replace="layout/layout.html::script"></th:block>
+</body>
+</html>

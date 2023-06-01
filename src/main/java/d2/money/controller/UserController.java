@@ -1,13 +1,11 @@
 package d2.money.controller;
 
-import d2.money.service.UserService;
+import d2.money.service.*;
 import d2.money.service.dto.LoginDTO;
 import d2.money.service.dto.RegisterDTO;
 import d2.money.service.dto.UserDTO;
 import d2.money.service.impl.UserServiceImp;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
-import d2.money.service.CurrencyService;
-import d2.money.service.WalletService;
 import d2.money.service.dto.CurrencyDTO;
 import d2.money.service.dto.WalletDTO;
 import org.springframework.stereotype.Controller;
@@ -20,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,21 +30,35 @@ public class UserController {
     public final UserService userService;
     private final WalletService walletService;
     private final CurrencyService currencyService;
+    private final TransactionService transactionService;
+    private final NotificationService notificationService;
 
-    public UserController(PersistentTokenBasedRememberMeServices rememberMeServices, UserService userService, WalletService walletService, CurrencyService currencyService) {
+    public UserController(PersistentTokenBasedRememberMeServices rememberMeServices, UserService userService, WalletService walletService, CurrencyService currencyService, TransactionService transactionService, NotificationService notificationService) {
         this.rememberMeServices = rememberMeServices;
         this.userService = userService;
         this.walletService = walletService;
         this.currencyService = currencyService;
+        this.transactionService = transactionService;
+        this.notificationService = notificationService;
     }
 
     @GetMapping("/index")
-    public String homePage(Model model, Authentication authentication) {
+    public String homePage(HttpSession session, Authentication authentication, Model model) {
         Optional<UserDTO> userDTO = userService.getUserProfile(authentication);
         if (userDTO.isPresent()) {
+            model.addAttribute("notification",notificationService.findAllByUser());
             UserDTO user = userDTO.get();
-            model.addAttribute("user", user);
-            return "user/index";
+            session.setAttribute("user", user);
+            if (walletService.findAll() != null) {
+                WalletDTO wallet = (WalletDTO) session.getAttribute("wallet");
+                if (wallet != null) {
+                    model.addAttribute("listTransaction", transactionService.findTransactionByWalletIdOrReceiveWalletId(wallet.getId()));
+                }
+                model.addAttribute("listCurrency",currencyService.getAllCurrency());
+                session.setAttribute("listWallet", walletService.findAll());
+                return "user/index";
+            }
+            return "redirect:/wallet/add";
         }
         return "/user/index";
     }
@@ -72,14 +85,15 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    public String showLoginForm() {
+    public String showLoginForm(HttpSession session) {
+        session.invalidate();
         return "/login";
     }
 
     @GetMapping("/login")
     public String showLoginForm(Model model) {
-        model.addAttribute("user", new LoginDTO());
-        model.addAttribute("param", new Object()); // Đối tượng tùy ý để truyền giá trị của tham số remember-me vào View
+        model.addAttribute("userlogin", new LoginDTO());
+        model.addAttribute("param", new Object());
         return "login";
     }
 
@@ -95,17 +109,15 @@ public class UserController {
 
     @GetMapping("/")
     public String index(Model model) {
-        List<WalletDTO> walletDTOList = walletService.getAllWallet();
+        List<WalletDTO> walletDTOList = walletService.findAll();
         if (walletDTOList != null) {
             WalletDTO walletDTO = walletDTOList.get(0);
             Optional<CurrencyDTO> currencyDTO = currencyService.findById(walletDTO.getCurrencyId());
             model.addAttribute("wallet", walletDTO);
             model.addAttribute("currency", currencyDTO);
-            model.addAttribute("listWallet", walletService.getAllWallet());
-            return "user/index";
+            model.addAttribute("listWallet", walletService.findAll());
         }
-        model.addAttribute("listCurrency", currencyService.getAllCurrency());
-        return "user/wallet/add";
+        return "redirect:/wallet/add";
     }
 
     @GetMapping("/profile")

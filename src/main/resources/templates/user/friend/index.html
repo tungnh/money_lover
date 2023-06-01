@@ -1,0 +1,71 @@
+<!doctype html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Add Transaction</title>
+    <th:block th:replace="layout/layout.html::css"></th:block>
+    <th:block th:replace="layout/navbar.html::css"></th:block>
+    <style>
+        .friend {
+            display: flex;
+            align-items: center;
+            width: 300px;
+            margin-bottom: 10px;
+        }
+
+        .friend .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .friend .info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .friend .name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .friend .status {
+            color: #888;
+        }
+
+        .btn {
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .btn.sent {
+            background-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <th:block th:each="friend:${listFriend}" th:object="${friend}">
+        <div class="friend" style="width: 464px;margin-left: 61px;margin-bottom: 24px;">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgxq6_vxgzAWe_oqzC7pODyWt4Dhm3PvXH3w&usqp=CAU"
+                 alt="Avatar" class="avatar">
+            <div class="info" style="width: 210px;text-align: center;">
+                <span class="name" th:text="*{firstName+''+lastName}"></span>
+                <span class="status" th:text="*{#dates.format(birthday, 'dd/MM/yyyy')}"></span>
+            </div>
+            <a th:href="@{/friend/add/{id}(id=${friend.id})}">
+                <button class="btn">Thêm bạn bè</button>
+            </a>
+        </div>
+    </th:block>
+</div>
+</body>
+</html>

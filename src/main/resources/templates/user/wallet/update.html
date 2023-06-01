@@ -1,10 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title> Update Currency</title>
+    <th:block th:replace="layout/layout.html::css"></th:block>
+    <th:block th:replace="layout/navbar.html::css"></th:block>
 </head>
 <body>
-
+<div layout:fragment="content">
+    <div class="row my-4">
+        <div class="col-lg-7 col-12">
+            <div class="custom-block bg-white">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                        <h6 class="mb-4">Update Wallet</h6>
+                        <form class="custom-form profile-form" th:action="@{/wallet/edit/{id}(id=${wallet.id})}" method="post" role="form" th:object="${wallet}">
+                            <input type="hidden" name="id" th:value="${wallet.id}" readonly>
+                            <input class="form-control" type="text" name="name" id="name" placeholder="name ..." th:value="*{name}">
+                            <input class="form-control" type="text" name="balance" id="balance" placeholder="balance" th:value="*{balance}">
+                            <input class="form-control" type="file" name="image" id="image" th:value="*{image}">
+                            <div class="form-control">
+                                <label for="currencyId">Loại tiền tệ:</label>
+                                <select id="currencyId" name="currencyId" required>
+                                    <option th:value="${wallet.currencyId}"><span th:text="${currency.name}"></span></option>
+                                    <th:block th:each="cur:${listCurrency}" th:object="${cur}">
+                                        <option th:value="*{id}"><span th:text="*{name}"></span></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <div class="d-flex">
+                                <button type="submit" class="form-control me-3">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>>
+<th:block th:replace="layout/layout.html::script"></th:block>
+</th:block>
 </body>
 </html>

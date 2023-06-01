@@ -5,10 +5,10 @@ import d2.money.repository.UserRepository;
 import d2.money.service.dto.UserDTO;
 import d2.money.service.mapper.UserMapper;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import d2.money.service.UserService;
-import d2.money.service.dto.UserDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -52,6 +52,11 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public Optional<UserDTO> findByName(String name) {
+        return userRepository.findOneByUsername(name).map(userMapper::toDto);
+    }
+
+    @Override
     public Optional<UserDTO> getUserProfile(Authentication authentication) {
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -79,7 +84,21 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public List<UserDTO> getAllUserDTO() {
+    public List<UserDTO> findAll() {
+        return userMapper.toDto(userRepository.findAll());
+    }
+
+    @Override
+    public List<UserDTO> findAllUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            Optional<User> optionalUser = userRepository.findOneByUsername(userDetails.getUsername());
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                return userMapper.toDto(userRepository.findAllUsersExceptId(user.getId()));
+            }
+        }
         return null;
     }
 
@@ -96,10 +115,4 @@ public class UserServiceImp implements UserService {
     @Override
     public void delete(int id) {
     }
-
-    @Override
-    public Optional<UserDTO> findByUserDTOId(int id) {
-        return Optional.empty();
-    }
 }
-

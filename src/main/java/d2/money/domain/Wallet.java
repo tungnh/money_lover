@@ -27,10 +27,10 @@ public class Wallet {
     @Column(name = "create_date")
     private Date createDate;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "currency_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "currency", referencedColumnName = "id", updatable = false)
     private Currency currency;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "user", referencedColumnName = "id", updatable = false)
     private User user;
     @OneToMany(mappedBy = "wallet")
     @JsonIgnore
@@ -101,8 +101,17 @@ public class Wallet {
     public Currency getCurrency() {
         return currency;
     }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
     public User getUser() {
         return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<Transaction> getTransactionList() {

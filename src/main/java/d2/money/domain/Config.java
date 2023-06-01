@@ -16,6 +16,6 @@ public class Config {
     @Column(name = "value")
     private String value;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user",insertable = false, updatable = false)
+    @JoinColumn(name = "user", updatable = false)
     private User user;
 }

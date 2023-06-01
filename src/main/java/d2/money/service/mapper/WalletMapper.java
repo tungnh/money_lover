@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Component
 public class WalletMapper implements EntityMapper<WalletDTO, Wallet> {
     @Override
@@ -60,6 +61,5 @@ public class WalletMapper implements EntityMapper<WalletDTO, Wallet> {
 
     @Override
     public void partialUpdate(Wallet entity, WalletDTO dto) {
-
     }
 }

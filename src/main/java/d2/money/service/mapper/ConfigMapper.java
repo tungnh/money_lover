@@ -28,6 +28,5 @@ public class ConfigMapper implements EntityMapper<ConfigDTO, Config> {
 
     @Override
     public void partialUpdate(Config entity, ConfigDTO dto) {
-
     }
 }

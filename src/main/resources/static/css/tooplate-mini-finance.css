@@ -306,7 +306,7 @@ strong {
 .notifications-block-wrap small {
   background: var(--custom-btn-bg-color);
   display: block;
-  padding: 15px 30px;
+  padding:13px 231px;
   margin-top: -15px;
   margin-bottom: 10px;
 }
@@ -486,8 +486,11 @@ strong {
 
 #sidebarMenu .nav-link.active, 
 #sidebarMenu .nav-link:hover {
-  background: var(--primary-color);
-  color: var(--white-color);
+  background-color: #6fe76f;
+  border-left: 5px solid #a9d3ff;
+  width: 148px;
+  border-radius: 13px;
+  color: white;
 }
 
 .navbar-toggler {

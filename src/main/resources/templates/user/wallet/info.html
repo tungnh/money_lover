@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div class="custom-block custom-block-balance" th:fragment="wallet-info">
+    <small>Your Balance</small>
+    <h2 class="mt-2 mb-3">
+        <p th:text="${#session.getAttribute('wallet') != null ? #session.getAttribute('wallet').balance : 'N/A'}"></p>
+    </h2>
+    <div class="custom-block-numbers d-flex align-items-center">
+        <span>****</span>
+        <span>****</span>
+        <span>****</span>
+        <p></p>
+    </div>
+    <div class="d-flex">
+        <div>
+            <small>VALID DATE</small>
+            <p th:text="${#session.getAttribute('wallet') != null ? #session.getAttribute('wallet').createDate : 'N/A'}"></p>
+        </div>
+        <div class="ms-auto">
+            <small>WALLET HOLDER</small>
+            <p th:text="${#session.getAttribute('user') != null ? #session.getAttribute('user').username : 'N/A'}"></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
