@@ -1,0 +1,78 @@
+<!doctype html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title> Create Wallet</title>
+    <th:block th:replace="layout/layout.html::css"></th:block>
+    <th:block th:replace="layout/header.html::css"></th:block>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div class="row my-4">
+        <div class="col-lg-7 col-12">
+            <div class="custom-block bg-white">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel"
+                         aria-labelledby="profile-tab" tabindex="0">
+                        <h6>Create Category</h6>
+                        <form class="custom-form profile-form" th:action="@{/budget/create}" method="post"
+                              th:object="${budgetDTO}">
+                            <div>
+                                <input class="form-control" type="text" name="name" id="name"
+                                       placeholder="name:" th:field="*{name}" required>
+                            </div>
+                            <div>
+                                <input class="form-control" type="number" name="amount" id="amount"
+                                       placeholder="amount:" th:field="*{amount}" required>
+                            </div>
+                            <div>
+                                <input class="form-control" type="date" name="startDate" id="startDate"
+                                       placeholder="startDate:" th:field="*{startDate}" required>
+                            </div>
+                            <div>
+                                <input class="form-control" type="date" name="endDate" id="endDate"
+                                       placeholder="endDate:" th:field="*{endDate}" required>
+                            </div>
+                            <div>
+                                <label for="categoryList">Danh mục:</label>
+                                <select style="width: 164px;margin-left: 171px;margin-top: -30px;" class="form-select"
+                                        aria-label="Default select example" id="categoryList" name="categoryList"
+                                        multiple>
+                                    <th:block th:each="category : ${categoryList}">
+                                        <option th:value="${category.id}"><span th:text="${category.name}"></span>
+                                        </option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="listWalletId">Vi:</label>
+                                <select style="width: 164px;margin-left: 171px;margin-top: -30px;" class="form-select"
+                                        aria-label="Default select example" id="listWalletId" name="listWalletId"
+                                        multiple>
+                                    <th:block th:each="wallet : ${walletList}">
+                                        <option th:value="${wallet.id}"><span th:text="${wallet.name}"></span>
+                                        </option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <br>
+                            <div class="d-flex">
+                                <button type="submit" class="form-control me-3">
+                                    Create
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+<th:block th:replace="layout/layout.html::script"></th:block>
+</th:block>
+</body>
+</html>

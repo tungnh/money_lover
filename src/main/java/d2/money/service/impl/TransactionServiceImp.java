@@ -11,6 +11,18 @@ import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import d2.money.domain.Category;
+import d2.money.domain.Wallet;
+import d2.money.service.BudgetService;
+import d2.money.service.CategoryService;
+import d2.money.service.TransactionService;
+import d2.money.service.WalletService;
+import d2.money.service.dto.BudgetDTO;
+import d2.money.service.dto.CategoryDTO;
+import d2.money.service.dto.WalletDTO;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,8 +36,9 @@ public class TransactionServiceImp implements TransactionService {
 
     private final WalletMapper walletMapper;
     private final CategoryMapper categoryMapper;
+    private final BudgetService budgetService;
 
-    public TransactionServiceImp(TransactionMapper transactionMapper, TransactionRepository transactionRepository, CategoryService categoryService, WalletService walletService, CurrencyService currencyService, WalletMapper walletMapper, CategoryMapper categoryMapper) {
+    public TransactionServiceImp(TransactionMapper transactionMapper, TransactionRepository transactionRepository, CategoryService categoryService, WalletService walletService, CurrencyService currencyService, WalletMapper walletMapper, CategoryMapper categoryMapper, BudgetService budgetService) {
         this.transactionMapper = transactionMapper;
         this.transactionRepository = transactionRepository;
         this.categoryService = categoryService;
@@ -33,6 +46,7 @@ public class TransactionServiceImp implements TransactionService {
         this.currencyService = currencyService;
         this.walletMapper = walletMapper;
         this.categoryMapper = categoryMapper;
+        this.budgetService = budgetService;
     }
 
     @Override
@@ -185,5 +199,32 @@ public class TransactionServiceImp implements TransactionService {
             walletService.save(walletDTOUpdate);
         }
         transactionRepository.deleteById(id);
+    }
+
+
+    @Override
+    public double spent(int budgetId) {
+        Optional<BudgetDTO> budgetDTO = budgetService.findByBudgetId(budgetId);
+        if (budgetDTO.isPresent()) {
+            BudgetDTO budgetDTO1 = budgetDTO.get();
+            List<Integer> listWallet = new ArrayList<>();
+            for (Wallet wallet : budgetDTO1.getWalletList()) {
+                listWallet.add(wallet.getId());
+            }
+            List<Integer> listCategory = new ArrayList<>();
+            for (Category category : budgetDTO1.getCategoryArrayList()) {
+                listCategory.add(category.getId());
+            }
+            List<Transaction> transactions = transactionRepository.findTransactionsByCategoryAndWalletAndDate(listCategory, listWallet, budgetDTO1.getStartDate(), budgetDTO1.getEndDate());
+            double amount = 0;
+            for (Transaction transaction : transactions) {
+                Optional<CategoryDTO> categoryDTO = categoryService.finbyCategoryId(transaction.getCategoryId());
+                if (!categoryDTO.get().isStatus()) {
+                    amount += transaction.getAmount();
+                }
+            }
+            return amount;
+        }
+        return 0;
     }
 }

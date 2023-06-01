@@ -79,6 +79,7 @@ public class WalletServiceImp implements WalletService {
                 wallet.setUserId(user.getId());
             }
         }
+        wallet.setBudgetList(walletRequest.getBudgetList());
         wallet.setCurrencyId(walletRequest.getCurrencyId());
         wallet.setCreateDate(new Date());
         walletRepository.save(wallet);

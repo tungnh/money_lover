@@ -47,6 +47,11 @@
                         <p class="d-flex flex-wrap">
                             <strong>Create Date</strong>
                             <span th:text="${#session.getAttribute('user')!=null ? #session.getAttribute('user').createDate: ''}"></span>
+                            <span th:text="${#dates.format(user.birthday, 'dd/MM/yyyy')}"></span>
+                        </p>
+                        <p class="d-flex flex-wrap">
+                            <strong>Create Date</strong>
+                            <span th:text="${#dates.format(user.createDate, 'dd/MM/yyyy')}"></span>
                         </p>
                     </div>
                 </div>

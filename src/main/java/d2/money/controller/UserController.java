@@ -4,17 +4,15 @@ import d2.money.service.*;
 import d2.money.service.dto.LoginDTO;
 import d2.money.service.dto.RegisterDTO;
 import d2.money.service.dto.UserDTO;
-import d2.money.service.impl.UserServiceImp;
+import javassist.NotFoundException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import d2.money.service.dto.CurrencyDTO;
 import d2.money.service.dto.WalletDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -71,17 +69,20 @@ public class UserController {
 
     @PostMapping("/register")
     public String registerUser(@ModelAttribute UserDTO userDto, Model model) {
-        try {
-            userService.registerUser(userDto);
-            model.addAttribute("registrationSuccess", true);
-            return "redirect:/user/login";
-        } catch (UserServiceImp.EmailExistsException e) {
-            model.addAttribute("error", "Email đã tồn tại");
-            return "/register";
-        } catch (UserServiceImp.UsernameExistsException e) {
-            model.addAttribute("error", "Tên đăng nhập đã tồn tại");
+        Optional<UserDTO> exitUserName = userService.findOneByUsername(userDto.getUsername());
+        Optional<UserDTO> exitEmail = userService.findOneByEmail(userDto.getEmail());
+        if (exitEmail.isPresent()) {
+            model.addAttribute("user", new RegisterDTO());
+            model.addAttribute("erroremail", "Email đã tồn tại");
+            if (exitUserName.isPresent()) {
+                model.addAttribute("user", new RegisterDTO());
+                model.addAttribute("errorusername", "Tên đăng nhập đã tồn tại");
+            }
             return "/register";
         }
+        userService.registerUser(userDto);
+        model.addAttribute("registrationSuccess", true);
+        return "redirect:/user/login";
     }
 
     @GetMapping("/logout")
@@ -139,5 +140,24 @@ public class UserController {
             model.addAttribute("user", user);
         }
         return "user/setting";
+    }
+
+    @PostMapping("/update")
+    public String updateUser(@ModelAttribute("user") UserDTO userDTO, Authentication authentication, Model model) {
+        UserDTO updatedUser = userService.update(userDTO, authentication);
+        if (updatedUser != null) {
+            model.addAttribute("user", updatedUser);
+            return "redirect:/user/profile";
+        } else {
+            return "redirect:/error";
+        }
+    }
+
+    @GetMapping("/settings")
+    public String showSettingsPage(Model model) throws NotFoundException {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDTO userDTO = userService.getUserProfile(authentication).orElseThrow(() -> new NotFoundException("User not found"));
+        model.addAttribute("user", userDTO);
+        return "settings";
     }
 }

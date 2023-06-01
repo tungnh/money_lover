@@ -1,0 +1,79 @@
+<!doctype html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title> Create Wallet</title>
+    <th:block th:replace="layout/layout.html::css"></th:block>
+    <th:block th:replace="layout/header.html::css"></th:block>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div class="row my-4">
+        <div class="col-lg-7 col-12">
+            <div class="custom-block bg-white">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel"
+                         aria-labelledby="profile-tab" tabindex="0">
+                        <div class="custom-block custom-block-profile bg-white">
+                            <h6 class="mb-4">Budget It'me</h6>
+                            <p class="d-flex flex-wrap mb-2">
+                                <strong>Name:</strong>
+                                <span th:text="${budget.name}"></span>
+                            </p>
+                            <p class="d-flex flex-wrap mb-2">
+                                <strong>Amount:</strong>
+                                <span th:text="${budget.amount}"></span>
+                            </p>
+                            <p class="d-flex flex-wrap mb-2">
+                                <strong>spent:</strong>
+                                <span th:text="${spent}"></span>
+                            </p>
+                            <p class="d-flex flex-wrap mb-2">
+                                <strong>Start Date:</strong>
+                                <span th:text="${#dates.format(budget.startDate, 'dd/MM/yyyy')}"></span>
+                            </p>
+                            <p class="d-flex flex-wrap mb-2">
+                                <strong>End Date:</strong>
+                                <span th:text="${#dates.format(budget.endDate, 'dd/MM/yyyy')}"></span>
+                            </p>
+                            <p class="d-flex flex-wrap mb-2">
+                                <strong>Categories:</strong>
+                            <ul th:each="category : ${categoryList}">
+                                <li th:text="${category.name}"></li>
+                            </ul>
+                            </p>
+                            <p class="d-flex flex-wrap mb-2">
+                                <strong>Wallets:</strong>
+                            <ul th:each="wallet : ${walletList}">
+                                <li th:text="${wallet.name}">
+                                </li>
+                            </ul>
+                            </p>
+                            <div>
+                                <a th:href="@{/budget/{id}(id=${budget.id})}" class="action-button"
+                                   onclick="return confirm('Bạn chắn chắn muốn xóa không')">
+                                    <button type="submit" class="form-control me-3" style="width: 200px; border-radius: 40px; background-color: #41d54b;color: white;" >
+                                        Delete
+                                    </button>
+                                </a>
+                                <a th:href="@{/budget/update/{id}(id=${budget.id})}" class="action-button">
+                                    <button type="submit" class="form-control me-3"  style="width: 200px;border-radius: 40px;background-color: #41d54b;color: white;margin-left: 61px;">
+                                        Update
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+<th:block th:replace="layout/layout.html::script"></th:block>
+</th:block>
+</body>
+</html>
