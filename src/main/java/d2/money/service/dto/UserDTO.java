@@ -11,6 +11,7 @@ public class UserDTO {
     private String firstName;
     private String lastName;
     private String email;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
@@ -80,6 +81,7 @@ public class UserDTO {
         this.createDate = createDate;
     }
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public Date getBirthday() {
         return birthday;
     }

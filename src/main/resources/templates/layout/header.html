@@ -40,88 +40,88 @@
             aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div data-v-48ecc7dc="" class="wallet-toolbar-menu" style="margin-left: -755px;"><img data-v-48ecc7dc=""
-                                                                                          src="https://static.moneylover.me/img/icon/icon.png"
-                                                                                          onerror="if (this.src != 'error.jpg') this.src = 'https://static.moneylover.me/img/icon/icon.png'"
-                                                                                          name="4"
-                                                                                          class="wallet-icon wallet-icon-all"
-                                                                                          style="width: 15%;">
+    <div data-v-48ecc7dc="" class="wallet-toolbar-menu"><img data-v-48ecc7dc=""
+                                                             src="https://static.moneylover.me/img/icon/icon.png"
+                                                             onerror="if (this.src != 'error.jpg') this.src = 'https://static.moneylover.me/img/icon/icon.png'"
+                                                             name="4" class="wallet-icon wallet-icon-all"
+                                                             style="width: 15%;">
         <div class="dropdown px-3" style="margin-left: -20px;">
-            <a class="nav-link dropdown-toggle" role="button"
-               data-bs-toggle="dropdown"
-               aria-expanded="false">
+            <form class="nav-link dropdown-toggle" th:action="@{/wallet/list}" th:method="get" role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false">
                 <div data-v-48ecc7dc="" class="info">
-                    <th:block th:if="${#session.getAttribute('wallet') != null}">
-                        <span data-v-48ecc7dc="" class="name"
-                              th:text="${#session.getAttribute('wallet').name} ?: 'No wallet selected'"><i
+                    <th:block th:if="${wallet!=null}">
+                        <span data-v-48ecc7dc="" class="name"><span th:text="${wallet.name}">No have wallet</span><i
                                 class="bi bi-caret-down-fill"></i></span>
-                        <span data-v-48ecc7dc="" class="amount"
-                              th:text="${#session.getAttribute('wallet').balance+' '+#session.getAttribute('currency').code+ ' ⇔ '+(#session.getAttribute('wallet').balance*#session.getAttribute('currency').transfer)+' VNĐ'}">+22,222.00 ₫</span>
+                        <span data-v-48ecc7dc="" class="amount" th:text="${wallet.balance}">+22,222.00 ₫</span>
                     </th:block>
-                    <th:block th:unless="${#session.getAttribute('wallet') != null}">
+                    <th:block th:unless="${wallet !=null}">
                         <span data-v-48ecc7dc="" class="name">No have wallet<i class="bi bi-caret-down-fill"></i></span>
                         <span data-v-48ecc7dc="" class="amount"></span>
                     </th:block>
                 </div>
-                <ul class="dropdown-menu bg-white shadow">
-                    <th:block th:each="wa:${#session.getAttribute('listWallet')}"
-                              th:object="${wa}">
-                        <li>
-                            <div class="dropdown-menu-profile-thumb d-flex">
-                                <img th:src="@{'/user-photos/' + ${#session.getAttribute('user').id} + '/' + ${wa.image}}"
-                                     class="profile-image img-fluid me-3"/>
-                                <a th:href="@{/wallet/index/{id}(id=${wa.id})}" style="margin-left: 18px">
-                                    <div class="d-flex flex-column">
-                                        <small><span th:text="*{name}"></span></small>
-                                        <span th:text="*{balance}"></span>
-                                    </div>
-                                </a>
-                            </div>
-                        </li>
-                        <li class="border-top mt-3 pt-2 mx-4">
-                            <a class="dropdown-item ms-0 me-0" href="#">
-                            </a>
-                        </li>
-                    </th:block>
-                </ul>
-            </a>
+            </form>
+            <ul class="dropdown-menu bg-white shadow">
+                <li th:each="wa:${listWallet}" th:object="${wa}">
+                    <div class="dropdown-menu-profile-thumb d-flex">
+                        <img th:src="*{image}" class="profile-image img-fluid me-3"
+                             th:alt="*{name}">
+                        <div class="d-flex flex-column">
+                            <small><span th:text="*{name}"></span></small>
+                            <a href="#"><span th:text="*{balance}"></span></a><br/>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
     <div class="navbar-nav me-lg-2">
         <div class="nav-item text-nowrap d-flex align-items-center">
             <div class="dropdown ps-3">
-                <a class="nav-link dropdown-toggle text-center" role="button" data-bs-toggle="dropdown"
+                <a class="nav-link dropdown-toggle text-center" href="#" role="button" data-bs-toggle="dropdown"
                    aria-expanded="false">
                     <i class="bi-bell"></i>
                     <span class="position-absolute start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
                                 <span class="visually-hidden">New alerts</span>
                             </span>
-                    <ul class="dropdown-menu notifications-block-wrap bg-white shadow" th:fragment="notification">
-                        <div style="background-color: aliceblue;width: 463px; margin-top: -23px; height: 38px;    margin-bottom: -13px;">
-                            <p style="margin-left: 164px;font-size: 16px;margin-right: 217px;margin-bottom: -7px;">
-                                Notifications</p>
-                        </div>
-                        <th:block th:each="no:${notification}">
-                            <li class="notifications-block border-bottom pb-2 mb-2">
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="notifications-icon-wrap bg-success" th:if="${no.type==1}">
-                                        <i class="bi bi-emoji-kiss"></i>
-                                    </div>
-                                    <div class="notifications-icon-wrap bg-danger" th:if="${no.type==2}">
-                                        <i class="bi bi-exclamation-triangle"></i>
-                                    </div>
-                                    <div class="notifications-icon-wrap bg-info" th:if="${no.type==3}">
-                                        <i class="bi bi-cloud-slash-fill"></i>
-                                    </div>
-                                    <div>
-                                        <span th:text="${no.message}"></span>
-                                        <p><span th:text="*{#dates.format(createdDate, 'dd/MM/yyyy')}"></span></p>
-                                    </div>
-                                </a>
-                            </li>
-                        </th:block>
-                    </ul>
                 </a>
+                <ul class="dropdown-menu notifications-block-wrap bg-white shadow">
+                    <small>Notifications</small>
+                    <li class="notifications-block border-bottom pb-2 mb-2">
+                        <a class="dropdown-item d-flex align-items-center" href="#">
+                            <div class="notifications-icon-wrap bg-success">
+                                <i class="notifications-icon bi-check-circle-fill"></i>
+                            </div>
+                            <div>
+                                <span>Your account has been created successfuly.</span>
+
+                                <p>12 days ago</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="notifications-block border-bottom pb-2 mb-2">
+                        <a class="dropdown-item d-flex align-items-center" href="#">
+                            <div class="notifications-icon-wrap bg-info">
+                                <i class="notifications-icon bi-folder"></i>
+                            </div>
+                            <div>
+                                <span>Please check. We have sent a Daily report.</span>
+                                <p>10 days ago</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="notifications-block">
+                        <a class="dropdown-item d-flex align-items-center" href="#">
+                            <div class="notifications-icon-wrap bg-danger">
+                                <i class="notifications-icon bi-question-circle"></i>
+                            </div>
+                            <div>
+                                <span>Account verification failed.</span>
+                                <p>1 hour ago</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
             </div>
             <div class="dropdown ps-1">
                 <a class="nav-link dropdown-toggle text-center" href="#" role="button" data-bs-toggle="dropdown"
@@ -174,22 +174,20 @@
             <div class="dropdown px-3">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                    aria-expanded="false">
-                    <img th:src="${#session.getAttribute('user')!=null ? #session.getAttribute('user').image: ''}"
-                         alt="User Image" class="profile-image img-fluid">
+                    <img th:src="${user.image}" alt="User Image" class="profile-image img-fluid">
                 </a>
                 <ul class="dropdown-menu bg-white shadow">
                     <li>
                         <div class="dropdown-menu-profile-thumb d-flex">
-                            <img th:src="${#session.getAttribute('user')!=null ? #session.getAttribute('user').image: ''}"
-                                 th:alt="${#session.getAttribute('user')!=null ? #session.getAttribute('user').username: ''}"
-                                 class="profile-image img-fluid me-3"
+                            <img th:src="${user.image}" alt="User Image" class="profile-image img-fluid me-3"
                             >
                             <div class="d-flex flex-column">
                                 <small>
-                                    <span th:text="${#session.getAttribute('user')!=null ? #session.getAttribute('user').username: ''}"></span>
+                                    <div th:if="${user.username}">
+                                        <span th:text="${user.username}"></span>
+                                    </div>
                                 </small>
-                                <a href="#"
-                                   th:text="${#session.getAttribute('user')!=null ? #session.getAttribute('user').email: ''}">
+                                <a href="#" th:text="${user.email}">
                                 </a>
                             </div>
                         </div>

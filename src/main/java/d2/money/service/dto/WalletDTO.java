@@ -1,8 +1,11 @@
 package d2.money.service.dto;
 
 import org.springframework.web.multipart.MultipartFile;
+import d2.money.domain.Budget;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class WalletDTO {
     private int id;
@@ -13,8 +16,17 @@ public class WalletDTO {
     private int currencyId;
     private Date createDate;
     private int userId;
+    private List<Budget> budgetList = new ArrayList<>();
 
     public WalletDTO() {
+    }
+
+    public List<Budget> getBudgetList() {
+        return budgetList;
+    }
+
+    public void setBudgetList(List<Budget> budgetList) {
+        this.budgetList = budgetList;
     }
 
     public int getId() {

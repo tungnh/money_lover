@@ -2,6 +2,10 @@ package d2.money.service.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Component;
+
+@Component
 public class CategoryDTO {
     private Integer id;
     private Integer userId;
@@ -65,6 +69,7 @@ public class CategoryDTO {
         this.status = status;
     }
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public Date getCreatedDate() {
         return createdDate;
     }

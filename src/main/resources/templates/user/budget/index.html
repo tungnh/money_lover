@@ -1,0 +1,53 @@
+<!doctype html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title> Create Wallet</title>
+    <th:block th:replace="layout/layout.html::css"></th:block>
+    <th:block th:replace="layout/header.html::css"></th:block>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div class="row my-4" style="width: 460px;">
+        <div class="col-lg-12 col-12">
+            <div class="title-group mb-3">
+                <h1 class="h2 mb-0">Budget</h1>
+            </div>
+            <a th:href="@{/budget/create}">
+                <button style="color: white;margin-bottom: 20px;background-color: #70d741;width: 188px;margin-left: 248px;display: flex;margin-top: -56px;border-radius: 12px;"
+                        type="submit" class="form-control me-3">
+                    Create budget
+                </button>
+            </a>
+            <div class="custom-block custom-block-profile bg-white" th:each="budget : ${budgetList}"
+                 th:onclick="'window.location.href = \'' + @{/budget/detail/{id}(id=${budget.id})} + '\''">
+
+                <p class="d-flex flex-wrap mb-2">
+                    <strong>Name:</strong>
+                    <span th:text="${budget.name}"></span>
+                </p>
+                <p class="d-flex flex-wrap mb-2">
+                    <strong>Amount:</strong>
+
+                    <span th:text="${budget.amount}"></span>
+                </p>
+                <p class="d-flex flex-wrap mb-2">
+                    <strong>Start Date:</strong>
+                    <span th:text="${#dates.format(budget.startDate, 'dd/MM/yyyy')}"></span>
+                </p>
+                <p class="d-flex flex-wrap mb-2">
+                    <strong>End Date:</strong>
+                    <span th:text="${#dates.format(budget.endDate, 'dd/MM/yyyy')}"></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</th:block>
+<th:block th:replace="layout/layout.html::script"></th:block>
+</th:block>
+</body>
+</html>

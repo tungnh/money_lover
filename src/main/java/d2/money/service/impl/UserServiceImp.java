@@ -47,6 +47,16 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public Optional<UserDTO> findOneByUsername(String name) {
+        return userRepository.findOneByUsername(name).map(userMapper::toDto);
+    }
+
+    @Override
+    public Optional<UserDTO> findOneByEmail(String email) {
+        return userRepository.findOneByEmail(email).map(userMapper::toDto);
+    }
+
+    @Override
     public Optional<UserDTO> findById(int id) {
         return userRepository.findById(id).map(userMapper::toDto);
     }
@@ -58,17 +68,15 @@ public class UserServiceImp implements UserService {
 
     @Override
     public Optional<UserDTO> getUserProfile(Authentication authentication) {
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            String username = userDetails.getUsername();
-            Optional<User> optionalUser = userRepository.findOneByUsername(username);
-            if (optionalUser.isPresent()) {
-                User user = optionalUser.get();
-                UserDTO userDTO = userMapper.toDto(user);
-                return Optional.of(userDTO);
-            }
+        String username = authentication.getName();
+        Optional<User> userOpt = userRepository.findOneByUsername(username);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            UserDTO userDTO = userMapper.toDto(user);
+            return Optional.of(userDTO);
+        } else {
+            return Optional.empty();
         }
-        return Optional.empty();
     }
 
     public class EmailExistsException extends RuntimeException {
@@ -108,7 +116,28 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public UserDTO update(UserDTO userDTO) {
+    public UserDTO update(UserDTO userDTO, Authentication authentication) {
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            String username = userDetails.getUsername();
+            Optional<User> optionalUser = userRepository.findOneByUsername(username);
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                user.setFirstName(userDTO.getFirstName());
+                user.setLastName(userDTO.getLastName());
+                user.setEmail(userDTO.getEmail());
+                if (userDTO.getBirthday() != null) {
+                    user.setBirthday(userDTO.getBirthday());
+                }
+                user.setImage(userDTO.getImage());
+                try {
+                    User updatedUser = userRepository.save(user);
+                    return userMapper.toDto(updatedUser);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return null;
     }
 

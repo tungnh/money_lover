@@ -1,5 +1,5 @@
 <!doctype html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{layout/layout}">
 <head>
     <meta charset="utf-8">
@@ -42,20 +42,21 @@
                     <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel"
                          aria-labelledby="profile-tab" tabindex="0">
                         <h6 class="mb-4">User Profile</h6>
-                        <form class="custom-form profile-form" action="#" method="post" role="form">
-                            <input class="form-control" type="text" name="profile-name" id="profile-name"
-                                   placeholder="John Doe">
-                            <input class="form-control" type="email" name="profile-email" id="profile-email"
-                                   placeholder="Johndoe@gmail.com">
+                        <form class="custom-form profile-form" th:action="@{/user/update}" th:object="${user}" method="post" role="form">
+                            <input class="form-control" type="text" name="firstName" id="firstName" placeholder="Họ:" th:field="*{firstName}">
+                            <input class="form-control" type="text" name="lastName" id="lastName" placeholder="Tên:" th:field="*{lastName}">
+                            <input type="date" id="birthday" class="form-control" name="birthday" th:field="*{birthday}" onchange="formatDateString()">
+                            <input class="form-control" type="email" name="email" id="email" placeholder="Emai: abc12gmail.com" th:field="*{email}">
                             <div class="input-group mb-1">
-                                <img src="images/profile/senior-man-white-sweater-eyeglasses.jpg"
-                                     class="profile-image img-fluid" alt="">
+                                <img class="profile-image img-fluid" th:src="${user.image}" alt="Profile Image">
                                 <input type="file" class="form-control" id="inputGroupFile02">
                             </div>
+
                             <div class="d-flex">
                                 <button type="button" class="form-control me-3">
                                     Reset
                                 </button>
+
                                 <button type="submit" class="form-control ms-2">
                                     Update
                                 </button>
@@ -131,5 +132,28 @@
     </div>
 </div>
 <th:block th:replace="layout/layout.html::script"></th:block>
+<script>
+    function formatDateString() {
+        var dateInput = document.getElementById("birthday");
+        var dateValue = dateInput.value;
+        var formattedDate = formatDate(dateValue);
+        document.getElementById("valueBirthday").value = formattedDate;
+    }
+
+    function formatDate(dateString) {
+        var date = new Date(dateString);
+        var day = date.getDate();
+        if (day < 10) {
+            day = "0" + day;
+        }
+        var month = date.getMonth() + 1;
+        if (month < 10) {
+            month = "0" + month;
+        }
+        var year = date.getFullYear();
+
+        return day + "/" + month + "/" + year;
+    }
+</script>
 </body>
 </html>

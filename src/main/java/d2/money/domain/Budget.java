@@ -27,6 +27,9 @@ public class Budget {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "budget_category", joinColumns = @JoinColumn(name = "budget_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categoryList = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "wallet_budget", joinColumns = @JoinColumn(name = "budget_id"), inverseJoinColumns = @JoinColumn(name = "wallet_id"))
+    private List<Wallet> walletList = new ArrayList<>();
 
     public Budget() {
     }
@@ -93,5 +96,13 @@ public class Budget {
 
     public void setCategoryList(List<Category> categoryList) {
         this.categoryList = categoryList;
+    }
+
+    public List<Wallet> getWalletList() {
+        return walletList;
+    }
+
+    public void setWalletList(List<Wallet> walletList) {
+        this.walletList = walletList;
     }
 }
