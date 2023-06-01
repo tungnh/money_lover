@@ -6,7 +6,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Mini Finance - Settings</title>
-    <!-- CSS FILES -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700&display=swap" rel="stylesheet">
@@ -38,8 +37,7 @@
                                class="form-control" placeholder="Họ:">
                         <input type="text" id="lastName" name="lastName" th:field="*{lastName}" required
                                placeholder="Tên:" class="form-control">
-                        <input type="date" id="birthday" class="form-control" onchange="formatDateString()">
-                        <input type="hidden" id="valueBirthday" name="birthday" th:value="${user.birthday}">
+                        <input type="date" id="birthday" name="birthday">
                         <input type="email" id="email" name="email" th:field="*{email}" required
                                class="form-control" placeholder="Email:">
                         <div th:if="${error}">
@@ -92,11 +90,9 @@
         return day + "/" + month + "/" + year;
     }
 </script>
-<!-- JAVASCRIPT FILES -->
 <script src="/js/jquery.min.js"></script>
 <script src="/js/bootstrap.bundle.min.js"></script>
 <script src="/js/custom.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
-
 </body>
 </html>

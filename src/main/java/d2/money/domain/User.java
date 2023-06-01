@@ -52,7 +52,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Notification> notificationList = new ArrayList<>();
-
     public User() {
     }
     public int getId() {

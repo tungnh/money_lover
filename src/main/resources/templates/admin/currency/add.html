@@ -8,10 +8,10 @@
     <meta name="author" content="">
     <title> Create Currency</title>
     <th:block th:replace="layout/layout.html::css"></th:block>
-    <th:block th:replace="layout/header.html::css"></th:block>
+    <th:block th:replace="layout/navbar.html::css"></th:block>
 </head>
 <body>
-<th:block layout:fragment="content">
+<div layout:fragment="content">
     <div class="row my-4">
         <div class="col-lg-7 col-12">
             <div class="custom-block bg-white">
@@ -22,6 +22,8 @@
                         <form class="custom-form profile-form" th:action="@{/currency/add}" method="post" role="form">
                             <input class="form-control" type="text" name="name" id="name"
                                    placeholder="name currency...">
+                            <h6 th:text="${err}"
+                                style="color: #d93838;font-size: 12px;margin-top: -18px;margin-left: 21px;"></h6>
                             <input class="form-control" type="text" name="code" id="code"
                                    placeholder="currency code ">
                             <input class="form-control" type="number" name="transfer" id="transfer"
@@ -35,12 +37,11 @@
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
-</th:block>
+</div>
 <th:block th:replace="layout/layout.html::script"></th:block>
 </th:block>
 </body>

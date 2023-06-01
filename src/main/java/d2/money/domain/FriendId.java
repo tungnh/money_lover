@@ -8,8 +8,7 @@ import java.io.Serializable;
 public class FriendId implements Serializable {
     @Column(name = "user_id")
     private int userId;
-
-    @Column(name = "friend_id", insertable = false, updatable = false)
+    @Column(name = "friend_id", updatable = false)
     private int friendId;
 
     public FriendId() {
@@ -23,6 +22,7 @@ public class FriendId implements Serializable {
         if (userId != friendId1.userId) return false;
         return friendId == friendId1.friendId;
     }
+
     @Override
     public int hashCode() {
         int result = userId;

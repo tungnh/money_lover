@@ -1,12 +1,9 @@
 package d2.money.service.impl;
 
-import d2.money.domain.Currency;
 import d2.money.domain.User;
 import d2.money.domain.Wallet;
-import d2.money.repository.CurrencyRepository;
 import d2.money.repository.UserRepository;
 import d2.money.repository.WalletRepository;
-import d2.money.service.dto.CurrencyDTO;
 import d2.money.service.dto.WalletDTO;
 import d2.money.service.WalletService;
 import d2.money.service.mapper.WalletMapper;
@@ -32,8 +29,22 @@ public class WalletServiceImp implements WalletService {
     }
 
     @Override
-    public List<WalletDTO> getAllWallet() {
-        return walletMapper.toDto(walletRepository.findAll());
+    public List<WalletDTO> findAll() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            Optional<User> optionalUser = userRepository.findOneByUsername(userDetails.getUsername());
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                return walletMapper.toDto(walletRepository.findByUserId(user.getId()));
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public List<WalletDTO> findByCurrencyId(int id) {
+        return walletMapper.toDto(walletRepository.findByCurrencyId(id));
     }
 
     @Override
@@ -48,7 +59,9 @@ public class WalletServiceImp implements WalletService {
                 entity.setUserId(user.getId());
             }
         }
+        entity.setImage(walletRequest.getImage());
         entity.setCurrencyId(walletRequest.getCurrencyId());
+        entity.setCreateDate(new Date());
         walletRepository.save(entity);
         WalletDTO walletDTO = walletMapper.toDto(entity);
         return walletDTO;
@@ -56,7 +69,7 @@ public class WalletServiceImp implements WalletService {
 
     @Override
     public WalletDTO update(WalletDTO walletRequest) {
-        Wallet  wallet = walletMapper.toEntity(walletRequest);
+        Wallet wallet = walletMapper.toEntity(walletRequest);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
@@ -67,6 +80,7 @@ public class WalletServiceImp implements WalletService {
             }
         }
         wallet.setCurrencyId(walletRequest.getCurrencyId());
+        wallet.setCreateDate(new Date());
         walletRepository.save(wallet);
         WalletDTO walletDTO = walletMapper.toDto(wallet);
         return walletDTO;
@@ -78,7 +92,7 @@ public class WalletServiceImp implements WalletService {
     }
 
     @Override
-    public Optional<WalletDTO> findByWalletId(int id) {
+    public Optional<WalletDTO> findById(int id) {
         return walletRepository.findById(id).map(walletMapper::toDto);
     }
 }

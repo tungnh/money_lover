@@ -1,0 +1,66 @@
+<!doctype html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Add Transaction</title>
+    <th:block th:replace="layout/layout.html::css"></th:block>
+    <th:block th:replace="layout/navbar.html::css"></th:block>
+    <style>
+        select {
+            width: 230px;
+            height: 28px;
+            border: aliceblue;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="row my-4">
+        <div class="col-lg-7 col-12">
+            <div class="custom-block bg-white">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel"
+                         aria-labelledby="profile-tab" tabindex="0">
+                        <h6 class="mb-4">Add Transaction</h6>
+                        <form class="custom-form profile-form" th:action="@{/notification/add}" method="post"
+                              role="form">
+                            <div class="form-control">
+                                <label for="type">Type</label>
+                                <select id="type" name="type" required>
+                                    <option value="" disabled selected>Type</option>
+                                    <option value="1">Thông Báo</option>
+                                    <option value="2">Cảnh Báo</option>
+                                    <option value="3">Gợi ý</option>
+                                </select>
+                            </div>
+                            <input class="form-control" type="text" name="title" id="title" placeholder="title..">
+                            <input class="form-control" type="text" name="message" id="message"
+                                   placeholder="message...">
+                            <div class="form-control">
+                                <label for="userIdList">User</label>
+                                <select id="userIdList" name="userIdList" required multiple>
+                                    <option value="" disabled selected>User</option>
+                                    <th:block th:each="user: ${listUser}" th:object="${user}">
+                                        <option th:value="*{id}" th:text="*{username}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                            <div class="d-flex">
+                                <button type="submit" class="form-control me-3">ADD</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="layout/layout.html::script"></th:block>
+</th:block>
+</body>
+</html>

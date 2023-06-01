@@ -9,16 +9,26 @@
         <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700&display=swap" rel="stylesheet">
         <link href="/css/bootstrap.min.css" rel="stylesheet">
         <link href="/css/bootstrap-icons.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="<URL_CSS>"/>
         <link href="/css/apexcharts.css" rel="stylesheet">
         <link href="/css/tooplate-mini-finance.css" rel="stylesheet">
+        <style>
+            .nav-item-active {
+                background-color: #6fe76f;
+                border-left: 5px solid #a9d3ff;
+                width: 148px;
+                border-radius: 13px;
+                color: white;
+            }
+        </style>
     </th:block>
-    <th:block th:replace="layout/header::css"></th:block>
+    <th:block th:replace="layout/navbar::css"></th:block>
 </head>
 <body>
-<th:block th:replace="layout/header.html::header"></th:block>
+<th:block th:replace="layout/navbar.html::header"></th:block>
 <div class="container-fluid">
     <div class="row">
-        <th:block th:replace="layout/navbar.html::nav"></th:block>
+        <th:block th:replace="layout/sidebar.html::nav"></th:block>
         <main class="main-wrapper col-md-9 ms-sm-auto py-4 col-lg-9 px-md-4 border-start">
             <section layout:fragment="content"></section>
             <th:block th:replace="layout/footer.html::footer"></th:block>

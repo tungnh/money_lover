@@ -36,6 +36,11 @@ public class CurrencyServiceImp implements CurrencyService {
     }
 
     @Override
+    public Optional<CurrencyDTO> findByName(String name) {
+        return currencyRepository.findOneByName(name).map(currencyMapper::toDto);
+    }
+
+    @Override
     public List<CurrencyDTO> getAllCurrency() {
         return currencyMapper.toDto(currencyRepository.findAll());
     }
@@ -49,8 +54,6 @@ public class CurrencyServiceImp implements CurrencyService {
             Optional<User> optionalUser = userRepository.findOneByUsername(userDetails.getUsername());
             if (optionalUser.isPresent()) {
                 User user = optionalUser.get();
-                currencyDto.setCreatedBy(user.getUsername());
-                currencyDto.setLastModifiedBy(user.getUsername());
                 currency.setCreatedBy(user.getUsername());
                 currency.setLastModifiedBy(user.getUsername());
             }
@@ -78,6 +81,12 @@ public class CurrencyServiceImp implements CurrencyService {
         currencyRepository.save(currency);
         CurrencyDTO updatedCurrencyDto = currencyMapper.toDto(currency);
         return updatedCurrencyDto;
+    }
+
+    @Override
+    public double currencyConversion(double transfer, double receiving) {
+        double exchangeRate = receiving / transfer;
+        return exchangeRate;
     }
 
     @Override

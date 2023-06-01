@@ -8,10 +8,10 @@
     <meta name="author" content="">
     <title> Settings</title>
     <th:block th:replace="layout/layout.html::css"></th:block>
-    <th:block th:replace="layout/header.html::css"></th:block>
+    <th:block th:replace="layout/navbar.html::css"></th:block>
 </head>
 <body>
-<th:block layout:fragment="content">
+<div layout:fragment="content">
     <div class="title-group mb-3">
         <h1 class="h2 mb-0">Settings</h1>
     </div>
@@ -129,8 +129,7 @@
             </div>
         </div>
     </div>
-</th:block>
-</th:block>
+</div>
 <th:block th:replace="layout/layout.html::script"></th:block>
 </body>
 </html>

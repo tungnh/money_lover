@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PersistentTokenBasedRememberMeServices rememberMeServices() {
         PersistentTokenBasedRememberMeServices rememberMeServices =
-                new PersistentTokenBasedRememberMeServices("your-unique-key", userDetailsService, persistentTokenRepository());
+        new PersistentTokenBasedRememberMeServices("your-unique-key", userDetailsService, persistentTokenRepository());
         rememberMeServices.setTokenValiditySeconds(86400);
         return rememberMeServices;
     }
@@ -66,34 +66,32 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/user/tranghome", "/css/**", "/js/**").permitAll()
-                .antMatchers("/user/register").permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/user/login")
-                .loginProcessingUrl("/loginn")
-                .defaultSuccessUrl("/user/index", true)
-                .permitAll()
-                .failureHandler((request, response, exception) -> {
-                    // Xử lý thông báo lỗi
-                    String errorMessage = "Tài khoản hoặc mật khẩu của bạn không chính xác";
-                    request.getSession().setAttribute("errorMessage", errorMessage);
-                    response.sendRedirect("/login");
-                })
-                .and()
-                .rememberMe()
-                .rememberMeServices(rememberMeServices())
-                .key("your-unique-key") // Khóa xác thực duy nhất cho token
-                .and()
-                .logout()
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/user/login?/user/logout")
-                .permitAll();
+        .antMatchers("/user/tranghome", "/css/**", "/js/**").permitAll()
+        .antMatchers("/user/register").permitAll()
+        .anyRequest()
+        .authenticated()
+        .and()
+        .formLogin()
+        .loginPage("/user/login")
+        .loginProcessingUrl("/loginn")
+        .defaultSuccessUrl("/user/index", true)
+        .permitAll()
+        .failureHandler((request, response, exception) -> {
+            // Xử lý thông báo lỗi
+            String errorMessage = "Tài khoản hoặc mật khẩu của bạn không chính xác";
+            request.getSession().setAttribute("errorMessage", errorMessage);
+            response.sendRedirect("/login");
+        })
+        .and()
+        .rememberMe()
+        .rememberMeServices(rememberMeServices())
+        .key("your-unique-key") // Khóa xác thực duy nhất cho token
+        .and()
+        .logout()
+        .invalidateHttpSession(true)
+        .clearAuthentication(true)
+        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+        .logoutSuccessUrl("/user/login?/user/logout")
+        .permitAll();
     }
 }
-
-

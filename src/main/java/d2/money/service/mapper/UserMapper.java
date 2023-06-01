@@ -75,6 +75,5 @@ public class UserMapper implements EntityMapper<UserDTO, User> {
 
     @Override
     public void partialUpdate(User entity, UserDTO dto) {
-
     }
 }

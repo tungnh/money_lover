@@ -1,0 +1,96 @@
+<!doctype html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title> Settings</title>
+    <th:block th:replace="layout/layout.html::css"></th:block>
+    <th:block th:replace="layout/navbar.html::css"></th:block>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <div class="title-group mb-3">
+        <h1 class="h2 mb-0">Transations</h1>
+    </div>
+    <div class="row my-4">
+        <div class="col-lg-12 col-12">
+            <div class="custom-block custom-block-transation-detail bg-white" th:each=" tra:${listTransaction}"
+                 th:object="${tra}">
+                <div class="d-flex flex-wrap align-items-center border-bottom pb-3 mb-3"
+                     th:if="*{receivingWalletId!=null}">
+                    <div class="d-flex align-items-center" style="margin-right: 192px;">
+                        <img src="https://static.moneylover.me/img/icon/icon.png"
+                             class="profile-image img-fluid" alt="">
+                        <div>
+                            <p><span th:text="${tra.wallet.name}"></span></p>
+                            <small class="text-muted">Payment Received</small>
+                        </div>
+                    </div>
+                    <div class="ms-auto" style="margin-right: 335px;">
+                        <small><span th:text="*{day}"></span></small>
+                        <th:block th:if="${tra.wallet.id==tra.walletTransferId}">
+                            <strong class="d-block text-danger">-<span th:text="*{amount}"></span>
+                            </strong>
+                        </th:block>
+                        <th:block th:unless="${tra.wallet.id==tra.walletTransferId}">
+                            <strong class="d-block text-success">+<span th:text="*{amount}"></span>
+                            </strong>
+                        </th:block>
+                    </div>
+                    <div class="custom-block-transation-detail-item mt-4 ms-lg-auto px-lg-3 px-md-3"
+                         style="text-align: center;">
+                        <div style="display: flex;margin-left: 740px;margin-top: -56px;">
+                            <a th:href="@{/transaction/edit/{id}(id=${tra.id})}" class="btn btn-primary me-2"><i
+                                    class="bi bi-pencil-square"></i></a>
+                            <a th:href="@{/transaction/delete/{id}(id=${tra.id})}" class="btn btn-danger"
+                               onclick="return confirm('Bạn có muốn xóa giao dịch không?')"
+                               style="margin-left: 30px;"><i
+                                    class="bi bi-trash3"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex flex-wrap align-items-center border-bottom pb-3 mb-3"
+                     th:unless="*{receivingWalletId!=null}">
+                    <div class="d-flex flex-wrap align-items-center">
+                        <div class="custom-block-transation-detail-item mt-4" style="width: 231px;">
+                            <h6>Transation Day</h6>
+                            <p><span th:text="*{day}"></span></p>
+                        </div>
+                        <div class="custom-block-transation-detail-item mt-4 mx-auto px-4" style="width: 243px;">
+                            <h6>Description</h6>
+                            <p><span th:text="*{note}"></span></p>
+                        </div>
+                        <div class="custom-block-transation-detail-item mt-4 ms-lg-auto px-lg-3 px-md-3"
+                             style="width: 176px;">
+                            <h6>Category</h6>
+                            <p><span th:text="${tra.category.name}"></span></p>
+                        </div>
+                        <div class="custom-block-transation-detail-item mt-4 ms-auto me-auto" style="width: 100px;">
+                            <h6>Amount</h6>
+                            <p><span class="me-1"
+                                     th:text="${tra.category.status == true ?'+':'-'}"></span><span
+                                    th:text="*{amount}"></span></p>
+                        </div>
+                        <div class="custom-block-transation-detail-item mt-4 ms-lg-auto px-lg-3 px-md-3"
+                             style="text-align: center;">
+                            <h6>Action</h6>
+                            <div style="display: flex;">
+                                <a th:href="@{/transaction/edit/{id}(id=${tra.id})}" class="btn btn-primary me-2"><i
+                                        class="bi bi-pencil-square"></i></a>
+                                <a th:href="@{/transaction/delete/{id}(id=${tra.id})}" class="btn btn-danger"
+                                   onclick="return confirm('Bạn có muốn xóa tiền tệ không?')"
+                                   style="margin-left: 30px;"><i class="bi bi-trash3"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+<th:block th:replace="layout/layout.html::script"></th:block>
+</body>
+</html>

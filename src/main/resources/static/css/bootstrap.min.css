@@ -3975,10 +3975,10 @@ textarea.form-control-lg {
     border-color: transparent
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: var(--bs-nav-pills-link-active-color);
-    background-color: var(--bs-nav-pills-link-active-bg)
-}
+/*.nav-pills .nav-link.active, .nav-pills .show > .nav-link {*/
+/*    color: var(--bs-nav-pills-link-active-color);*/
+/*    background-color: var(--bs-nav-pills-link-active-bg)*/
+/*}*/
 
 .nav-fill .nav-item, .nav-fill > .nav-link {
     flex: 1 1 auto;
@@ -8103,7 +8103,7 @@ textarea.form-control-lg {
 }
 
 .m-auto {
-    margin: auto !important
+    margin: auto
 }
 
 .mx-0 {

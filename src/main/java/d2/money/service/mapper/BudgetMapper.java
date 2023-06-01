@@ -28,6 +28,5 @@ public class BudgetMapper implements EntityMapper<BudgetDTO, Budget> {
 
     @Override
     public void partialUpdate(Budget entity, BudgetDTO dto) {
-
     }
 }

@@ -1,5 +1,7 @@
 package d2.money.service.dto;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class UserDTO {
@@ -10,6 +12,7 @@ public class UserDTO {
     private String lastName;
     private String email;
     private Date createDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
     private boolean status;
     private String image;

@@ -1,11 +1,14 @@
 package d2.money.service.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Date;
 
 public class WalletDTO {
     private int id;
     private String name;
     private double balance;
+    private MultipartFile file;
     private String image;
     private int currencyId;
     private Date createDate;
@@ -44,6 +47,14 @@ public class WalletDTO {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 
     public int getCurrencyId() {

@@ -8,307 +8,66 @@
     <meta name="author" content="">
     <title> Settings</title>
     <th:block th:replace="layout/layout.html::css"></th:block>
-    <th:block th:replace="layout/header.html::css"></th:block>
+    <th:block th:replace="layout/navbar.html::css"></th:block>
 </head>
 <body>
-<th:block layout:fragment="content" th:fragment="wallet">
-    <div class="title-group mb-3">
-        <h1 class="h2 mb-0">Wallet</h1>
-    </div>
+<div layout:fragment="content">
     <div class="row my-4">
-        <div class="col-lg-7 col-12">
-            <div class="custom-block custom-block-balance">
-                <small>Your Balance</small>
-                <h2 class="mt-2 mb-3"><span th:text="${currency.symbol}+${wallet.balance}"></span></h2>
-                <div class="custom-block-numbers d-flex align-items-center">
-                    <span>****</span>
-                    <span>****</span>
-                    <span>****</span>
-                    <p></p>
-                </div>
-                <div class="d-flex">
-                    <div>
-                        <small>Valid Date</small>
-                        <p th:text="${wallet.createDate}"></p>
-                    </div>
-                    <div class="ms-auto">
-                    </div>
-                </div>
-            </div>
-            <div class="custom-block custom-block-bottom d-flex flex-wrap">
-                <div class="custom-block-bottom-item">
-                    <a href="#" class="d-flex flex-column">
-                        <i class="custom-block-icon bi-wallet"></i>
-                        <small>Add Wallet</small>
-                    </a>
-                </div>
-                <div class="custom-block-bottom-item">
-                    <a href="#" class="d-flex flex-column">
-                        <span class="glyphicon">&#xe065;</span>
-                        <small>Update</small>
-                    </a>
-                </div>
-                <div class="custom-block-bottom-item">
-                    <a href="#" class="d-flex flex-column">
-                        <i class="fas fa-eraser"></i>
-                        <small>Delete</small>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-5 col-12">
-            <div class="custom-block custom-block-transations">
-                <h5 class="mb-4">Recent Transations</h5>
-                <div class="d-flex flex-wrap align-items-center mb-4">
-                    <div class="d-flex align-items-center">
-                        <img src="images/profile/senior-man-white-sweater-eyeglasses.jpg"
-                             class="profile-image img-fluid" alt="">
-                        <div>
-                            <p>
-                                <a href="../transation-detail.html">Daniel Jones</a>
-                            </p>
-                            <small class="text-muted">C2C Transfer</small>
-                        </div>
-                    </div>
-                    <div class="ms-auto">
-                        <small>05/12/2023</small>
-                        <strong class="d-block text-danger"><span class="me-1">-</span> $250</strong>
-                    </div>
-                </div>
-                <div class="d-flex flex-wrap align-items-center mb-4">
-                    <div class="d-flex align-items-center">
-                        <img src="images/profile/young-beautiful-woman-pink-warm-sweater.jpg"
-                             class="profile-image img-fluid" alt="">
-                        <div>
-                            <p>
-                                <a href="../transation-detail.html">Public Bank</a>
-                            </p>
-                            <small class="text-muted">Mobile Reload</small>
-                        </div>
-                    </div>
-                    <div class="ms-auto">
-                        <small>22/8/2023</small>
-                        <strong class="d-block text-success"><span class="me-1">+</span> $280</strong>
-                    </div>
-                </div>
-                <div class="d-flex flex-wrap align-items-center">
-                    <div class="d-flex align-items-center">
-                        <img src="images/profile/young-woman-with-round-glasses-yellow-sweater.jpg"
-                             class="profile-image img-fluid" alt="">
-                        <div>
-                            <p><a href="../transation-detail.html">Store</a></p>
-                            <small class="text-muted">Payment Received</small>
-                        </div>
-                    </div>
-                    <div class="ms-auto">
-                        <small>22/8/2023</small>
-                        <strong class="d-block text-success"><span class="me-1">+</span> $280</strong>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12 col-12">
-            <div class="custom-block bg-white">
-                <h5 class="mb-4">Account Activities</h5>
-                <div class="table-responsive">
-                    <table class="account-table table">
-                        <thead>
-                        <tr>
-                            <th scope="col">Date</th>
-                            <th scope="col">Time</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Payment Type</th>
-                            <th scope="col">Amount</th>
-                            <th scope="col">Balance</th>
-                            <th scope="col">Status</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td scope="row">July 5, 2023</td>
-                            <td scope="row">10:00 PM</td>
-                            <td scope="row">Shopping</td>
-                            <td scope="row">C2C Transfer</td>
-                            <td class="text-danger" scope="row">
-                                <span class="me-1">-</span>
-                                $100.00
-                            </td>
-                            <td scope="row">$5,500.00</td>
-                            <td scope="row">
-                                    <span class="badge text-bg-danger">
-                                        Pending
-                                    </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">July 2, 2023</td>
-                            <td scope="row">10:42 AM</td>
-                            <td scope="row">Food Delivery</td>
-                            <td scope="row">Mobile Reload</td>
-                            <td class="text-success" scope="row">
-                                <span class="me-1">+</span>
-                                $250
-                            </td>
-                            <td scope="row">$5,600.00</td>
-                            <td scope="row">
-                                    <span class="badge text-bg-success">
-                                        Success
-                                    </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">June 28, 2023</td>
-                            <td scope="row">8:20 PM</td>
-                            <td scope="row">Billing</td>
-                            <td scope="row">Goverment</td>
-                            <td class="text-success" scope="row">
-                                <span class="me-2">+</span>$50
-                            </td>
-                            <td scope="row">$5,350.00</td>
-                            <td scope="row">
-                                    <span class="badge text-bg-success">
-                                        Success
-                                    </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">June 24, 2023</td>
-                            <td scope="row">10:48 PM</td>
-                            <td scope="row">Shopee</td>
-                            <td scope="row">QR Code</td>
-                            <td class="text-danger" scope="row">
-                                <span class="me-2">-</span>$380
-                            </td>
-                            <td scope="row">$5,300.00</td>
-                            <td scope="row">
-                                    <span class="badge text-bg-dark">
-                                        Cancelled
-                                    </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">June 12, 2023</td>
-                            <td scope="row">12:30 AM</td>
-                            <td scope="row">Food Delivery</td>
-                            <td scope="row">Mobile Reload</td>
-                            <td class="text-success" scope="row">
-                                <span class="me-2">+</span>$250
-                            </td>
-                            <td scope="row">$4,920.00</td>
-                            <td scope="row">
-                                    <span class="badge text-bg-success">
-                                        Success
-                                    </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">May 31, 2023</td>
-                            <td scope="row">2:40 PM</td>
-                            <td scope="row">Food Delivery</td>
-                            <td scope="row">Mobile Reload</td>
-                            <td class="text-success" scope="row">
-                                <span class="me-2">+</span>$50
-                            </td>
-                            <td scope="row">$4,920.00</td>
-                            <td scope="row">
-                                    <span class="badge text-bg-success">
-                                        Success
-                                    </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">May 22, 2023</td>
-                            <td scope="row">8:50 AM</td>
-                            <td scope="row">Food Delivery</td>
-                            <td scope="row">Mobile Reload</td>
-                            <td class="text-success" scope="row">
-                                <span class="me-2">+</span>$50
-                            </td>
-                            <td scope="row">$4,920.00</td>
-                            <td scope="row">
-                                    <span class="badge text-bg-success">
-                                        Success
-                                    </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">May 20, 2023</td>
-                            <td scope="row">6:45 PM</td>
-                            <td scope="row">Food Delivery</td>
-                            <td scope="row">Mobile Reload</td>
-                            <td class="text-danger" scope="row">
-                                <span class="me-2">-</span>$500
-                            </td>
-                            <td scope="row">$4,920.00</td>
-                            <td scope="row">
-                                    <span class="badge text-bg-danger">
-                                        Pending
-                                    </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">April 28, 2023</td>
-                            <td scope="row">11:20 AM</td>
-                            <td scope="row">Food Delivery</td>
-                            <td scope="row">Mobile Reload</td>
-                            <td class="text-success" scope="row">
-                                <span class="me-2">+</span>$856
-                            </td>
-                            <td scope="row">$4,920.00</td>
-                            <td scope="row">
-                                    <span class="badge text-bg-success">
-                                        Success
-                                    </span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td scope="row">April 16, 2023</td>
-                            <td scope="row">11:00 PM</td>
-                            <td scope="row">Food Delivery</td>
-                            <td scope="row">Mobile Reload</td>
-                            <td class="text-success" scope="row">
-                                <span class="me-2">+</span>$50
-                            </td>
-                            <td scope="row">$4,920.00</td>
-                            <td scope="row">
-                                    <span class="badge text-bg-danger">
-                                        Pending
-                                    </span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center mb-0">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">Prev</span>
+        <a th:href="@{/transaction/transfer}">
+            <button style="display: block;margin-left: 806px;margin-top: -25px;background-color: #a1e682;border: aliceblue;
+                       height: 41px;width: 227px;border-radius: 11px;">
+                TRANSFER MONEY
+            </button>
+        </a>
+        <th:block th:each="wallet:${listWallet}" th:object="${wallet}">
+            <div class="col-lg-7 col-12" style="margin-top: -23px;margin-bottom: 25px;">
+                <div class="custom-block custom-block-profile bg-white">
+                    <h6 class="mb-4" style="margin-top: -6px;display: flex;">Wallet Information
+                        <div class="dropdown ps-1" style="margin-left: 191px;">
+                            <a class="nav-link dropdown-toggle text-center" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi-three-dots-vertical"></i>
                             </a>
-                        </li>
-                        <li class="page-item active" aria-current="page">
-                            <a class="page-link" href="#">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">3</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">4</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">Next</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                            <ul class="dropdown-menu bg-white shadow"
+                                style="position: fixed;inset: 123px 29px auto 754px; margin: 0px;transform: translate3d(-86.4078px, 23.301px, 0px);">
+                                <li>
+                                    <a class="dropdown-item" th:href="@{/wallet/edit/{id}(id=${wallet.id})}">
+                                        <i class="bi bi-pencil-square"></i>
+                                        <b>Edit</b>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a th:href="@{/wallet/delete/{id}(id=${wallet.id})}" class="dropdown-item"
+                                       onclick="return confirm('Bạn có muốn xóa ví không')">
+                                        <i class="bi bi-folder-minus"></i>
+                                        <b>Delete</b>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </h6>
+                    <p class="d-flex flex-wrap mb-2">
+                        <strong>Name</strong>
+                        <span><b th:text="*{name}"></b></span>
+                    </p>
+                    <p class="d-flex flex-wrap mb-2">
+                        <strong>Balance:</strong>
+                        $<span th:text="*{balance}"></span>
+                    </p>
+                    <p class="d-flex flex-wrap mb-2">
+                        <strong>Valid Date:</strong>
+                        <span th:text="*{#dates.format(createDate, 'dd/MM/yyyy')}"></span>
+                    </p>
+                </div>
             </div>
-        </div>
+        </th:block>
+        <a th:href="@{/wallet/add}">
+            <button style="display: block; margin-left: 913px;margin-top: -44px;background-color: #a1e682;border: aliceblue;height: 61px;width: 64px;border-radius: 68px;">
+                <i class="bi bi-plus-lg"></i>
+            </button>
+        </a>
     </div>
-</th:block>
+</div>
 <th:block th:replace="layout/layout.html::script"></th:block>
 </body>
 </html>

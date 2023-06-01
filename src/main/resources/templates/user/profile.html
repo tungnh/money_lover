@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title> Settings</title>
+    <title>Profile</title>
     <th:block th:replace="layout/layout.html::css"></th:block>
-    <th:block th:replace="layout/header.html::css"></th:block>
+    <th:block th:replace="layout/navbar.html::css"></th:block>
 </head>
 <body>
-<th:block layout:fragment="content">
+<div layout:fragment="content">
     <div class="title-group mb-3">
         <h1 class="h2 mb-0">Profile</h1>
     </div>
@@ -24,7 +24,7 @@
                     </div>
                     <div class="col-lg-3 col-12 mb-4 mb-lg-0">
                         <div class="custom-block-profile-image-wrap">
-                            <img th:src="${user.image}" alt="User Image"
+                            <img th:src="${#session.getAttribute('user')!=null ? #session.getAttribute('user').image: ''}" th:alt="${#session.getAttribute('user')!=null ? #session.getAttribute('user').username: ''}"
                                  class="custom-block-profile-image img-fluid">
                             <a href="setting.html" class="bi-pencil-square custom-block-edit-icon"></a>
                         </div>
@@ -32,21 +32,21 @@
                     <div class="col-lg-9 col-12">
                         <p class="d-flex flex-wrap mb-2">
                             <strong>Name:</strong>
-                            <span th:text="${user.firstName}+''+${user.lastName}"></span>
+                            <span th:text="${#session.getAttribute('user')!=null ? (#session.getAttribute('user').firstName+''+#session.getAttribute('user').lastName): ''}"></span>
                         </p>
                         <p class="d-flex flex-wrap mb-2">
                             <strong>Email:</strong>
-                            <a href="#" th:text="${user.email}">
+                            <a href="#" th:text="${#session.getAttribute('user')!=null ? #session.getAttribute('user').email: ''}">
 
                             </a>
                         </p>
                         <p class="d-flex flex-wrap mb-2">
                             <strong>Birthday:</strong>
-                            <span th:text="${user.birthday}"></span>
+                            <span th:text="${#session.getAttribute('user')!=null ? #session.getAttribute('user').birthday: ''}"></span>
                         </p>
                         <p class="d-flex flex-wrap">
                             <strong>Create Date</strong>
-                            <span th:text="${user.createDate}"></span>
+                            <span th:text="${#session.getAttribute('user')!=null ? #session.getAttribute('user').createDate: ''}"></span>
                         </p>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
             </div>
         </div>
     </div>
-</th:block>
+</div>>
 <th:block th:replace="layout/layout.html::script"></th:block>
 </body>
 </html>
