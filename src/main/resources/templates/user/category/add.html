@@ -6,9 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title> Create Wallet</title>
+    <title> Create Category</title>
     <th:block th:replace="layout/layout.html::css"></th:block>
     <th:block th:replace="layout/header.html::css"></th:block>
+    <style>
+        select {
+            width: 230px;
+            height: 28px;
+            border: aliceblue;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <th:block layout:fragment="content">
@@ -25,24 +33,21 @@
                                 <input class="form-control" type="text" name="name" id="name"
                                        placeholder="name:" th:field="*{name}" required>
                             </div>
-                            <div class="input-group mb-1">
-                                <img class="profile-image img-fluid" th:src="${category.image}" alt="Profile Image">
-                                <input type="file" class="form-control" id="inputGroupFile02" name="image">
-                            </div>
-
-                            <div>
-                                <label for="parentId">Parent Category:</label>
-                                <select style="width: 164px;margin-left: 171px;margin-top: -30px;" class="form-select" aria-label="Default select example" id="parentId" name="parentId" required th:field="*{parentId}">
+                            <div class="form-control">
+                                <label for="parentId">Category</label>
+                                <select id="parentId" name="parentId" required>
+                                    <option value="" disabled selected>Select Category</option>
                                     <option th:value="1">Khoản thu</option>
                                     <option th:value="2">Khoản chi</option>
                                     <option th:value="3">Nợ/Cho vay</option>
                                 </select>
                             </div>
-                            <div>
-                                <label style="margin-top: 15px;" for="status">Status:</label>
-                                <select style="width: 107px;margin-left: 170px;margin-top: -30px;" class="form-select" aria-label="Default select example" id="status" name="status" required th:field="*{status}">
-                                    <option value="true">True</option>
-                                    <option value="false">False</option>
+                            <div class="form-control">
+                                <label for="status">Type</label>
+                                <select id="status" name="status" required>
+                                    <option value="" disabled selected>Select Status</option>
+                                    <option value="true">Cộng Tiền</option>
+                                    <option value="false">Trừ Tiền</option>
                                 </select>
                             </div>
                             <br>

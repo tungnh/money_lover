@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Add Transaction</title>
+    <title>Add Notification</title>
     <th:block th:replace="layout/layout.html::css"></th:block>
     <th:block th:replace="layout/navbar.html::css"></th:block>
     <style>
@@ -19,14 +19,17 @@
     </style>
 </head>
 <body>
-<div layout:fragment="content">
+<div layout:fragment="content" th:if="${#session.getAttribute('user').role=='user'}">
+    <h4><b>Bạn không có quyền truy cập vào trang web này</b></h4>
+</div>
+<div layout:fragment="content" th:unless="${#session.getAttribute('user').role=='user'}">
     <div class="row my-4">
         <div class="col-lg-7 col-12">
             <div class="custom-block bg-white">
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel"
                          aria-labelledby="profile-tab" tabindex="0">
-                        <h6 class="mb-4">Add Transaction</h6>
+                        <h6 class="mb-4">Add Notification</h6>
                         <form class="custom-form profile-form" th:action="@{/notification/add}" method="post"
                               role="form">
                             <div class="form-control">
@@ -41,13 +44,14 @@
                             <input class="form-control" type="text" name="title" id="title" placeholder="title..">
                             <input class="form-control" type="text" name="message" id="message"
                                    placeholder="message...">
-                            <div class="form-control">
-                                <label for="userIdList">User</label>
-                                <select id="userIdList" name="userIdList" required multiple>
-                                    <option value="" disabled selected>User</option>
-                                    <th:block th:each="user: ${listUser}" th:object="${user}">
-                                        <option th:value="*{id}" th:text="*{username}"></option>
-                                    </th:block>
+                            <div class="form-group">
+                                <label for="userIdList"></label>
+                                <select multiple class="form-control" id="userIdList" name="userIdList" style="height: 93px;border-radius: 8px;">
+                                    <option value="" disabled selected>Select User</option>
+                                    <option th:each="user: ${listUser}"
+                                            th:value="${user.id}"
+                                            th:text="${user.username}"
+                                            ></option>
                                 </select>
                             </div>
                             <div class="d-flex">

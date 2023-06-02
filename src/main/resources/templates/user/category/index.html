@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title> Create Wallet</title>
+    <title>Category</title>
     <th:block th:replace="layout/layout.html::css"></th:block>
     <th:block th:replace="layout/header.html::css"></th:block>
 </head>
@@ -47,7 +47,12 @@
                             <td scope="row" th:text="${category.createdDate}"></td>
                             <td scope="row" th:text="${category.image}"></td>
                             <td scope="row" th:text="${category.name}"></td>
-                            <td scope="row" th:text="${category.status}"></td>
+                            <td scope="row" th:if="${category.status==true}">
+                                <span>Cộng Tiền</span>
+                            </td>
+                            <td scope="row" th:unless="${category.status==true}">
+                                <span>Trừ Tiền</span>
+                            </td>
                             <td scope="row" th:text="${category.userId}"></td>
                             <td scope="row">
                                 <span th:if="${category.parentId == 1}" class="badge text-bg-danger">Khoản thu</span>

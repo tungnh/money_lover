@@ -7,7 +7,7 @@
     <th:block th:replace="layout/navbar.html::css"></th:block>
 </head>
 <body>
-<nav id="sidebarMenu" class="col-md-3 col-lg-3 d-md-block sidebar collapse" th:fragment="nav">
+<nav id="sidebarMenu" class="col-md-3 col-lg-3 d-md-block sidebar collapse" th:fragment="navAdmin">
     <div class="position-sticky py-4 px-3 sidebar-sticky">
         <ul class="nav flex-column h-100">
             <li th:class="${#httpServletRequest.getRequestURI() == '/user/index' ? 'nav-item-active':'nav-item'}">
@@ -16,41 +16,28 @@
                     Overview
                 </a>
             </li>
-            <li th:class="${#httpServletRequest.getRequestURI() == '/wallet/index' ? 'nav-item-active':'nav-item'}">
-                <a class="nav-link" th:href="@{/wallet/index}">
+            <li th:class="${#httpServletRequest.getRequestURI() == '/currency/index' ? 'nav-item-active':'nav-item'}">
+                <a class="nav-link" th:href="@{/currency/index}">
                     <i class="bi-wallet me-2"></i>
-                    My Wallet
+                    Currency
+                </a>
+            </li>
+            <li th:class="${#httpServletRequest.getRequestURI() == '/category/index' ? 'nav-item-active':'nav-item'}">
+                <a class="nav-link" th:href="@{/category/index}">
+                    <i class="bi bi-bookmark-heart"></i>
+                    Category
+                </a>
+            </li>
+            <li th:class="${#httpServletRequest.getRequestURI() == '/notification/index' ? 'nav-item-active':'nav-item'}">
+                <a class="nav-link" th:href="@{/notification/index}">
+                    <i class="bi bi-bell"></i>
+                    Notification
                 </a>
             </li>
             <li th:class="${#httpServletRequest.getRequestURI() == '/user/profile' ? 'nav-item-active':'nav-item'}">
                 <a class="nav-link" th:href="@{/user/profile}">
                     <i class="bi-person me-2"></i>
-                    Report
-                </a>
-            </li>
-           <!-- <li >
-                <a class="nav-link" th:href="@{/user/setting}">
-                    <i class="bi-gear me-2"></i>
-                    Budget
-                </a>
-            </li>-->
-            <li class="nav-item" th:class="${#httpServletRequest.getRequestURI() == '/budget/index' ? 'nav-item-active':'nav-item'}">
-                <a class="nav-link" aria-current="page" th:href="@{/budget/index}">
-                    <svg data-v-0698e127="" data-v-e5c19db8="" xmlns="http://www.w3.org/2000/svg" width="24"
-                         height="24"
-                         viewBox="0 0 24 24" aria-labelledby="test" version="1.1">
-                        <defs data-v-0698e127=""></defs>
-                        <g data-v-0698e127="" id="Icons/account/ic_account" stroke="none" stroke-width="1"
-                           fill="#BDBDBD" fill-rule="evenodd">
-                            <rect data-v-0698e127="" id="blue-background" fill-opacity="0" fill="#FFFFFF" x="0"
-                                  y="0"
-                                  width="24" height="24"></rect>
-                            <path data-v-e5c19db8=""
-                                  d="M2,10.0058587 C2,8.89805351 2.90017617,8 3.99201702,8 L11.007983,8 C12.1081436,8 13,8.89706013 13,10.0058587 L13,19.9941413 C13,21.1019465 12.0998238,22 11.007983,22 L3.99201702,22 C2.8918564,22 2,21.1029399 2,19.9941413 L2,10.0058587 Z M12.5482654,6.05054411 C12.6911723,6.01747057 12.8397304,6 12.992017,6 L20.007983,6 C21.1081436,6 22,6.89706013 22,8.00585866 L22,17.9941413 C22,19.1019465 21.0998238,20 20.007983,20 L15,20 L15,9.00012623 C15,7.52394198 13.9436521,6.30852264 12.5482654,6.05054411 Z M13,2 L20,2 L20,4 L13,4 L13,2 Z M4,4 L11,4 L11,6 L4,6 L4,4 Z"
-                                  id="Combined-Shape" data-v-0698e127=""></path>
-                        </g>
-                    </svg>
-                    Budget
+                    My Profile
                 </a>
             </li>
             <li class="nav-item border-top mt-auto pt-2"

@@ -56,15 +56,6 @@
                                    placeholder="day wallet...">
                             <input class="form-control" type="note" name="note" id="note" th:value="*{note}"
                                    placeholder="note...">
-                            <input class="form-control" type="file" name="image" id="image" th:value="*{image}">
-                            <div class="form-control">
-                                <label for="listFriend">With</label>
-                                <select id="listFriend" name="listFriend" required multiple>
-                                    <option value="" disabled selected>With</option>
-                                    <th:block th:each="friend:${listFriend}" th:object="${friend}">
-                                    </th:block>
-                                </select>
-                            </div>
                             <div class="d-flex">
                                 <button type="submit" class="form-control me-3">Update
                                 </button>

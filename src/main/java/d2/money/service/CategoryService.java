@@ -1,5 +1,6 @@
 package d2.money.service;
 
+import d2.money.domain.Category;
 import d2.money.service.dto.CategoryDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +14,7 @@ public interface CategoryService {
     Page<CategoryDTO> findAll(String search, Pageable pageable);
 
     List<CategoryDTO> findAll();
+    List<CategoryDTO> findByUserId(int id);
 
     List<CategoryDTO> serchByName(String name);
 

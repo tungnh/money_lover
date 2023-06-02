@@ -18,6 +18,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
     List<Transaction> findTop3ByDayBetweenAndWalletIdOrderByDayDesc(@Param("start") Date start, @Param("end") Date end, @Param("id") Integer id);
 
     List<Transaction> findByWalletId(int id);
+    List<Transaction> findByCategoryId(int id);
 
     @Query("SELECT t FROM Transaction t " +
             "WHERE t.category.id IN :categoryIds " +

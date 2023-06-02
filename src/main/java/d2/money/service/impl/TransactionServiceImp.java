@@ -60,6 +60,11 @@ public class TransactionServiceImp implements TransactionService {
     }
 
     @Override
+    public List<TransactionDTO> findByCategoryId(int id) {
+        return transactionMapper.toDto(transactionRepository.findByCategoryId(id));
+    }
+
+    @Override
     public TransactionDTO save(TransactionDTO transactionDTO) {
         Transaction transaction = transactionMapper.toEntity(transactionDTO);
         if (transactionDTO.getDay() == null) {

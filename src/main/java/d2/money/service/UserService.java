@@ -1,5 +1,6 @@
 package d2.money.service;
 
+import d2.money.domain.User;
 import d2.money.service.dto.UserDTO;
 import org.springframework.security.core.Authentication;
 
@@ -17,6 +18,7 @@ public interface UserService {
     Optional<UserDTO> findById(int id);
 
     Optional<UserDTO> findByName(String name);
+    Optional<UserDTO> findByRole(String role);
 
     Optional<UserDTO> getUserProfile(Authentication authentication);
 

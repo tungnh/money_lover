@@ -10,8 +10,6 @@
     <div class="d-flex flex-wrap align-items-center" th:each="tra:${transactionRecent}">
         <th:block th:if="${tra.category!=null&&tra.receivingWalletId==null}">
             <div class="d-flex align-items-center">
-                <img src="images/profile/young-woman-with-round-glasses-yellow-sweater.jpg"
-                     class="profile-image img-fluid" alt="">
                 <div>
                     <p><a href="transaction/index.html"><span th:text="${tra.wallet.name}"></span></a></p>
                     <small class="text-muted"><span th:text="${tra.category.name}"></span></small>

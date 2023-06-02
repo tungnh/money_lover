@@ -53,21 +53,6 @@
                                    placeholder="day wallet...">
                             <input class="form-control" type="note" name="note" id="note"
                                    placeholder="note...">
-                            <input class="form-control" type="file" name="image" id="image">
-                            <div class="form-control">
-                                <label for="listFriend">With</label>
-                                <th:block th:if="${listFriend!=null}">
-                                    <select id="listFriend" name="listFriend" required multiple>
-                                        <option value="" disabled selected>With</option>
-                                        <th:block th:each="friend:${listFriend}" th:object="${friend}">
-                                            <option th:value="${id}"><span th:text="${name}"></span></option>
-                                        </th:block>
-                                    </select>
-                                </th:block>
-                                <th:block th:unless="${listFriend!=null}">
-                                    <a th:href="@{/friend/index}">No friends want to add you</a>
-                                </th:block>
-                            </div>
                             <div class="d-flex">
                                 <button type="submit" class="form-control me-3">ADD
                                 </button>

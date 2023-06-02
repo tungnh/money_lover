@@ -15,7 +15,7 @@
     <div class="title-group mb-3">
         <h1 class="h2 mb-0">Home</h1>
         <a th:href="@{/transaction/add}">
-            <button style="display: block;margin-left: 806px;margin-top: -25px;background-color: #a1e682;border: aliceblue;
+            <button style="display: block;margin-left:939px;margin-top: -25px;background-color: #a1e682;border: aliceblue;
                        height: 41px;width: 227px;border-radius: 11px;">
                 ADD TRANSACTION
             </button>
@@ -27,10 +27,6 @@
     <div class="row my-4">
         <div class="col-lg-7 col-12">
             <div th:replace="user/wallet/info::wallet-info"></div>
-            <div class="custom-block bg-white" style="width: 457px;">
-                <h5 class="mb-4">History</h5>
-                <div id="pie-chart"></div>
-            </div>
             <div class="custom-block custom-block-exchange" style="width: 450px;">
                 <h5 class="mb-4">Exchange Rate</h5>
                 <th:block th:each="cur:${listCurrency}" th:object="${cur}">
@@ -57,10 +53,10 @@
             <div class="custom-block custom-block-profile-front custom-block-profile text-center bg-white"
                  style="height: 219px;">
                 <div class="custom-block-profile-image-wrap mb-4">
-                    <img th:src="${#session.getAttribute('user')!=null ? #session.getAttribute('user').image: ''}"
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbSYaka4sh6N6iKAwSjZJoY4raKAYtQCtc5Ln3Oz5ijJpvWoZ6i6OTlLf-bEnhf6e-sx4&usqp=CAU"
                          th:alt="${#session.getAttribute('user')!=null ? #session.getAttribute('user').username: ''}"
                          class="custom-block-profile-image img-fluid" style="width: 65px;height: 67px;">
-                    <a href="setting.html" class="bi-pencil-square custom-block-edit-icon"></a>
+                    <a th:href="@{/user/setting}" class="bi-pencil-square custom-block-edit-icon"></a>
                 </div>
                 <p class="d-flex flex-wrap mb-2">
                     <strong>Name:</strong>

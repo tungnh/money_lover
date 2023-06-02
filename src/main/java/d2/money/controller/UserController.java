@@ -143,10 +143,11 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String updateUser(@ModelAttribute("user") UserDTO userDTO, Authentication authentication, Model model) {
+    public String updateUser(@ModelAttribute("user") UserDTO userDTO, Authentication authentication,HttpSession session, Model model) {
         UserDTO updatedUser = userService.update(userDTO, authentication);
         if (updatedUser != null) {
             model.addAttribute("user", updatedUser);
+            session.setAttribute("user", updatedUser);
             return "redirect:/user/profile";
         } else {
             return "redirect:/error";

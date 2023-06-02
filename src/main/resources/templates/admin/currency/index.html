@@ -11,50 +11,53 @@
     <th:block th:replace="layout/navbar.html::css"></th:block>
 </head>
 <body>
-<div layout:fragment="content">
-    <a class="btn custom-btn" th:href="@{/currency/add}"
-       style="background-color: #1ad165;margin-left: 871px; margin-bottom: -8px;">Create
-        Currency</a>
-    <div class="row my-4">
-        <div class="col-lg-12 col-12">
-            <div class="custom-block bg-white" style="text-align: center">
-                <h5 class="mb-4">CURRENCY</h5>
-                <div class="table-responsive">
-                    <table class="account-table table">
-                        <thead>
-                        <tr>
-                            <th scope="col">STT</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Code</th>
-                            <th scope="col">Symbol</th>
-                            <th scope="col">Transfer</th>
-                            <th scope="col">CreateBy</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="cur, state : ${listcurrency}" th:object="${cur}">
-                            <td scope="row" th:text="${state.index+1}"></td>
-                            <td scope="row" th:text="*{name}"></td>
-                            <td scope="row" th:text="*{code}"></td>
-                            <td scope="row" th:text="*{symbol}"></td>
-                            <td scope="row" th:text="*{transfer}"></td>
-                            <td scope="row" th:text="*{createdBy}"></td>
-                            <td scope="row">
-                                <a th:href="@{/currency/edit/{id}(id=${cur.id})}" class="btn btn-primary me-2"><i
-                                        class="bi bi-pencil-square"></i></a>
-                                <a th:href="@{/currency/delete/{id}(id=${cur.id})}" class="btn btn-danger"
-                                   onclick="return confirm('Bạn có muốn xóa tiền tệ không?')"><i
-                                        class="bi bi-trash3"></i></a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+<div layout:fragment="content" th:if="${#session.getAttribute('user').role=='user'}">
+    <h4><b>Bạn không có quyền truy cập vào trang web này</b></h4>
+</div>
+<div layout:fragment="content" th:unless="${#session.getAttribute('user').role=='user'}" >
+        <a class="btn custom-btn" th:href="@{/currency/add}"
+           style="background-color: #1ad165;margin-left: 871px; margin-bottom: -8px;">Create Currency</a>
+        <div class="row my-4">
+            <div class="col-lg-12 col-12">
+                <div class="custom-block bg-white" style="text-align: center">
+                    <h5 class="mb-4">CURRENCY</h5>
+                    <div class="table-responsive">
+                        <table class="account-table table">
+                            <thead>
+                            <tr>
+                                <th scope="col">STT</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Code</th>
+                                <th scope="col">Symbol</th>
+                                <th scope="col">Transfer</th>
+                                <th scope="col">CreateBy</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="cur, state : ${listcurrency}" th:object="${cur}">
+                                <td scope="row" th:text="${state.index+1}"></td>
+                                <td scope="row" th:text="*{name}"></td>
+                                <td scope="row" th:text="*{code}"></td>
+                                <td scope="row" th:text="*{symbol}"></td>
+                                <td scope="row" th:text="*{transfer}"></td>
+                                <td scope="row" th:text="*{createdBy}"></td>
+                                <td scope="row">
+                                    <a th:href="@{/currency/edit/{id}(id=${cur.id})}" class="btn btn-primary me-2"><i
+                                            class="bi bi-pencil-square"></i></a>
+                                    <a th:href="@{/currency/delete/{id}(id=${cur.id})}" class="btn btn-danger"
+                                       onclick="return confirm('Bạn có muốn xóa tiền tệ không?')"><i
+                                            class="bi bi-trash3"></i></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<th:block th:replace="layout/layout.html::script"></th:block>
+
+<div th:replace="layout/layout.html::script"></div>
 </body>
 </html>
