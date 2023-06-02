@@ -67,6 +67,11 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public Optional<UserDTO> findByRole(String role) {
+        return userRepository.findByRole(role).map(userMapper::toDto);
+    }
+
+    @Override
     public Optional<UserDTO> getUserProfile(Authentication authentication) {
         String username = authentication.getName();
         Optional<User> userOpt = userRepository.findOneByUsername(username);

@@ -13,6 +13,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findOneByUsername(String name);
     Optional<User> findOneByEmail(String email);
+    Optional<User> findByRole(String role);
     @Query("SELECT u FROM User u WHERE u.id <> :id")
     List<User> findAllUsersExceptId(@Param("id") int id);
 }

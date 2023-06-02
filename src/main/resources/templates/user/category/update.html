@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title> Create Wallet</title>
+    <title>Update Category</title>
     <th:block th:replace="layout/layout.html::css"></th:block>
     <th:block th:replace="layout/header.html::css"></th:block>
 </head>
@@ -24,12 +24,9 @@
                                 <input class="form-control" type="text" name="name" id="name"
                                        placeholder="name:"  th:field="*{name}" required>
                             </div>
-                            <div class="input-group mb-1">
-                                <img class="profile-image img-fluid" th:src="${category.image}" alt="Profile Image">
-                                <input type="file" class="form-control" id="inputGroupFile02" name="image">
-                            </div>
                             <div>
-                                <label for="parentId">Parent Category:</label>
+                                <label for="parentId"></label>
+                                <option value="" disabled selected>Category Parent</option>
                                 <select style="width: 164px;margin-left: 171px;margin-top: -30px;"
                                         class="form-select" aria-label="Default select example" id="parentId" name="parentId"
                                         required th:field="*{parentId}">
@@ -39,10 +36,11 @@
                                 </select>
                             </div>
                             <div>
-                                <label style="margin-top: 15px;" for="status">Status:</label>
+                                <label style="margin-top: 15px;" for="status"></label>
+                                <option value="" disabled selected>Select Type</option>
                                 <select style="width: 107px;margin-left: 170px;margin-top: -30px;" class="form-select" aria-label="Default select example" id="status" name="status" required th:field="*{status}">
-                                    <option value="true">True</option>
-                                    <option value="false">False</option>
+                                    <option value="true">Cộng Tiền</option>
+                                    <option value="false">Trừ tiền</option>
                                 </select>
                             </div>
                             <br>

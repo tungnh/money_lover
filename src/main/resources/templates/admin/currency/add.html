@@ -11,7 +11,10 @@
     <th:block th:replace="layout/navbar.html::css"></th:block>
 </head>
 <body>
-<div layout:fragment="content">
+<div layout:fragment="content" th:if="${#session.getAttribute('user').role=='user'}">
+    <h4><b>Bạn không có quyền truy cập vào trang web này</b></h4>
+</div>
+<div layout:fragment="content" th:unless="${#session.getAttribute('user').role=='user'}">
     <div class="row my-4">
         <div class="col-lg-7 col-12">
             <div class="custom-block bg-white">

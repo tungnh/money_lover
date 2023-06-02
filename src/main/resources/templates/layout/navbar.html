@@ -56,7 +56,7 @@
                               th:text="${#session.getAttribute('wallet').name} ?: 'No wallet selected'"><i
                                 class="bi bi-caret-down-fill"></i></span>
                         <span data-v-48ecc7dc="" class="amount"
-                              th:text="${#session.getAttribute('wallet').balance+' '+#session.getAttribute('currency').code+ ' ⇔ '+(#session.getAttribute('wallet').balance*#session.getAttribute('currency').transfer)+' VNĐ'}">+22,222.00 ₫</span>
+                              th:text="${#session.getAttribute('wallet') != null ? (#session.getAttribute('wallet').balance+' '+#session.getAttribute('currency').code+ ' ⇔ '+(#session.getAttribute('wallet').balance*#session.getAttribute('currency').transfer)+' VNĐ'):''}">+22,222.00 ₫</span>
                     </th:block>
                     <th:block th:unless="${#session.getAttribute('wallet') != null}">
                         <span data-v-48ecc7dc="" class="name">No have wallet<i class="bi bi-caret-down-fill"></i></span>
@@ -68,8 +68,7 @@
                               th:object="${wa}">
                         <li>
                             <div class="dropdown-menu-profile-thumb d-flex">
-                                <img th:src="@{'/user-photos/' + ${#session.getAttribute('user').id} + '/' + ${wa.image}}"
-                                     class="profile-image img-fluid me-3"/>
+                                <img src="https://media.istockphoto.com/id/1309693181/vi/vec-to/vector-bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-v%C3%AD-d%E1%BA%A5u-hi%E1%BB%87u-v%C3%AD-ti%E1%BB%81n.jpg?s=1024x1024&w=is&k=20&c=EZW0YcVpYJwjytFPhDqjJeRVbV0zKheWCWbWyr1NDEE="  class="profile-image img-fluid me-3"/>
                                 <a th:href="@{/wallet/index/{id}(id=${wa.id})}" style="margin-left: 18px">
                                     <div class="d-flex flex-column">
                                         <small><span th:text="*{name}"></span></small>
@@ -174,13 +173,13 @@
             <div class="dropdown px-3">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                    aria-expanded="false">
-                    <img th:src="${#session.getAttribute('user')!=null ? #session.getAttribute('user').image: ''}"
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbSYaka4sh6N6iKAwSjZJoY4raKAYtQCtc5Ln3Oz5ijJpvWoZ6i6OTlLf-bEnhf6e-sx4&usqp=CAU"
                          alt="User Image" class="profile-image img-fluid">
                 </a>
                 <ul class="dropdown-menu bg-white shadow">
                     <li>
                         <div class="dropdown-menu-profile-thumb d-flex">
-                            <img th:src="${#session.getAttribute('user')!=null ? #session.getAttribute('user').image: ''}"
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbSYaka4sh6N6iKAwSjZJoY4raKAYtQCtc5Ln3Oz5ijJpvWoZ6i6OTlLf-bEnhf6e-sx4&usqp=CAU"
                                  th:alt="${#session.getAttribute('user')!=null ? #session.getAttribute('user').username: ''}"
                                  class="profile-image img-fluid me-3"
                             >

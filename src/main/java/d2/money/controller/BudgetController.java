@@ -31,12 +31,7 @@ public class BudgetController {
     }
 
     @GetMapping("index")
-    public String listBudget(Model model, Authentication authentication) {
-        Optional<UserDTO> userDTO = userService.getUserProfile(authentication);
-        if (userDTO.isPresent()) {
-            UserDTO user = userDTO.get();
-            model.addAttribute("user", user);
-        }
+    public String listBudget(Model model) {
         List<BudgetDTO> budgetDTOS = budgetService.findAll();
         List<CategoryDTO> categoryList = categoryService.findAll();
         model.addAttribute("categoryList", categoryList);
@@ -45,12 +40,7 @@ public class BudgetController {
     }
 
     @GetMapping("/create")
-    public String showCreateForm(Model model, Authentication authentication) {
-        Optional<UserDTO> userDTO = userService.getUserProfile(authentication);
-        if (userDTO.isPresent()) {
-            UserDTO user = userDTO.get();
-            model.addAttribute("user", user);
-        }
+    public String showCreateForm(Model model) {
         List<WalletDTO> walletDTOS = walletService.findAll();
         List<CategoryDTO> categoryList = categoryService.findAll();
         model.addAttribute("walletList", walletDTOS);
@@ -72,12 +62,7 @@ public class BudgetController {
     }
 
     @GetMapping("/detail/{id}")
-    public String getBudgetById(@PathVariable int id, Model model, Authentication authentication) {
-        Optional<UserDTO> userDTO = userService.getUserProfile(authentication);
-        if (userDTO.isPresent()) {
-            UserDTO user = userDTO.get();
-            model.addAttribute("user", user);
-        }
+    public String getBudgetById(@PathVariable int id, Model model) {
         Optional<BudgetDTO> budgetDTOOptional = budgetService.findByBudgetId(id);
         if (budgetDTOOptional.isPresent()) {
             BudgetDTO budgetDTO = budgetDTOOptional.get();
@@ -90,12 +75,7 @@ public class BudgetController {
     }
 
     @GetMapping("/update/{id}")
-    public String showUpdateForm(@PathVariable int id, Authentication authentication, Model model) {
-        Optional<UserDTO> userDTO = userService.getUserProfile(authentication);
-        if (userDTO.isPresent()) {
-            UserDTO user = userDTO.get();
-            model.addAttribute("user", user);
-        }
+    public String showUpdateForm(@PathVariable int id, Model model) {
         Optional<BudgetDTO> budgetDTOOptional = budgetService.findByBudgetId(id);
         if (budgetDTOOptional.isPresent()) {
             BudgetDTO budgetDTO = budgetDTOOptional.get();

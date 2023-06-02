@@ -11,9 +11,18 @@
     <th:block th:replace="layout/navbar.html::css"></th:block>
 </head>
 <body>
-<th:block layout:fragment="content">
+<div layout:fragment="content" th:if="${#session.getAttribute('user').role=='user'}">
+    <h4><b>Bạn không có quyền truy cập vào trang web này</b></h4>
+</div>
+<th:block layout:fragment="content" th:unless="${#session.getAttribute('user').role=='user'}">
     <div class="title-group mb-3">
         <h1 class="h2 mb-0">Notifications</h1>
+        <a th:href="@{/notification/add}">
+            <button style="display: block;margin-left:939px;margin-top: -25px;background-color: #a1e682;border: aliceblue;
+                       height: 41px;width: 227px;border-radius: 11px;">
+                ADD NOTIFICATION
+            </button>
+        </a>
     </div>
     <div class="row my-4">
         <div class="col-lg-12 col-12">

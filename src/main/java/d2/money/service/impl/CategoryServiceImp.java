@@ -27,7 +27,6 @@ import java.util.Optional;
 @Service
 public class CategoryServiceImp implements CategoryService {
 
-
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
     private final UserService userService;
@@ -52,6 +51,11 @@ public class CategoryServiceImp implements CategoryService {
     @Override
     public List<CategoryDTO> findAll() {
         return categoryMapper.toDto(categoryRepository.findAll());
+    }
+
+    @Override
+    public List<CategoryDTO> findByUserId(int id) {
+        return categoryMapper.toDto(categoryRepository.findByUserId(id));
     }
 
     public List<CategoryDTO> serchByName(String name) {

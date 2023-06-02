@@ -40,7 +40,7 @@ public class WalletController {
         List<WalletDTO> walletDTOList = walletService.findAll();
         if (walletDTOList != null) {
             session.setAttribute("listWallet", walletDTOList);
-            model.addAttribute("notification",notificationService.findAllByUser());
+            model.addAttribute("notification", notificationService.findAllByUser());
             model.addAttribute("listWallet", walletDTOList);
             return "user/wallet/index";
         }
@@ -50,12 +50,16 @@ public class WalletController {
 
     @GetMapping("index/{id}")
     public String walletById(@PathVariable int id, HttpSession session, Model model) {
-        Optional<WalletDTO> walletDTOList = walletService.findById(id);
-        Optional<CurrencyDTO> currencyDTO = currencyService.findById(walletDTOList.get().getCurrencyId());
-        session.setAttribute("wallet", walletDTOList.get());
-        session.setAttribute("currency",currencyDTO.get());
-        model.addAttribute("transactionRecent", transactionService.findTransactionByWalletIdOrReceiveWalletId(id));
-        return "/user/index";
+        if (walletService.findAll()!=null){
+            Optional<WalletDTO> walletDTOList = walletService.findById(id);
+            Optional<CurrencyDTO> currencyDTO = currencyService.findById(walletDTOList.get().getCurrencyId());
+            session.setAttribute("wallet", walletDTOList.get());
+            session.setAttribute("currency", currencyDTO.get());
+            model.addAttribute("listCurrency", currencyService.getAllCurrency());
+            model.addAttribute("transactionRecent", transactionService.findTransactionByWalletIdOrReceiveWalletId(id));
+            return "/user/index";
+        }
+        return "redirect:/wallet/add";
     }
 
     @GetMapping("add")
@@ -65,23 +69,14 @@ public class WalletController {
     }
 
     @PostMapping("add")
-    public String createWallet(@RequestParam("file") MultipartFile multipartFile,Authentication authentication, @ModelAttribute WalletDTO walletDTO, Model model, HttpSession session) throws IOException {
-        Optional<UserDTO> userDTO = userService.getUserProfile(authentication);
-        String uploadDir ="";
-        if (userDTO.isPresent()) {
-            UserDTO user = userDTO.get();
-            uploadDir="src/main/resources/static/user-photos/" +user.getId();
-        }
-        String fileName = multipartFile.getOriginalFilename();
-        String storedFileName = UUID.randomUUID().toString() + "-" + fileName;
-        FileUploadUtil.saveFile(uploadDir, storedFileName, multipartFile);
-        walletDTO.setImage(storedFileName);
+    public String createWallet(@ModelAttribute WalletDTO walletDTO ,HttpSession session) {
         walletService.save(walletDTO);
         session.setAttribute("wallet", walletDTO);
         Optional<CurrencyDTO> currencyDTO = currencyService.findById(walletDTO.getCurrencyId());
-        session.setAttribute("currency",currencyDTO.get());
+        session.setAttribute("currency", currencyDTO.get());
         return "redirect:/wallet/index";
     }
+
 
     @GetMapping("edit/{id}")
     public String edit(@PathVariable int id, Model model) {
@@ -103,7 +98,7 @@ public class WalletController {
         walletService.update(walletDTO);
         session.setAttribute("wallet", walletDTO);
         Optional<CurrencyDTO> currencyDTO = currencyService.findById(walletDTO.getCurrencyId());
-        session.setAttribute("currency",currencyDTO.get());
+        session.setAttribute("currency", currencyDTO.get());
         return "redirect:/wallet/index";
     }
 
@@ -117,7 +112,12 @@ public class WalletController {
             }
         }
         walletService.delete(id);
-        session.setAttribute("wallet", walletService.findAll().get(0));
+        if (walletService.findAll()==null){
+            session.removeAttribute("wallet");
+            return "redirect:/wallet/add";
+        }else {
+            session.setAttribute("wallet", walletService.findAll().get(0));
+        }
         return "redirect:/wallet/index";
     }
 }

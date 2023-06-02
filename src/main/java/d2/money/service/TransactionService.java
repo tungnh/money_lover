@@ -9,6 +9,7 @@ public interface TransactionService {
     Optional<TransactionDTO> findById(int id);
 
     List<TransactionDTO> findByWalletId(int id);
+    List<TransactionDTO> findByCategoryId(int id);
 
     TransactionDTO save(TransactionDTO transactionDTO);
 

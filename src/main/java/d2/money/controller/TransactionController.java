@@ -1,13 +1,21 @@
 package d2.money.controller;
 
+import d2.money.domain.User;
 import d2.money.service.*;
+import d2.money.service.dto.CategoryDTO;
 import d2.money.service.dto.TransactionDTO;
+import d2.money.service.dto.UserDTO;
 import d2.money.service.dto.WalletDTO;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -33,7 +41,7 @@ public class TransactionController {
     @GetMapping("/index")
     public String index(HttpSession session, Model model) {
         WalletDTO wallet = (WalletDTO) session.getAttribute("wallet");
-        model.addAttribute("notification",notificationService.findAllByUser());
+        model.addAttribute("notification", notificationService.findAllByUser());
         model.addAttribute("listTransaction", transactionService.findByDayBetweenAndWalletId(wallet.getId()));
         session.setAttribute("listWallet", walletService.findAll());
         model.addAttribute("listWallet", walletService.findAll());
@@ -42,17 +50,38 @@ public class TransactionController {
 
     @GetMapping("add")
     public String add(Model model) {
-        model.addAttribute("transaction", new TransactionDTO());
-        model.addAttribute("listFriend", friendService.findAll());
-        model.addAttribute("listWallet", walletService.findAll());
-        model.addAttribute("listCategory", categoryService.findAll());
-        return "user/transaction/add";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        List<CategoryDTO> categoryDTOList = new ArrayList<>();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            Optional<UserDTO> optionalUser = userService.findOneByUsername(userDetails.getUsername());
+            if (optionalUser.isPresent()) {
+                UserDTO user = optionalUser.get();
+                List<CategoryDTO> list = categoryService.findByUserId(user.getId());
+                if (list != null) {
+                    categoryDTOList.addAll(list);
+                }
+            }
+            Optional<UserDTO> userdmin = userService.findByRole("admin");
+            if (userdmin != null) {
+                List<CategoryDTO> list = categoryService.findByUserId(userdmin.get().getId());
+                if (list != null) {
+                    categoryDTOList.addAll(list);
+                }
+            }
+            model.addAttribute("transaction", new TransactionDTO());
+            model.addAttribute("listFriend", friendService.findAll());
+            model.addAttribute("listWallet", walletService.findAll());
+            model.addAttribute("listCategory", categoryDTOList);
+            return "user/transaction/add";
+        }
+        return "redirect:/user/index";
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute TransactionDTO transactionDTO,HttpSession session) {
+    public String add(@ModelAttribute TransactionDTO transactionDTO, HttpSession session) {
         transactionService.save(transactionDTO);
-        Optional<WalletDTO> wallet=walletService.findById(transactionDTO.getWalletTransferId());
+        Optional<WalletDTO> wallet = walletService.findById(transactionDTO.getWalletTransferId());
         session.setAttribute("wallet", wallet.get());
         return "redirect:/transaction/index";
     }
@@ -74,18 +103,19 @@ public class TransactionController {
     }
 
     @PostMapping("edit/{id}")
-    public String edit(@PathVariable int id,HttpSession session ,@ModelAttribute TransactionDTO transactionDTO) {
+    public String edit(@PathVariable int id, HttpSession session, @ModelAttribute TransactionDTO
+    transactionDTO) {
         transactionDTO.setId(id);
         transactionService.update(transactionDTO);
-        Optional<WalletDTO> wallet=walletService.findById(transactionDTO.getWalletTransferId());
+        Optional<WalletDTO> wallet = walletService.findById(transactionDTO.getWalletTransferId());
         session.setAttribute("wallet", wallet.get());
         return "redirect:/transaction/index";
     }
 
     @GetMapping("delete/{id}")
-    public String delete(@PathVariable int id,HttpSession session) {
-        Optional<TransactionDTO> transactionDTOOptional=transactionService.findById(id);
-        Optional<WalletDTO> wallet=walletService.findById(transactionDTOOptional.get().getWalletTransferId());
+    public String delete(@PathVariable int id, HttpSession session) {
+        Optional<TransactionDTO> transactionDTOOptional = transactionService.findById(id);
+        Optional<WalletDTO> wallet = walletService.findById(transactionDTOOptional.get().getWalletTransferId());
         session.setAttribute("wallet", wallet.get());
         transactionService.delete(id);
         return "redirect:/transaction/index";

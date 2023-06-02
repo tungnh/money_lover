@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/moneylover
+    url: jdbc:mysql://localhost:3306/money
     username: root
-    password: dangtiep204
+    password: 123456789
 
   jpa:
     properties:

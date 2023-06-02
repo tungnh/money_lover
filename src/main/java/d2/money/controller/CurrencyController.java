@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,7 +84,7 @@ public class CurrencyController {
         }
     }
     @GetMapping("delete/{id}")
-    public String deleteCurrency(@PathVariable int id, Model model) {
+    public String deleteCurrency(@PathVariable int id, HttpSession session) {
         Optional<CurrencyDTO> currencyDTOOptional =currencyService.findById(id);
         List<WalletDTO> walletDTOList = walletService.findByCurrencyId(currencyDTOOptional.get().getId());
         if (walletDTOList != null) {
@@ -99,7 +100,7 @@ public class CurrencyController {
             }
         }
         currencyService.delete(id);
-        model.addAttribute("listcurrency", currencyService.getAllCurrency());
-        return "admin/currency/index";
+        session.removeAttribute("wallet");
+      return "redirect:/currency/index";
     }
 }
