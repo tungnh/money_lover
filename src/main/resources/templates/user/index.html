@@ -15,12 +15,12 @@
     <div class="title-group mb-3">
         <h1 class="h2 mb-0">Home</h1>
         <a th:href="@{/transaction/add}">
-            <button style="display: block;margin-left:939px;margin-top: -25px;background-color: #a1e682;border: aliceblue;
+            <button style="display: block;margin-left:865px;margin-top: -25px;background-color: #a1e682;border: aliceblue;
                        height: 41px;width: 227px;border-radius: 11px;">
                 ADD TRANSACTION
             </button>
         </a>
-        <small class="text-muted">Hello <span
+        <small class="text-muted" style="margin-left: 15px;">Hello <span
                 th:text="${#session.getAttribute('user')!=null ? (#session.getAttribute('user').firstName+''+#session.getAttribute('user').lastName): ''}"></span>,
             welcome back!</small>
     </div>

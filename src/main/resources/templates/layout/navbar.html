@@ -59,7 +59,7 @@
                               th:text="${#session.getAttribute('wallet') != null ? (#session.getAttribute('wallet').balance+' '+#session.getAttribute('currency').code+ ' ⇔ '+(#session.getAttribute('wallet').balance*#session.getAttribute('currency').transfer)+' VNĐ'):''}">+22,222.00 ₫</span>
                     </th:block>
                     <th:block th:unless="${#session.getAttribute('wallet') != null}">
-                        <span data-v-48ecc7dc="" class="name">No have wallet<i class="bi bi-caret-down-fill"></i></span>
+                        <span data-v-48ecc7dc="" class="name">No wallet selected<i class="bi bi-caret-down-fill"></i></span>
                         <span data-v-48ecc7dc="" class="amount"></span>
                     </th:block>
                 </div>

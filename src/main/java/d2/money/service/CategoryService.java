@@ -14,7 +14,7 @@ public interface CategoryService {
     Page<CategoryDTO> findAll(String search, Pageable pageable);
 
     List<CategoryDTO> findAll();
-    List<CategoryDTO> findByUserId(int id);
+     List<CategoryDTO> findByUser();
 
     List<CategoryDTO> serchByName(String name);
 

@@ -50,25 +50,8 @@ public class TransactionController {
 
     @GetMapping("add")
     public String add(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        List<CategoryDTO> categoryDTOList = new ArrayList<>();
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            Optional<UserDTO> optionalUser = userService.findOneByUsername(userDetails.getUsername());
-            if (optionalUser.isPresent()) {
-                UserDTO user = optionalUser.get();
-                List<CategoryDTO> list = categoryService.findByUserId(user.getId());
-                if (list != null) {
-                    categoryDTOList.addAll(list);
-                }
-            }
-            Optional<UserDTO> userdmin = userService.findByRole("admin");
-            if (userdmin != null) {
-                List<CategoryDTO> list = categoryService.findByUserId(userdmin.get().getId());
-                if (list != null) {
-                    categoryDTOList.addAll(list);
-                }
-            }
+        List<CategoryDTO> categoryDTOList = categoryService.findByUser();
+        if (categoryDTOList != null) {
             model.addAttribute("transaction", new TransactionDTO());
             model.addAttribute("listFriend", friendService.findAll());
             model.addAttribute("listWallet", walletService.findAll());
@@ -93,8 +76,9 @@ public class TransactionController {
         model.addAttribute("transaction", transactionDTO);
         model.addAttribute("listWallet", walletService.findAll());
         if (transactionDTO.getCategoryId() != null && transactionDTO.getReceivingWalletId() == null) {
+            List<CategoryDTO> categoryDTOList = categoryService.findByUser();
             model.addAttribute("listFriend", friendService.findAll());
-            model.addAttribute("listCategory", categoryService.findAll());
+            model.addAttribute("listCategory", categoryDTOList);
             return "user/transaction/update";
         }
         Optional<WalletDTO> walletReceive = walletService.findById(transactionDTO.getReceivingWalletId());
@@ -104,7 +88,7 @@ public class TransactionController {
 
     @PostMapping("edit/{id}")
     public String edit(@PathVariable int id, HttpSession session, @ModelAttribute TransactionDTO
-    transactionDTO) {
+            transactionDTO) {
         transactionDTO.setId(id);
         transactionService.update(transactionDTO);
         Optional<WalletDTO> wallet = walletService.findById(transactionDTO.getWalletTransferId());
