@@ -47,6 +47,18 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public boolean authenticateUser(UserDTO userDTO) {
+        String username = userDTO.getUsername();
+        String password = userDTO.getPassword();
+
+        User user = userRepository.findOneByUsername(username).get();
+        if (user != null && user.getPassword().equals(password) && user.isStatus()) {
+            return true; // Đăng nhập thành công và trạng thái là true
+        }
+        return false; // Đăng nhập không thành công hoặc trạng thái là false
+    }
+
+    @Override
     public Optional<UserDTO> findOneByUsername(String name) {
         return userRepository.findOneByUsername(name).map(userMapper::toDto);
     }

@@ -1,7 +1,11 @@
 package d2.money.service.impl;
 
+import d2.money.domain.Budget;
 import d2.money.domain.Transaction;
+import d2.money.repository.BudgetRepository;
+import d2.money.repository.CategoryRepository;
 import d2.money.repository.TransactionRepository;
+import d2.money.repository.WalletRepository;
 import d2.money.service.*;
 import d2.money.service.dto.*;
 import d2.money.service.mapper.CategoryMapper;
@@ -33,17 +37,22 @@ public class TransactionServiceImp implements TransactionService {
     private final CategoryService categoryService;
     private final WalletService walletService;
     private final CurrencyService currencyService;
-
+    private final BudgetRepository budgetRepository;
+    private final WalletRepository walletRepository;
+    private final CategoryRepository categoryRepository;
     private final WalletMapper walletMapper;
     private final CategoryMapper categoryMapper;
     private final BudgetService budgetService;
 
-    public TransactionServiceImp(TransactionMapper transactionMapper, TransactionRepository transactionRepository, CategoryService categoryService, WalletService walletService, CurrencyService currencyService, WalletMapper walletMapper, CategoryMapper categoryMapper, BudgetService budgetService) {
+    public TransactionServiceImp(TransactionMapper transactionMapper, TransactionRepository transactionRepository, CategoryService categoryService, WalletService walletService, CurrencyService currencyService, BudgetRepository budgetRepository, WalletRepository walletRepository, CategoryRepository categoryRepository, WalletMapper walletMapper, CategoryMapper categoryMapper, BudgetService budgetService) {
         this.transactionMapper = transactionMapper;
         this.transactionRepository = transactionRepository;
         this.categoryService = categoryService;
         this.walletService = walletService;
         this.currencyService = currencyService;
+        this.budgetRepository = budgetRepository;
+        this.walletRepository = walletRepository;
+        this.categoryRepository = categoryRepository;
         this.walletMapper = walletMapper;
         this.categoryMapper = categoryMapper;
         this.budgetService = budgetService;
@@ -59,6 +68,7 @@ public class TransactionServiceImp implements TransactionService {
         return transactionMapper.toDto(transactionRepository.findByWalletId(id));
     }
 
+
     @Override
     public List<TransactionDTO> findByCategoryId(int id) {
         return transactionMapper.toDto(transactionRepository.findByCategoryId(id));
@@ -70,8 +80,7 @@ public class TransactionServiceImp implements TransactionService {
         if (transactionDTO.getDay() == null) {
             transaction.setDay(new Date());
         }
-        Optional<WalletDTO> optionalWalletTransfer = walletService.findById(transactionDTO.getWalletTransferId());
-        WalletDTO walletTransfer = optionalWalletTransfer.get();
+        Wallet walletTransfer = walletRepository.findById(transactionDTO.getWalletTransferId()).get();
         if (transactionDTO.getReceivingWalletId() != null) {
             Optional<WalletDTO> optionalWalletReceiving = walletService.findById(transactionDTO.getReceivingWalletId());
             WalletDTO walletReceiving = optionalWalletReceiving.get();
@@ -91,7 +100,7 @@ public class TransactionServiceImp implements TransactionService {
                 transaction.setAmount(transactionDTO.getAmount() * exchangeRate);
             }
             walletTransfer.setBalance(walletTransfer.getBalance() - transactionDTO.getAmount());
-            walletService.save(walletTransfer);
+            walletRepository.save(walletTransfer);
         } else {
             Optional<CategoryDTO> categoryDTOOptional = categoryService.findById(transaction.getCategoryId());
             CategoryDTO categoryDTO = categoryDTOOptional.get();
@@ -101,14 +110,39 @@ public class TransactionServiceImp implements TransactionService {
             } else {
                 walletTransfer.setBalance(walletTransfer.getBalance() - transactionDTO.getAmount());
             }
-            walletService.save(walletTransfer);
-            transaction.setWallet(walletMapper.toEntity(walletTransfer));
+            walletRepository.save(walletTransfer);
+            transaction.setWallet(walletTransfer);
+            transaction.setWallet(walletTransfer);
         }
+
+        List<Budget> budgetList = budgetRepository.findAll();
+        boolean checkWallet = false;
+        boolean checkCategory = false;
+        for (Budget b : budgetList) {
+            for (Wallet w : b.getWalletList()) {
+                if (w.getId() == transaction.getWalletId()) {
+                    checkWallet = true;
+                    break;
+                }
+            }
+            for (Category c : b.getCategoryList()) {
+                if (c.getId() == transaction.getCategoryId()) {
+                    checkCategory = true;
+                    break;
+                }
+            }
+            if (checkWallet && checkCategory) {
+                b.setSpent(transaction.getAmount());
+                budgetRepository.save(b);
+                break;
+            }
+        }
+
+
         transactionRepository.save(transaction);
         TransactionDTO dto = transactionMapper.toDto(transaction);
         return dto;
     }
-
     @Override
     public TransactionDTO update(TransactionDTO transactionDTO) {
         Optional<TransactionDTO> transactionOldOptional = findById(transactionDTO.getId());

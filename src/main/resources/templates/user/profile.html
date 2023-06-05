@@ -24,9 +24,9 @@
                     </div>
                     <div class="col-lg-3 col-12 mb-4 mb-lg-0">
                         <div class="custom-block-profile-image-wrap">
-                            <img th:src="${#session.getAttribute('user')!=null ? #session.getAttribute('user').image: ''}" th:alt="${#session.getAttribute('user')!=null ? #session.getAttribute('user').username: ''}"
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbSYaka4sh6N6iKAwSjZJoY4raKAYtQCtc5Ln3Oz5ijJpvWoZ6i6OTlLf-bEnhf6e-sx4&usqp=CAU" th:alt="${#session.getAttribute('user')!=null ? #session.getAttribute('user').username: ''}"
                                  class="custom-block-profile-image img-fluid">
-                            <a href="setting.html" class="bi-pencil-square custom-block-edit-icon"></a>
+                            <a th:href="@{/user/setting}" class="bi-pencil-square custom-block-edit-icon"></a>
                         </div>
                     </div>
                     <div class="col-lg-9 col-12">
@@ -42,13 +42,17 @@
                         </p>
                         <p class="d-flex flex-wrap mb-2">
                             <strong>Birthday:</strong>
+<!--
                             <span th:text="${#session.getAttribute('user')!=null ? #session.getAttribute('user').birthday: ''}"></span>
+-->
+                            <span th:text="${#dates.format(user.birthday, 'dd/MM/yyyy')}"></span>
+
                         </p>
-                        <p class="d-flex flex-wrap">
+                        <!--<p class="d-flex flex-wrap">
                             <strong>Create Date</strong>
                             <span th:text="${#session.getAttribute('user')!=null ? #session.getAttribute('user').createDate: ''}"></span>
                             <span th:text="${#dates.format(user.birthday, 'dd/MM/yyyy')}"></span>
-                        </p>
+                        </p>-->
                         <p class="d-flex flex-wrap">
                             <strong>Create Date</strong>
                             <span th:text="${#dates.format(user.createDate, 'dd/MM/yyyy')}"></span>

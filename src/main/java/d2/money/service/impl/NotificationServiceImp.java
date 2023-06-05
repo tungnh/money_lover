@@ -31,7 +31,7 @@ public class NotificationServiceImp implements NotificationService {
         this.notificationMapper = notificationMapper;
     }
 
-    @Scheduled(cron = "0 00 08 * * *")
+    @Scheduled(cron = "0 37 15 * * *")
     public void scheduleFixedRateTask() {
         List<UserDTO> users = userService.findAll();
         LocalDate today = LocalDate.now();

@@ -75,8 +75,10 @@ public class CategoryController {
     @GetMapping("/{id}")
     private String deleteCategory(@PathVariable int id) {
         List<TransactionDTO> transactionDTOList= transactionService.findByCategoryId(id);
-        for (TransactionDTO tra:transactionDTOList) {
-            transactionService.delete(tra.getId());
+        if (transactionDTOList!=null){
+            for (TransactionDTO tra:transactionDTOList) {
+                transactionService.delete(tra.getId());
+            }
         }
         categoryService.delete(id);
         return "redirect:/category/index";

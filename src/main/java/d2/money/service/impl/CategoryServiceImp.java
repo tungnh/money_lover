@@ -4,6 +4,7 @@ import d2.money.domain.Category;
 import d2.money.repository.CategoryRepository;
 import d2.money.service.CategoryService;
 import d2.money.service.dto.CategoryDTO;
+import d2.money.service.dto.UserDTO;
 import d2.money.service.mapper.CategoryMapper;
 import org.springframework.stereotype.Service;
 import d2.money.domain.User;
@@ -20,6 +21,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -53,9 +55,31 @@ public class CategoryServiceImp implements CategoryService {
         return categoryMapper.toDto(categoryRepository.findAll());
     }
 
+
     @Override
-    public List<CategoryDTO> findByUserId(int id) {
-        return categoryMapper.toDto(categoryRepository.findByUserId(id));
+    public List<CategoryDTO> findByUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        List<CategoryDTO> categoryDTOList = new ArrayList<>();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            Optional<UserDTO> optionalUser = userService.findOneByUsername(userDetails.getUsername());
+            if (optionalUser.isPresent()) {
+                UserDTO user = optionalUser.get();
+                List<CategoryDTO> list = categoryMapper.toDto(categoryRepository.findByUserId(user.getId()));
+                if (list != null) {
+                    categoryDTOList.addAll(list);
+                }
+            }
+            Optional<UserDTO> userdmin = userService.findByRole("admin");
+            if (userdmin.isPresent()) {
+                List<CategoryDTO> list = categoryMapper.toDto(categoryRepository.findByUserId(userdmin.get().getId()));
+                if (list != null) {
+                    categoryDTOList.addAll(list);
+                }
+            }
+
+        }
+        return categoryDTOList;
     }
 
     public List<CategoryDTO> serchByName(String name) {

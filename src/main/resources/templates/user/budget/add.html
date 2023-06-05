@@ -18,7 +18,7 @@
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="profile-tab-pane" role="tabpanel"
                          aria-labelledby="profile-tab" tabindex="0">
-                        <h6>Create Category</h6>
+                        <h6>Create Budget</h6>
                         <form class="custom-form profile-form" th:action="@{/budget/create}" method="post"
                               th:object="${budgetDTO}">
                             <div>
@@ -39,7 +39,7 @@
                             </div>
                             <div>
                                 <label for="categoryList">Danh mục:</label>
-                                <select style="width: 164px;margin-left: 171px;margin-top: -30px;" class="form-select"
+                                <select style="width: 164px;margin-left: 171px;margin-top: -30px;height: 60px;" class="form-select"
                                         aria-label="Default select example" id="categoryList" name="categoryList"
                                         multiple>
                                     <th:block th:each="category : ${categoryList}">
@@ -50,7 +50,7 @@
                             </div>
                             <div>
                                 <label for="listWalletId">Vi:</label>
-                                <select style="width: 164px;margin-left: 171px;margin-top: -30px;" class="form-select"
+                                <select style="width: 164px;margin-left: 171px;margin-top: -15px;height: 60px;" class="form-select"
                                         aria-label="Default select example" id="listWalletId" name="listWalletId"
                                         multiple>
                                     <th:block th:each="wallet : ${walletList}">

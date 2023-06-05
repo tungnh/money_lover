@@ -7,13 +7,18 @@ import d2.money.repository.BudgetRepository;
 import d2.money.repository.WalletRepository;
 import d2.money.service.BudgetService;
 import d2.money.service.CategoryService;
+import d2.money.service.UserService;
 import d2.money.service.WalletService;
 import d2.money.service.dto.BudgetDTO;
 import d2.money.service.dto.CategoryDTO;
+import d2.money.service.dto.UserDTO;
 import d2.money.service.dto.WalletDTO;
 import d2.money.service.mapper.BudgetMapper;
 import d2.money.service.mapper.CategoryMapper;
 import d2.money.service.mapper.WalletMapper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,8 +34,8 @@ public class BudgetServiceImp implements BudgetService {
     private final WalletService walletService;
     private final WalletMapper walletMapper;
     private final WalletRepository walletRepository;
-
-    public BudgetServiceImp(BudgetRepository budgetRepository, BudgetMapper budgetMapper, CategoryService categoryService, CategoryMapper categoryMapper, WalletService walletService, WalletMapper walletMapper, WalletRepository walletRepository) {
+    private final UserService userService;
+    public BudgetServiceImp(BudgetRepository budgetRepository, BudgetMapper budgetMapper, CategoryService categoryService, CategoryMapper categoryMapper, WalletService walletService, WalletMapper walletMapper, WalletRepository walletRepository, UserService userService) {
         this.budgetRepository = budgetRepository;
         this.budgetMapper = budgetMapper;
         this.categoryService = categoryService;
@@ -38,10 +43,20 @@ public class BudgetServiceImp implements BudgetService {
         this.walletService = walletService;
         this.walletMapper = walletMapper;
         this.walletRepository = walletRepository;
+        this.userService = userService;
     }
 
     @Override
     public List<BudgetDTO> findAll() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            Optional<UserDTO> optionalUser = userService.findOneByUsername(userDetails.getUsername());
+            if (optionalUser.isPresent()) {
+                UserDTO user = optionalUser.get();
+                return budgetMapper.toDto(budgetRepository.findBudgetAmountsByUserId(user.getId()));
+            }
+        }
         return budgetMapper.toDto(budgetRepository.findAll());
     }
 
@@ -130,4 +145,7 @@ public class BudgetServiceImp implements BudgetService {
         Optional<Budget> budgetOptional = budgetRepository.findById(id);
         return budgetOptional.map(budgetMapper::toDto);
     }
+
+
+
 }

@@ -102,6 +102,25 @@ public class WalletController {
         return "redirect:/wallet/index";
     }
 
+    /*@GetMapping("delete/{id}")
+    public String deleteWallet(@PathVariable int id, HttpSession session) {
+        Optional<WalletDTO> walletDTOOptional = walletService.findById(id);
+        List<TransactionDTO> transactionDTOS = transactionService.findByWalletId(walletDTOOptional.get().getId());
+        if (transactionDTOS != null) {
+            for (TransactionDTO tr : transactionDTOS) {
+                transactionService.delete(tr.getId());
+            }
+        }
+        if (walletService.findAll()==null){
+            session.removeAttribute("wallet");
+            return "redirect:/wallet/add";
+        }else {
+            session.setAttribute("wallet", walletService.findAll().get(0));
+        }
+        walletService.delete(id);
+        return "redirect:/wallet/index";
+    }*/
+
     @GetMapping("delete/{id}")
     public String deleteWallet(@PathVariable int id, HttpSession session) {
         Optional<WalletDTO> walletDTOOptional = walletService.findById(id);
@@ -111,7 +130,7 @@ public class WalletController {
                 transactionService.delete(tr.getId());
             }
         }
-        walletService.delete(id);
+        walletService.delete(walletDTOOptional.get().getId());
         if (walletService.findAll()==null){
             session.removeAttribute("wallet");
             return "redirect:/wallet/add";

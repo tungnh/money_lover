@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public interface UserService {
     UserDTO registerUser(UserDTO userDTO);
+    boolean authenticateUser(UserDTO userDTO);
 
     Optional<UserDTO> findOneByUsername(String name);
 

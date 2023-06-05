@@ -33,18 +33,18 @@ public class BudgetController {
     @GetMapping("index")
     public String listBudget(Model model) {
         List<BudgetDTO> budgetDTOS = budgetService.findAll();
-        List<CategoryDTO> categoryList = categoryService.findAll();
-        model.addAttribute("categoryList", categoryList);
+        List<CategoryDTO> categoryDTOList = categoryService.findByUser();
+        model.addAttribute("categoryList", categoryDTOList);
         model.addAttribute("budgetList", budgetDTOS);
         return "user/budget/index";
     }
 
     @GetMapping("/create")
     public String showCreateForm(Model model) {
+        List<CategoryDTO> categoryDTOList = categoryService.findByUser();
         List<WalletDTO> walletDTOS = walletService.findAll();
-        List<CategoryDTO> categoryList = categoryService.findAll();
         model.addAttribute("walletList", walletDTOS);
-        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("categoryList", categoryDTOList);
         model.addAttribute("budgetDTO", new BudgetDTO());
         return "user/budget/add";
     }
